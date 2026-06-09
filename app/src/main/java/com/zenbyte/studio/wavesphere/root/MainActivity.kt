@@ -1,4 +1,4 @@
-package com.zenbyte.studio.wavesphere
+package com.zenbyte.studio.wavesphere.root
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.zenbyte.studio.wavesphere.ui.theme.WaveSphereTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             WaveSphereTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Box(modifier = Modifier.fillMaxSize().padding(innerPadding)){
+                    Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
 
                     }
                 }
