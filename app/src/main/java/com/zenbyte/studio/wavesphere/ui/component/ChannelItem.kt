@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -77,7 +78,7 @@ fun ChannelItem(context: PlatformContext, myChannel: MyChannel) {
                     .data(myChannel.favicon.takeIf { it.isNotEmpty() && it != "null" })
                     .crossfade(true)
                     .build(),
-                placeholder =  painterResource(R.drawable.applogo),
+                placeholder = painterResource(R.drawable.applogo),
                 error = painterResource(R.drawable.applogowhite),
                 contentDescription = null,
                 contentScale = ContentScale.Fit
@@ -122,12 +123,19 @@ fun ChannelItem(context: PlatformContext, myChannel: MyChannel) {
                 contentDescription = null
             )
         }
-        IconButton(onClick = {}) {
+
+
+        IconButton(
+
+            onClick = {},
+
+            ) {
             Icon(
-                painter = painterResource(R.drawable.icon_play_hover_play),
+                painter = painterResource(R.drawable.icon_play_circle_svgrepo_com),
                 contentDescription = null
             )
         }
+
 
     }
 }
