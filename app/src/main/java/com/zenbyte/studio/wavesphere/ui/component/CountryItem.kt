@@ -1,0 +1,90 @@
+package com.zenbyte.studio.wavesphere.ui.component
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import coil3.PlatformContext
+import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import com.zenbyte.studio.wavesphere.R
+import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
+
+@Composable
+fun CountryItem(context: PlatformContext) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        AsyncImage(
+            modifier = Modifier
+                .size(55.dp)
+                .aspectRatio(1f),
+            model = ImageRequest.Builder(context = context).data("https://flagcdn.com/w320/au.png")
+                .crossfade(true).build(),
+            placeholder = painterResource(R.drawable.applogo),
+            error = painterResource(R.drawable.applogowhite),
+            contentDescription = null,
+            contentScale = ContentScale.Fit
+        )
+        WidthSpace(width = 16.dp)
+
+        Column(modifier = Modifier.weight(1f)) {
+
+            Text(
+                text = "Aland Islands",
+                modifier = Modifier.fillMaxWidth(),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.titleSmall.copy(
+                    fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary
+                )
+            )
+            HeightSpace(height = 2.dp)
+
+            Text(
+                text = "2 Channel",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.fillMaxWidth(),
+                style = MaterialTheme.typography.titleSmall.copy(
+                    fontWeight = FontWeight.W400,
+                    fontSize = adjustedFontSize(10f),
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+                )
+            )
+        }
+
+        Image(painter = painterResource(R.drawable.icon_arrow_next), contentDescription = null,
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)))
+    }
+}
+
+@Composable
+@Preview
+fun CountryItemPreview() {
+    val context = LocalPlatformContext.current
+    CountryItem(context)
+}
