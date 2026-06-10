@@ -14,7 +14,8 @@ object DataMapper {
             favicon = this.favicon,
             language = this.language,
             votes = this.votes,
-            tags = this.tags
+            tags = this.tags,
+            name = this.name
         )
     }
 }

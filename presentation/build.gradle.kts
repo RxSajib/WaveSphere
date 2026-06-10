@@ -31,7 +31,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
 
-    implementation(project(":domain"))
+    api(project(":domain"))
     implementation(project(":data"))
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     // hilt android

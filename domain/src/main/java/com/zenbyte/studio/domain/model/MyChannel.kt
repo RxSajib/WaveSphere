@@ -1,6 +1,7 @@
 package com.zenbyte.studio.domain.model
 
 data class MyChannel(
+    val name : String,
     val codec: String,
     val country: String,
     val url : String,

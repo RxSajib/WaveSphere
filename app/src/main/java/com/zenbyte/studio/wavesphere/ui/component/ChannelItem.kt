@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -17,12 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.PlatformContext
 import coil3.compose.AsyncImage
-import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
+import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.wavesphere.R
 
 @Composable
-fun ChannelItem(context: PlatformContext) {
+fun ChannelItem(context: PlatformContext, myChannel: MyChannel) {
 
 
     Row(
@@ -32,8 +33,9 @@ fun ChannelItem(context: PlatformContext) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(context = context).data("")
-                .size(300).build(),
+            modifier = Modifier.size(65.dp),
+            model = ImageRequest.Builder(context = context).data(myChannel.favicon)
+                .size(500).build(),
             //   error = {},
             // placeholder = {},
             contentDescription = null,
@@ -45,15 +47,15 @@ fun ChannelItem(context: PlatformContext) {
         Column(modifier = Modifier.weight(1f)) {
 
             Text(
-                text = "Dhaka FM",
+                text = myChannel.name,
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            HeightSpace(height = 5.dp)
+            HeightSpace(height = 2.dp)
 
             Text(
-                text = "Mirpur Dhaka Bangladesh",
+                text = myChannel.tags,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.fillMaxWidth()
@@ -79,5 +81,5 @@ fun ChannelItem(context: PlatformContext) {
 @Composable
 @Preview
 fun ChannelItemPreview() {
-    ChannelItem(context = LocalPlatformContext.current)
+   // ChannelItem(context = LocalPlatformContext.current,)
 }

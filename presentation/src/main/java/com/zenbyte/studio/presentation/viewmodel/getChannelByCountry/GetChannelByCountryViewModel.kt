@@ -4,9 +4,12 @@ import android.content.res.Resources
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.usecase.GetChannelByCountryUseCase
 import com.zenbyte.studio.domain.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,6 +19,9 @@ class GetChannelByCountryViewModel @Inject constructor(
     val getChannelByCountryUseCase: GetChannelByCountryUseCase
 ) : ViewModel() {
 
+    private var channelListMutableStateFlow = MutableStateFlow<List<MyChannel>>(emptyList())
+    val channelList = channelListMutableStateFlow.asStateFlow()
+
     init {
         getChannelByCountry(countryName = "Bangladesh")
     }
@@ -24,13 +30,13 @@ class GetChannelByCountryViewModel @Inject constructor(
         viewModelScope.launch {
             when(val response = getChannelByCountryUseCase.getChannelByCountry(countryName)){
                is Resource.Success -> {
-                   Log.d(TAG, "getChannelByCountry: ${response.data}")
+                   channelListMutableStateFlow.emit(response.data?: emptyList())
                }
                is Resource.Error -> {
-                   Log.d(TAG, "error: ${response.message}")
+                   channelListMutableStateFlow.emit(emptyList())
                }
                is Resource.Loading -> {
-                   Log.d(TAG, "loading: ")
+
                }
            }
         }
