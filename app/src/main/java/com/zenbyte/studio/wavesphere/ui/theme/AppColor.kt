@@ -31,3 +31,5 @@ val purple = Color(0xFF800080)
 val bkashColor = Color(0xffD12053)
 val visaColor = Color(0xff0E4595)
 val nagodColor = Color(0xffEC1C24)
+
+val buttonColor = Color(0xffE12EA5)
