@@ -69,6 +69,10 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
-    implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
+    // hilt navigation compose
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // coil compose for image loading
+    implementation(libs.coil.compose)
 
 }
