@@ -10,8 +10,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
+import com.zenbyte.studio.wavesphere.BuildConfig
+import com.zenbyte.studio.wavesphere.ui.screen.channelByCountry.ChannelByCountry
 import com.zenbyte.studio.wavesphere.ui.theme.WaveSphereTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +24,7 @@ class MainActivity : ComponentActivity() {
             WaveSphereTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
-
+                        ChannelByCountry()
                     }
                 }
             }
