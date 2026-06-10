@@ -74,5 +74,6 @@ dependencies {
 
     // coil compose for image loading
     implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
 }

@@ -7,6 +7,7 @@ object DataMapper {
 
     fun ChannelDtoItem.toDomain() : MyChannel {
         return MyChannel(
+            stationuuid = this.stationuuid,
             codec = this.codec,
             country = this.country,
             url = this.url,
