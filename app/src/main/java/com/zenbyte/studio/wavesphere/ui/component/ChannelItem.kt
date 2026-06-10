@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,6 +23,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.wavesphere.R
+import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
 
 @Composable
 fun ChannelItem(context: PlatformContext, myChannel: MyChannel) {
@@ -50,7 +53,11 @@ fun ChannelItem(context: PlatformContext, myChannel: MyChannel) {
                 text = myChannel.name,
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.titleSmall.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
             )
             HeightSpace(height = 2.dp)
 
@@ -58,7 +65,12 @@ fun ChannelItem(context: PlatformContext, myChannel: MyChannel) {
                 text = myChannel.tags,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                style = MaterialTheme.typography.titleSmall.copy(
+                    fontWeight = FontWeight.W400,
+                    fontSize = adjustedFontSize(10f),
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+                )
             )
         }
 
