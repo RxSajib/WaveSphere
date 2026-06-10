@@ -34,7 +34,11 @@ dependencies {
     api(project(":domain"))
     implementation(project(":data"))
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
     // hilt android
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+    // paging3 dependency
+    implementation(libs.androidx.paging.common)
 }

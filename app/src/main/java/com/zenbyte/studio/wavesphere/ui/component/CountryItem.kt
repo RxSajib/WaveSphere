@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -13,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -26,11 +24,12 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import com.zenbyte.studio.domain.model.MyCountry
 import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
 
 @Composable
-fun CountryItem(context: PlatformContext) {
+fun CountryItem(context: PlatformContext, country: MyCountry?) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,21 +39,21 @@ fun CountryItem(context: PlatformContext) {
 
         AsyncImage(
             modifier = Modifier
-                .size(55.dp)
-                .aspectRatio(1f),
-            model = ImageRequest.Builder(context = context).data("https://flagcdn.com/w320/au.png")
+                .size(50.dp)
+                .aspectRatio(1.5f),
+            model = ImageRequest.Builder(context = context).data(country?.countryFlag)
                 .crossfade(true).build(),
             placeholder = painterResource(R.drawable.applogo),
             error = painterResource(R.drawable.applogowhite),
             contentDescription = null,
-            contentScale = ContentScale.Fit
+            contentScale = ContentScale.FillBounds
         )
         WidthSpace(width = 16.dp)
 
         Column(modifier = Modifier.weight(1f)) {
 
             Text(
-                text = "Aland Islands",
+                text = country?.name?: "",
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -65,7 +64,7 @@ fun CountryItem(context: PlatformContext) {
             HeightSpace(height = 2.dp)
 
             Text(
-                text = "2 Channel",
+                text = "${country?.stationCount} Channel",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.fillMaxWidth(),
@@ -86,5 +85,5 @@ fun CountryItem(context: PlatformContext) {
 @Preview
 fun CountryItemPreview() {
     val context = LocalPlatformContext.current
-    CountryItem(context)
+   // CountryItem(context,)
 }

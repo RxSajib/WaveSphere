@@ -1,11 +1,13 @@
 package com.zenbyte.studio.data.mapper
 
 import com.zenbyte.studio.data.model.ChannelDtoItem
+import com.zenbyte.studio.data.model.CountryDtoItem
 import com.zenbyte.studio.domain.model.MyChannel
+import com.zenbyte.studio.domain.model.MyCountry
 
 object DataMapper {
 
-    fun ChannelDtoItem.toDomain() : MyChannel {
+    fun ChannelDtoItem.toDomain(): MyChannel {
         return MyChannel(
             stationuuid = this.stationuuid,
             codec = this.codec,
@@ -19,4 +21,14 @@ object DataMapper {
             name = this.name
         )
     }
+
+    fun CountryDtoItem.toDomain(): MyCountry {
+        return MyCountry(
+            name = this.name,
+            stationCount = this.stationcount,
+            countryCode = this.iso
+
+        )
+    }
+
 }

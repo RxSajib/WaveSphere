@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import com.zenbyte.studio.wavesphere.BuildConfig
 import com.zenbyte.studio.wavesphere.ui.screen.channelByCountry.ChannelByCountry
+import com.zenbyte.studio.wavesphere.ui.screen.countryListScreen.CountryListScreen
 import com.zenbyte.studio.wavesphere.ui.theme.WaveSphereTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
             WaveSphereTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
-                        ChannelByCountry()
+                        CountryListScreen()
                     }
                 }
             }
