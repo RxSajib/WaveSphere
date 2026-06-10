@@ -33,3 +33,5 @@ val visaColor = Color(0xff0E4595)
 val nagodColor = Color(0xffEC1C24)
 
 val buttonColor = Color(0xffE12EA5)
+val playButtonColor = Color(0xFFF5BDF6)
+val playIconColor = Color(0xffA411B3)

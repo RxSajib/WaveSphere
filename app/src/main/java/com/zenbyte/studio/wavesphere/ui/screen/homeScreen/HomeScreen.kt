@@ -13,15 +13,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.LocalPlatformContext
+import com.zenbyte.studio.wavesphere.ui.component.HeightSpace
 import com.zenbyte.studio.wavesphere.ui.component.HomeHeader
+import com.zenbyte.studio.wavesphere.ui.component.NowPlayingComponent
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
+    val context = LocalPlatformContext.current
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .verticalScroll(state = rememberScrollState())
+    ) {
 
-        Column(modifier = Modifier.fillMaxSize().padding(16.dp).verticalScroll(state = rememberScrollState())) {
+        HomeHeader()
+        HeightSpace(height = 15.dp)
 
-            HomeHeader()
-        }
+        NowPlayingComponent(context)
+    }
 
 }
 

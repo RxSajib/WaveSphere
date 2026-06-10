@@ -27,10 +27,10 @@ import com.zenbyte.studio.wavesphere.ui.theme.buttonColor
 fun LiveTag() {
     Row(
         modifier = Modifier
-            .clip(shape = RoundedCornerShape(5.dp))
-            .border(width = 1.dp, color = buttonColor.copy(alpha = 0.5f), shape = RoundedCornerShape(5.dp))
+            .clip(shape = RoundedCornerShape(10.dp))
+            .border(width = 0.5.dp, color = buttonColor.copy(alpha = 0.5f), shape = RoundedCornerShape(10.dp))
             .background(color = buttonColor.copy(alpha = 0.1f))
-            .padding(horizontal = 8.dp, vertical = 5.dp),
+            .padding(horizontal = 8.dp, vertical = 3.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(

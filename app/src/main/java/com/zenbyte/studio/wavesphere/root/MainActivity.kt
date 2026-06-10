@@ -12,7 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
+import coil3.compose.LocalPlatformContext
 import com.zenbyte.studio.wavesphere.BuildConfig
+import com.zenbyte.studio.wavesphere.ui.component.NowPlayingComponent
 import com.zenbyte.studio.wavesphere.ui.screen.channelByCountry.ChannelByCountry
 import com.zenbyte.studio.wavesphere.ui.screen.countryListScreen.CountryListScreen
 import com.zenbyte.studio.wavesphere.ui.screen.homeScreen.HomeScreen
@@ -29,6 +31,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Box(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.surface).padding(innerPadding)) {
                         HomeScreen()
+
                     }
                 }
             }
