@@ -23,7 +23,8 @@ fun SettingItem(
     icon: Painter,
     showToggle: Boolean,
     isPremium: Boolean,
-    showArrow: Boolean = false
+    showArrow: Boolean = false,
+    enableChangeLanguage : Boolean = false
 ) {
 
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -61,6 +62,12 @@ fun SettingItem(
         if (showArrow) {
             IconButton(onClick = {}) {
                 Icon(painterResource(R.drawable.icon_arrow_next), contentDescription = null)
+            }
+        }
+
+        if(enableChangeLanguage){
+            ChangeLanguageButton{
+
             }
         }
     }

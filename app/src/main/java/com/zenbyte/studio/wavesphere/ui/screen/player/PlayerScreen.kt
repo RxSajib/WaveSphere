@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.wavesphere.ui.component.GeneralSetting
 import com.zenbyte.studio.wavesphere.ui.component.HeightSpace
+import com.zenbyte.studio.wavesphere.ui.component.OtherSetting
 import com.zenbyte.studio.wavesphere.ui.component.PremiumStatusCard
 
 @Composable
@@ -21,7 +22,10 @@ fun PlayerScreen(modifier: Modifier = Modifier) {
     Column(modifier = Modifier.fillMaxSize().verticalScroll(state = rememberScrollState())){
         HeightSpace(height = 10.dp)
         PremiumStatusCard(modifier = Modifier.padding(horizontal = 16.dp))
-        HeightSpace(height = 10.dp)
+        HeightSpace(height = 15.dp)
         GeneralSetting(modifier = Modifier.padding(horizontal = 16.dp))
+        HeightSpace(height = 15.dp)
+        OtherSetting(modifier = Modifier.padding(horizontal = 16.dp))
+        HeightSpace(height = 10.dp)
     }
 }
