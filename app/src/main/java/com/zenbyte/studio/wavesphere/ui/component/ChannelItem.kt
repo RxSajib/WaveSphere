@@ -2,6 +2,7 @@ package com.zenbyte.studio.wavesphere.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -72,6 +73,7 @@ fun ChannelItem(context: PlatformContext, myChannel: MyChannel) {
             Box(modifier = Modifier.fillMaxWidth(.8f).aspectRatio(1f)
                 .clip(shape = RoundedCornerShape(10.dp))
                 .background(if (myChannel.favicon.isEmpty() || myChannel.favicon == "null") randomColor else Color.Transparent)
+
 
                , contentAlignment = Alignment.Center){
                 AsyncImage(

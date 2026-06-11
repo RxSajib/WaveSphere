@@ -32,6 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zenbyte.studio.presentation.viewmodel.home.HomeViewModel
+import com.zenbyte.studio.wavesphere.MediaPlayerViewModel
 import com.zenbyte.studio.wavesphere.ui.component.CategoryButton
 import com.zenbyte.studio.wavesphere.ui.component.CategoryList
 import com.zenbyte.studio.wavesphere.ui.component.ChannelItem
@@ -43,6 +44,8 @@ import com.zenbyte.studio.wavesphere.ui.component.WidthSpace
 fun HomeScreen(modifier: Modifier = Modifier) {
 
     val viewModel : HomeViewModel = hiltViewModel()
+    val mediaPlayerViewModel : MediaPlayerViewModel = hiltViewModel()
+
     val context = LocalPlatformContext.current
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
@@ -58,18 +61,18 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
         item{
             HomeHeader()
-            HeightSpace(height = 15.dp)
+            HeightSpace(height = 20.dp)
 
             NowPlayingComponent(context)
-            HeightSpace(height = 10.dp)
+            HeightSpace(height = 15.dp)
             MySectionHeader(
                 title = stringResource(R.string.trending_stations),
                 showSeeAll = true,
-                onClick = {
+                onClickSeeAll = {
 
                 }
             )
-            HeightSpace(height = 10.dp)
+            HeightSpace(height = 20.dp)
         }
 
 
@@ -80,25 +83,35 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             ) {
                 items(trendingChannel.value) { channel ->
                     Box(modifier = Modifier.width(itemWidth)) {
-                        MyCustomStation(context = context, myChannel = channel)
+                        MyCustomStation(
+                            context = context, myChannel = channel,
+                            onClick = {myChannel ->
+                                mediaPlayerViewModel.playMusic(myChannel = myChannel)
+                            }
+                        )
                     }
                 }
             }
         }
 
         item {
-            HeightSpace(height = 10.dp)
+            HeightSpace(height = 20.dp)
             MySectionHeader(
                 title = stringResource(R.string.categories),
                 showSeeAll = false
             )
-            HeightSpace(height = 10.dp)
-            CategoryList()
-            HeightSpace(height = 10.dp)
+            HeightSpace(height = 15.dp)
+            CategoryList(
+                onClickCountry = {},
+                onClickLanguages = {},
+                onClickGenres = {},
+                onClickNews = {}
+            )
+            HeightSpace(height = 20.dp)
             MySectionHeader(
                 title = stringResource(R.string.popular_stations),
                 showSeeAll = true,
-                onClick = {
+                onClickSeeAll = {
 
                 }
             )

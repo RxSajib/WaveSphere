@@ -2,6 +2,7 @@ package com.zenbyte.studio.wavesphere.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -34,7 +35,7 @@ import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
 
 @Composable
-fun MyCustomStation(context: PlatformContext, myChannel: MyChannel) {
+fun MyCustomStation(context: PlatformContext, myChannel: MyChannel, onClick: (MyChannel) -> Unit) {
 
     val randomColor = remember(myChannel.stationuuid) {
         Color(
@@ -62,7 +63,9 @@ fun MyCustomStation(context: PlatformContext, myChannel: MyChannel) {
                             alpha = 0.2f
                         ),
                         shape = RoundedCornerShape(10.dp)
-                    ),
+                    ).clickable{
+            onClick.invoke(myChannel)
+                    },
                 contentAlignment = Alignment.Center
             ) {
                 Box(modifier = Modifier.fillMaxWidth(.8f).aspectRatio(1f)

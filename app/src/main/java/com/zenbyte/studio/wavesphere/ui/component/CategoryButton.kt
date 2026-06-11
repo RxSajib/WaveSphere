@@ -2,6 +2,7 @@ package com.zenbyte.studio.wavesphere.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,18 +35,31 @@ import com.zenbyte.studio.wavesphere.ui.theme.languagesColor
 import com.zenbyte.studio.wavesphere.ui.theme.newsColor
 
 @Composable
-fun CategoryButton(modifier: Modifier, color: Color, icon: Painter, categoryTitle : String) {
+fun CategoryButton(
+    modifier: Modifier,
+    color: Color,
+    icon: Painter,
+    categoryTitle: String,
+    onClickCategory: (String) -> Unit
+) {
 
     Column(modifier = modifier) {
         Box(
-            modifier = Modifier.fillMaxWidth().aspectRatio(1f)
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
                 .clip(shape = RoundedCornerShape(10.dp))
-                .background(color = color.copy(alpha = 0.1f)), contentAlignment = Alignment.Center
+                .background(color = color.copy(alpha = 0.1f))
+                .clickable{
+                    onClickCategory.invoke(categoryTitle)
+                }, contentAlignment = Alignment.Center
         ) {
             Image(
                 painter = icon,
                 contentDescription = null,
-                modifier = Modifier.fillMaxWidth(.6f).aspectRatio(1f),
+                modifier = Modifier
+                    .fillMaxWidth(.6f)
+                    .aspectRatio(1f),
                 colorFilter = ColorFilter.tint(color = color)
             )
         }
@@ -66,36 +80,48 @@ fun CategoryButton(modifier: Modifier, color: Color, icon: Painter, categoryTitl
 }
 
 @Composable
-fun CategoryList() {
+fun CategoryList(
+    onClickCountry: (String) -> Unit,
+    onClickLanguages: (String) -> Unit,
+    onClickGenres: (String) -> Unit,
+    onClickNews: (String) -> Unit) {
     Row(modifier = Modifier.fillMaxWidth()) {
         CategoryButton(
             modifier = Modifier.weight(1f),
             color = countryColor,
             icon = painterResource(R.drawable.world_svgrepo_com),
-            categoryTitle = stringResource(R.string.country)
-        )
+            categoryTitle = stringResource(R.string.country),
+            onClickCategory = { category ->
+                onClickCountry.invoke(category)
+            })
 
         WidthSpace(10.dp)
         CategoryButton(
             modifier = Modifier.weight(1f),
             color = languagesColor,
             icon = painterResource(R.drawable.languages_svgrepo_com),
-            categoryTitle = stringResource(R.string.languages)
-        )
+            categoryTitle = stringResource(R.string.languages),
+            onClickCategory = { category ->
+                onClickLanguages.invoke(category)
+            })
         WidthSpace(10.dp)
         CategoryButton(
             modifier = Modifier.weight(1f),
             color = genresColor,
             icon = painterResource(R.drawable.music_svgrepo_com),
-            categoryTitle = stringResource(R.string.genres)
-        )
+            categoryTitle = stringResource(R.string.genres),
+            onClickCategory = { category ->
+                onClickGenres.invoke(category)
+            })
         WidthSpace(10.dp)
         CategoryButton(
             modifier = Modifier.weight(1f),
             color = newsColor,
             icon = painterResource(R.drawable.news_svgrepo_com),
-            categoryTitle = stringResource(R.string.news)
-        )
+            categoryTitle = stringResource(R.string.news),
+            onClickCategory = { category ->
+                onClickNews.invoke(category)
+            })
     }
 
 }
@@ -103,7 +129,5 @@ fun CategoryList() {
 @Composable
 @Preview
 fun CategoryButtonPreview() {
-
-
-    CategoryList()
+    CategoryList(onClickCountry = {}, onClickLanguages = {}, onClickGenres = {}, onClickNews = {})
 }

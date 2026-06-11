@@ -79,4 +79,8 @@ dependencies {
     // paging3 compose
     implementation(libs.androidx.paging.compose)
 
+    // exo player android
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.dash)
+
 }
