@@ -17,9 +17,28 @@ class SearchViewModel @Inject constructor(
     val countryListUseCase: CountryListUseCase
 ) : ViewModel() {
 
+    private val searchInputMutableStateFlow = MutableStateFlow("")
+    val searchInput = searchInputMutableStateFlow.asStateFlow()
+
+
+    fun inputSearchData(searchKey : String){
+        viewModelScope.launch {
+            searchInputMutableStateFlow.emit(searchKey)
+        }
+    }
+
+    private var selectedMenuPositionMutableStateFlow = MutableStateFlow(1)
+    val selectedMenuPosition = selectedMenuPositionMutableStateFlow.asStateFlow()
+
     private val countryListMutableStateFlow = MutableStateFlow<List<MyCountry>>(emptyList())
     val countryList = countryListMutableStateFlow.asStateFlow().map {country ->
         country.sortedBy { it.countryCode }
+    }
+
+    fun setSelectedMenuPosition(position: Int){
+        viewModelScope.launch {
+            selectedMenuPositionMutableStateFlow.emit(position)
+        }
     }
 
     init {

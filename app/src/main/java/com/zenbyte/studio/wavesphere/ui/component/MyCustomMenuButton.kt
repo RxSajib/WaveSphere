@@ -36,16 +36,16 @@ fun MyCustomMenuButton(
         ),
         modifier = modifier
             .clip(shape = RoundedCornerShape(10.dp))
-            .background(if (isSelected) buttonColor.copy(alpha = 0.2f) else Color.Transparent)
+            .background(if (isSelected) buttonColor.copy(alpha = 0.05f) else Color.Transparent)
             .border(
                 width = if (isSelected) 0.5.dp else 0.dp,
-                color = if (isSelected) buttonColor.copy(alpha = 0.2f) else Color.Transparent,
+                color = if (isSelected) buttonColor.copy(alpha = 0.1f) else Color.Transparent,
                 shape = RoundedCornerShape(10.dp)
             )
             .clickable {
                 onClick.invoke()
             }
-            .padding(horizontal = 10.dp, vertical = 5.dp),
+            .padding(horizontal = 10.dp, vertical = 8.dp),
         textAlign = TextAlign.Center
 
     )

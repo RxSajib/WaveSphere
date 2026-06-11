@@ -92,4 +92,7 @@ dependencies {
     //kotlin x serilization json
     implementation(libs.kotlin.serialization.json)
 
+    // icon ectended
+    implementation(libs.material.icons.extended)
+
 }
