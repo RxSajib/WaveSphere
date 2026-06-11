@@ -1,13 +1,9 @@
 package com.zenbyte.studio.wavesphere.ui.navigation
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -26,13 +22,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.serialization.json.Json
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
@@ -44,10 +38,12 @@ import androidx.savedstate.serialization.SavedStateConfiguration
 import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomAppBar
 import com.zenbyte.studio.wavesphere.ui.component.WidthSpace
-import com.zenbyte.studio.wavesphere.ui.screen.homeScreen.HomeScreen
+import com.zenbyte.studio.wavesphere.ui.screen.favorite.FavoriteScreen
+import com.zenbyte.studio.wavesphere.ui.screen.home.HomeScreen
+import com.zenbyte.studio.wavesphere.ui.screen.player.PlayerScreen
+import com.zenbyte.studio.wavesphere.ui.screen.search.SearchScreen
 import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
 import com.zenbyte.studio.wavesphere.ui.theme.buttonColor
-import com.zenbyte.studio.wavesphere.ui.theme.onPrimaryLight
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 
@@ -283,11 +279,14 @@ fun BottomAppBarNavigation() {
                     HomeScreen()
                 }
                 entry<AppDestination.BottomAppBar.Search> {
+                    SearchScreen()
                 }
 
                 entry<AppDestination.BottomAppBar.Favorite> {
+                    FavoriteScreen()
                 }
                 entry<AppDestination.BottomAppBar.Player> {
+                    PlayerScreen()
                 }
             })
     }

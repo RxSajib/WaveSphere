@@ -1,8 +1,7 @@
-package com.zenbyte.studio.presentation.viewmodel.countryList
+package com.zenbyte.studio.presentation.viewmodel.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.cachedIn
 import com.zenbyte.studio.domain.model.MyCountry
 import com.zenbyte.studio.domain.usecase.CountryListUseCase
 import com.zenbyte.studio.domain.utils.Resource
@@ -14,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CountryListViewModel @Inject constructor(
+class SearchViewModel @Inject constructor(
     val countryListUseCase: CountryListUseCase
 ) : ViewModel() {
 

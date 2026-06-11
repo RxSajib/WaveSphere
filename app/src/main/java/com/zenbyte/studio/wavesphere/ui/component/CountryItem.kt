@@ -1,6 +1,7 @@
 package com.zenbyte.studio.wavesphere.ui.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
@@ -29,10 +30,13 @@ import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
 
 @Composable
-fun CountryItem(context: PlatformContext, country: MyCountry?) {
+fun CountryItem(context: PlatformContext, country: MyCountry?, onClickCountry: (MyCountry) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable{
+                onClickCountry.invoke(country!!)
+            }
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -53,7 +57,7 @@ fun CountryItem(context: PlatformContext, country: MyCountry?) {
         Column(modifier = Modifier.weight(1f)) {
 
             Text(
-                text = country?.name?: "",
+                text = country?.name ?: "",
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -76,14 +80,9 @@ fun CountryItem(context: PlatformContext, country: MyCountry?) {
             )
         }
 
-        Image(painter = painterResource(R.drawable.icon_arrow_next), contentDescription = null,
-            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)))
+        Image(
+            painter = painterResource(R.drawable.icon_arrow_next), contentDescription = null,
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+        )
     }
-}
-
-@Composable
-@Preview
-fun CountryItemPreview() {
-    val context = LocalPlatformContext.current
-   // CountryItem(context,)
 }
