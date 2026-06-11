@@ -24,3 +24,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "WaveSphere"
 include(":app")
+include(":domain")
+include(":presentation")
+include(":data")

@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">WaveSphere</string>
+
+    <string name="see_all">See All</string>
+    <string name="home_header_subtitle">Let\'s enjoy the world of radio</string>
+    <string name="live">LIVE</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="trending_stations">Trending Stations</string>
+    <string name="categories">Categories</string>
+    <string name="country">Country</string>
+    <string name="languages">Languages</string>
+    <string name="genres">Genres</string>
+    <string name="news">News</string>
+    <string name="popular_stations">Popular Stations</string>
+    <string name="premium">PREMIUM</string>"
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="player">Player</string>
+    <string name="favorite">Favorite</string>
 </resources>
