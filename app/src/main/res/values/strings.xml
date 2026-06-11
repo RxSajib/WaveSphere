@@ -13,6 +13,7 @@
     <string name="news">News</string>
     <string name="popular_stations">Popular Stations</string>
     <string name="premium">PREMIUM</string>"
+    <string name="premium_lowercase">Premium</string>"
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="player">Player</string>
@@ -20,4 +21,10 @@
     <string name="channel">Channel</string>
     <string name="you_are_premium">You are Premium</string>
     <string name="thanks_for_supporting_wavesphere">Thanks for supporting Wavesphere</string>
+    <string name="general">General</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="data_saver">Data Saver</string>
+    <string name="playback_setting">Playback Setting</string>
+    <string name="equlizer">Equalizer</string>"
+    <string name="sleep_time">Sleep Time</string>
 </resources>

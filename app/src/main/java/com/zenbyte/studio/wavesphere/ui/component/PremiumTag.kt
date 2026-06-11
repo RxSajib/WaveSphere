@@ -41,7 +41,7 @@ fun PremiumTag(onClick : () -> Unit) {
             painter = painterResource(R.drawable.icon_crown),
             contentDescription = null,
             colorFilter = ColorFilter.tint(color = genresColor),
-            modifier = Modifier.size(18.dp)
+            modifier = Modifier.size(15.dp)
         )
         WidthSpace(width = 5.dp)
         Text(

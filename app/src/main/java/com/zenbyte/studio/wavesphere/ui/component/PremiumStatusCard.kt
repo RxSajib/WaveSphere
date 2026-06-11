@@ -29,20 +29,20 @@ import com.zenbyte.studio.wavesphere.ui.theme.buttonColor
 import com.zenbyte.studio.wavesphere.ui.theme.genresColor
 
 @Composable
-fun PremiumStatusCard() {
+fun PremiumStatusCard(modifier: Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .border(
                 width = 0.5.dp,
-                color = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.5f),
+                color = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.1f),
                 shape = RoundedCornerShape(10.dp)
-            ).padding(10.dp)
+            ).padding(16.dp)
     ) {
         Text(
-            text = stringResource(R.string.premium),
+            text = stringResource(R.string.premium_lowercase),
             style = MaterialTheme.typography.titleSmall.copy(
-                fontWeight = FontWeight.W500,
+                fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             ),
             maxLines = 1,
@@ -98,5 +98,5 @@ fun PremiumStatusCard() {
 @Composable
 @Preview
 fun PremiumStatusCardPreview() {
-    PremiumStatusCard()
+    PremiumStatusCard(modifier = Modifier)
 }
