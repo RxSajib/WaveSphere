@@ -13,4 +13,8 @@
     <string name="news">News</string>
     <string name="popular_stations">Popular Stations</string>
     <string name="premium">PREMIUM</string>"
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="player">Player</string>
+    <string name="favorite">Favorite</string>
 </resources>
