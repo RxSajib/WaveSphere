@@ -51,38 +51,46 @@ fun ChannelItem(context: PlatformContext, myChannel: MyChannel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp),
+            .padding(vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
         Box(
             modifier = Modifier
-                .size(50.dp)
+                .size(60.dp)
                 .clip(itemShape)
-                .background(if (myChannel.favicon.isEmpty() || myChannel.favicon == "null") randomColor else Color.Transparent)
                 .border(
                     width = 1.dp,
-                    color = if (myChannel.favicon.isEmpty() || myChannel.favicon == "null") Color.Transparent else MaterialTheme.colorScheme.primary.copy(
+                    color =  MaterialTheme.colorScheme.primary.copy(
                         alpha = 0.2f
                     ),
                     shape = itemShape
                 ),
             contentAlignment = Alignment.Center
         ) {
-            AsyncImage(
-                modifier = Modifier
-                    .fillMaxSize(.8f)
-                    .clip(itemShape)
-                    .aspectRatio(1f),
-                model = ImageRequest.Builder(context = context)
-                    .data(myChannel.favicon.takeIf { it.isNotEmpty() && it != "null" })
-                    .crossfade(true)
-                    .build(),
-                placeholder = painterResource(R.drawable.applogo),
-                error = painterResource(R.drawable.applogowhite),
-                contentDescription = null,
-                contentScale = ContentScale.Fit
-            )
+
+            Box(modifier = Modifier.fillMaxWidth(.8f).aspectRatio(1f)
+                .clip(shape = RoundedCornerShape(10.dp))
+                .background(if (myChannel.favicon.isEmpty() || myChannel.favicon == "null") randomColor else Color.Transparent)
+
+               , contentAlignment = Alignment.Center){
+                AsyncImage(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(10.dp))
+                        .aspectRatio(1f),
+                    model = ImageRequest.Builder(context = context)
+                        .data(myChannel.favicon.takeIf { it.isNotEmpty() && it != "null" })
+                        .crossfade(true)
+                        .build(),
+                    placeholder = painterResource(R.drawable.applogo),
+                    error = painterResource(R.drawable.applogowhite),
+                    contentDescription = null,
+                    contentScale = ContentScale.Fit
+                )
+            }
+
+
 
         }
 

@@ -1,37 +1,113 @@
 package com.zenbyte.studio.wavesphere.ui.screen.homeScreen
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Column
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.LocalPlatformContext
+import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.wavesphere.ui.component.HeightSpace
 import com.zenbyte.studio.wavesphere.ui.component.HomeHeader
+import com.zenbyte.studio.wavesphere.ui.component.MyCustomStation
+import com.zenbyte.studio.wavesphere.ui.component.MySectionHeader
 import com.zenbyte.studio.wavesphere.ui.component.NowPlayingComponent
 
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.zenbyte.studio.presentation.viewmodel.home.HomeViewModel
+import com.zenbyte.studio.wavesphere.ui.component.CategoryButton
+import com.zenbyte.studio.wavesphere.ui.component.CategoryList
+import com.zenbyte.studio.wavesphere.ui.component.ChannelItem
+import com.zenbyte.studio.wavesphere.ui.component.WidthSpace
+
+
+@SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
+
+    val viewModel : HomeViewModel = hiltViewModel()
     val context = LocalPlatformContext.current
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .verticalScroll(state = rememberScrollState())
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val itemWidth = (screenWidth - 32.dp - 20.dp) / 4
+    val trendingChannel = viewModel.tranChannel.collectAsStateWithLifecycle(emptyList())
+    val popularShort = viewModel.popularStation.collectAsStateWithLifecycle(emptyList())
+
+    LazyColumn (
+        modifier = modifier
+            .fillMaxSize().padding(16.dp)
+
     ) {
 
-        HomeHeader()
-        HeightSpace(height = 15.dp)
+        item{
+            HomeHeader()
+            HeightSpace(height = 15.dp)
 
-        NowPlayingComponent(context)
+            NowPlayingComponent(context)
+            HeightSpace(height = 10.dp)
+            MySectionHeader(
+                title = stringResource(R.string.trending_stations),
+                showSeeAll = true,
+                onClick = {
+
+                }
+            )
+            HeightSpace(height = 10.dp)
+        }
+
+
+        item{
+            LazyRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                items(trendingChannel.value) { channel ->
+                    Box(modifier = Modifier.width(itemWidth)) {
+                        MyCustomStation(context = context, myChannel = channel)
+                    }
+                }
+            }
+        }
+
+        item {
+            HeightSpace(height = 10.dp)
+            MySectionHeader(
+                title = stringResource(R.string.categories),
+                showSeeAll = false
+            )
+            HeightSpace(height = 10.dp)
+            CategoryList()
+            HeightSpace(height = 10.dp)
+            MySectionHeader(
+                title = stringResource(R.string.popular_stations),
+                showSeeAll = true,
+                onClick = {
+
+                }
+            )
+        }
+
+        items(popularShort.value) { channel ->
+            ChannelItem(context = context, myChannel = channel)
+        }
+
     }
 
 }

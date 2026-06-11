@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -71,7 +72,8 @@ fun NowPlayingComponent(context: PlatformContext) {
                 modifier = Modifier
                     .size(80.dp)
                     .aspectRatio(1f)
-                    .clip(shape = RoundedCornerShape(15.dp))
+                    .clip(shape = RoundedCornerShape(15.dp)),
+                contentScale = ContentScale.Crop
             )
             WidthSpace(width = 10.dp)
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center) {

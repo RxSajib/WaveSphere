@@ -1,17 +1,23 @@
 package com.zenbyte.studio.wavesphere.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -22,59 +28,91 @@ import coil3.PlatformContext
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
+import coil3.request.crossfade
+import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
 
 @Composable
-fun MyCustomStation(context: PlatformContext) {
-    Column() {
+fun MyCustomStation(context: PlatformContext, myChannel: MyChannel) {
+
+    val randomColor = remember(myChannel.stationuuid) {
+        Color(
+            red = (150..230).random(),
+            green = (150..230).random(),
+            blue = (150..230).random()
+        )
+    }
+
+    Column(modifier = Modifier.fillMaxWidth()) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f), contentAlignment = Alignment.Center
         ) {
-            AsyncImage(
-                modifier = Modifier
-                    .border(
-                        1.dp,
-                        color = MaterialTheme.colorScheme.primary.copy(0.1f),
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    .fillMaxWidth(.85f)
-                    .aspectRatio(1f),
-                model = ImageRequest.Builder(context)
-                    .data("https://static.vecteezy.com/system/resources/previews/029/926/143/non_2x/podcast-icon-like-on-air-live-podcast-badge-icon-stamp-logo-radio-broadcasting-or-streaming-illustration-vector.jpg")
-                    .size(500).build(),
 
-                contentDescription = null,
-                error = painterResource(R.drawable.applogowhite),
-                placeholder = painterResource(R.drawable.applogowhite)
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+                    .clip(RoundedCornerShape(10.dp))
+                    .border(
+                        width = 1.dp,
+                        color =  MaterialTheme.colorScheme.primary.copy(
+                            alpha = 0.2f
+                        ),
+                        shape = RoundedCornerShape(10.dp)
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Box(modifier = Modifier.fillMaxWidth(.8f).aspectRatio(1f)
+                    .clip(shape = RoundedCornerShape(10.dp))
+                    .background(if (myChannel.favicon.isEmpty() || myChannel.favicon == "null") randomColor else Color.Transparent)
+
+                    , contentAlignment = Alignment.Center){
+                    AsyncImage(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(10.dp))
+                            .aspectRatio(1f),
+                        model = ImageRequest.Builder(context = context)
+                            .data(myChannel.favicon.takeIf { it.isNotEmpty() && it != "null" })
+                            .crossfade(true)
+                            .build(),
+                        placeholder = painterResource(R.drawable.applogo),
+                        error = painterResource(R.drawable.applogowhite),
+                        contentDescription = null,
+                        contentScale = ContentScale.Fit
+                    )
+                }
+
+            }
 
 
         }
 
         HeightSpace(height = 10.dp)
         Text(
-            text = "Radio Today",
+            text = myChannel.name,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleMedium.copy(
+            style = MaterialTheme.typography.titleSmall.copy(
                 color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                fontSize = adjustedFontSize(10f)
             ),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
 
         Text(
-            text = "89.0 FM",
+            text = myChannel.tags,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleMedium.copy(
+            style = MaterialTheme.typography.titleSmall.copy(
                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
                 fontWeight = FontWeight.W400,
-                fontSize = adjustedFontSize(10f)
+                fontSize = adjustedFontSize(8f)
             ),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -82,9 +120,3 @@ fun MyCustomStation(context: PlatformContext) {
     }
 }
 
-@Composable
-@Preview
-fun MyCustomStationPreview(modifier: Modifier = Modifier) {
-    val context = LocalPlatformContext.current
-    MyCustomStation(context = context)
-}
