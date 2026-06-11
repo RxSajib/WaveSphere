@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -68,7 +69,7 @@ fun CountryItem(context: PlatformContext, country: MyCountry?, onClickCountry: (
             HeightSpace(height = 2.dp)
 
             Text(
-                text = "${country?.stationCount} Channel",
+                text = "${country?.stationCount} ${stringResource(R.string.channel)}",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.fillMaxWidth(),
