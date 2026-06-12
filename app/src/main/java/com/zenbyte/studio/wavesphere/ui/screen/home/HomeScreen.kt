@@ -113,7 +113,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         }
 
         items(popularShort.value) { channel ->
-            ChannelItem(context = context, myChannel = channel)
+            ChannelItem(context = context, myChannel = channel, modifier = Modifier)
         }
 
     }

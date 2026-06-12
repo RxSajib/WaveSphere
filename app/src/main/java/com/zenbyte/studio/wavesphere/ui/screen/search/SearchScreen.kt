@@ -21,10 +21,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.LocalPlatformContext
 import com.zenbyte.studio.presentation.viewmodel.search.SearchViewModel
 import com.zenbyte.studio.wavesphere.R
+import com.zenbyte.studio.wavesphere.ui.component.ChannelItem
 import com.zenbyte.studio.wavesphere.ui.component.CountryItem
 import com.zenbyte.studio.wavesphere.ui.component.HeightSpace
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomInputFiled
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomMenuGroup
+import com.zenbyte.studio.wavesphere.ui.component.MyCustomStation
 
 @Composable
 fun SearchScreen() {
@@ -33,6 +35,8 @@ fun SearchScreen() {
     val viewModel: SearchViewModel = hiltViewModel()
     val countryList = viewModel.countryList.collectAsStateWithLifecycle(emptyList())
     val searchData = viewModel.searchInput.collectAsStateWithLifecycle()
+    val selectedMenuPosition = viewModel.selectedMenuPosition.collectAsStateWithLifecycle()
+    val newsList = viewModel.newsList.collectAsStateWithLifecycle()
 
     Column(modifier = Modifier.fillMaxSize()) {
         HeightSpace(height = 10.dp)
@@ -69,13 +73,17 @@ fun SearchScreen() {
                     shape = RoundedCornerShape(10.dp)
                 )
         ) {
-            items(countryList.value) { country ->
-                CountryItem(context = context, country = country) {
-
+            if (selectedMenuPosition.value == 1) {
+                items(items = countryList.value) { country ->
+                    CountryItem(context = context, country = country) {
+                    }
+                }
+            } else if (selectedMenuPosition.value == 3) {
+                items(items = newsList.value) { news ->
+                    ChannelItem(modifier = Modifier.padding(horizontal = 10.dp), context = context, myChannel = news)
                 }
             }
         }
     }
-
 
 }

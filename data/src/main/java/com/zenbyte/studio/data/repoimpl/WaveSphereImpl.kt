@@ -40,4 +40,26 @@ class WaveSphereImpl @Inject constructor(val api: WaveSphereApi) : WaveSphereRep
             }
         )
     }
+
+    override suspend fun getChannelBySearch(
+        tag: String,
+        order: String,
+        countryCode: String,
+        hideBroken: Boolean
+    ): Resource<List<MyChannel>> {
+        return safeApiCall(
+            apiCall = {
+                api.getChannelBySearch(
+                    tag = tag,
+                    order = order,
+                    countryCode = countryCode
+                )
+            },
+            mapper = { dto ->
+                dto.map {
+                    it.toDomain()
+                }
+            }
+        )
+    }
 }

@@ -36,7 +36,8 @@ fun ChannelByCountry(modifier: Modifier = Modifier) {
         ) { index, myChannel ->
             ChannelItem(
                 myChannel = myChannel,
-                context = contextCoil
+                context = contextCoil,
+                modifier = Modifier
             )
             if (index < items.lastIndex) {
                 HorizontalDivider(

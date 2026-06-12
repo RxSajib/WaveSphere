@@ -39,7 +39,7 @@ import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
 import androidx.compose.runtime.remember
 
 @Composable
-fun ChannelItem(context: PlatformContext, myChannel: MyChannel) {
+fun ChannelItem(modifier: Modifier, context: PlatformContext, myChannel: MyChannel) {
     val randomColor = remember(myChannel.stationuuid) {
         Color(
             red = (150..230).random(),
@@ -50,7 +50,7 @@ fun ChannelItem(context: PlatformContext, myChannel: MyChannel) {
     val itemShape = remember { RoundedCornerShape(10.dp) }
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
