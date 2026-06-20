@@ -53,7 +53,7 @@ fun ChannelByCountryScreen(backStack: NavBackStack<NavKey>) {
                         context = contextCoil, myChannel = items[index],
                         onClick = {myChannel ->
                             backStack.add(
-                                AppDestination.Dest.PlayerView(myChannel)
+                                AppDestination.Dest.PlayerView(channel = myChannel, channelList = items)
                             )
                         }
                     )

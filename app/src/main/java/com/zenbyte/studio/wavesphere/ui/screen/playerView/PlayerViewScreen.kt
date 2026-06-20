@@ -16,9 +16,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import android.content.Intent
+import androidx.core.content.ContextCompat
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -32,6 +40,8 @@ import coil3.request.ImageRequest
 import com.zenbyte.studio.presentation.viewmodel.playerView.PlayerViewModel
 import com.zenbyte.studio.wavesphere.MediaPlayerViewModel
 import com.zenbyte.studio.wavesphere.R
+import com.zenbyte.studio.wavesphere.root.LocalPlayerService
+import com.zenbyte.studio.wavesphere.service.PlayerService
 import com.zenbyte.studio.wavesphere.ui.component.HeightSpace
 import com.zenbyte.studio.wavesphere.ui.component.LiveTag
 import com.zenbyte.studio.wavesphere.ui.component.MusicController
@@ -46,10 +56,18 @@ import dev.vivvvek.seeker.Seeker
 fun PlayerViewScreen(channelData : AppDestination.Dest.PlayerView) {
 
     val coilsContext = LocalPlatformContext.current
+    val context = LocalContext.current
     val viewModel : PlayerViewModel = hiltViewModel()
     val volume = viewModel.volume.collectAsStateWithLifecycle()
-    val mediaPlayerViewModel : MediaPlayerViewModel = hiltViewModel()
+    val playerService = LocalPlayerService.current
+    val channelList = channelData.channelList
 
+    val serviceChannel by playerService?.currentChannelFlow?.collectAsState() ?: remember { mutableStateOf(null) }
+    val currentChannel = serviceChannel ?: channelData.channel
+
+    LaunchedEffect(Unit) {
+        playerService?.setChannelList(channelList)
+    }
 
     Scaffold(
         topBar = {
@@ -99,7 +117,7 @@ fun PlayerViewScreen(channelData : AppDestination.Dest.PlayerView) {
                     .fillMaxWidth(.5f)
                     .aspectRatio(1f),
                 model = ImageRequest.Builder(coilsContext)
-                    .data(channelData.channel.favicon).size(500).build(),
+                    .data(currentChannel.favicon).size(500).build(),
                 placeholder = painterResource(R.drawable.applogowhite),
                 error = painterResource(R.drawable.applogowhite),
                 contentDescription = null
@@ -107,7 +125,7 @@ fun PlayerViewScreen(channelData : AppDestination.Dest.PlayerView) {
             HeightSpace(height = 15.dp)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = channelData.channel.name,
+                    text = currentChannel.name,
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
@@ -121,7 +139,7 @@ fun PlayerViewScreen(channelData : AppDestination.Dest.PlayerView) {
                 )
             }
             Text(
-                text = channelData.channel.tags,
+                text = currentChannel.tags,
                 style = MaterialTheme.typography.bodySmall.copy(
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
                 ),
@@ -187,15 +205,18 @@ fun PlayerViewScreen(channelData : AppDestination.Dest.PlayerView) {
             HeightSpace(height = 15.dp)
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 MusicController(icon = painterResource(R.drawable.previous_svgrepo_com)) {
-
+                    playerService?.playPrevious()
                 }
                 WidthSpace(width = 10.dp)
                 MusicController(isPlayPushButton = true, icon = painterResource(R.drawable.pause)) {
-                    mediaPlayerViewModel.playMusic(myChannel = channelData.channel)
+                        val intent = Intent(context, PlayerService::class.java)
+                        ContextCompat.startForegroundService(context, intent)
+                        playerService?.playChannel(currentChannel)
+
                 }
                 WidthSpace(width = 10.dp)
                 MusicController(icon = painterResource(R.drawable.next_svgrepo_com)) {
-
+                    playerService?.playNext()
                 }
             }
         }

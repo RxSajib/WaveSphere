@@ -33,6 +33,6 @@ sealed class AppDestination : NavKey {
         data object ChannelByCountry : AppDestination()
 
         @Serializable
-        data class PlayerView(val channel: MyChannel) : AppDestination()
+        data class PlayerView(val channel: MyChannel, val channelList : List<MyChannel> = emptyList()) : AppDestination()
     }
 }

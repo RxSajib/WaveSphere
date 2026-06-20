@@ -85,6 +85,7 @@ dependencies {
     // exo player android
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.exoplayer.dash)
+    implementation(libs.androidx.media3.session)
 
     // navigation
     implementation(libs.navigation3.ui)
@@ -100,5 +101,7 @@ dependencies {
 
     // lottie android
     implementation(libs.lottie.compose)
+    implementation(libs.androidx.media)
+    implementation(libs.androidx.palette.ktx)
 
 }
