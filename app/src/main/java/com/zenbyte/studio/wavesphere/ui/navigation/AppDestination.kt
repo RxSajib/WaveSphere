@@ -1,6 +1,7 @@
 package com.zenbyte.studio.wavesphere.ui.navigation
 
 import androidx.navigation3.runtime.NavKey
+import com.zenbyte.studio.domain.model.MyChannel
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -30,5 +31,8 @@ sealed class AppDestination : NavKey {
 
         @Serializable
         data object ChannelByCountry : AppDestination()
+
+        @Serializable
+        data class PlayerView(val channel: MyChannel) : AppDestination()
     }
 }

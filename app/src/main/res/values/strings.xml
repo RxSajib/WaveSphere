@@ -31,6 +31,8 @@
     <string name="sleep_time">Sleep Time</string>
     <string name="other">Other</string>
     <string name="recording">Recording</string>
+    <string name="record">Record</string>
+    <string name="share">Share</string>
     <string name="help_support">Help &amp; Support</string>
     <string name="about">About</string>
     <string name="countries">Countries</string>

@@ -72,7 +72,7 @@ fun ChannelItem(modifier: Modifier, context: PlatformContext, myChannel: MyChann
 
             Box(modifier = Modifier.fillMaxWidth(.8f).aspectRatio(1f)
                 .clip(shape = RoundedCornerShape(10.dp))
-                .background(if (myChannel.favicon.isEmpty() || myChannel.favicon == "null") randomColor else Color.Transparent)
+                .background(if (myChannel.favicon.isNullOrEmpty() || myChannel.favicon == "null") randomColor else Color.Transparent)
 
 
                , contentAlignment = Alignment.Center){

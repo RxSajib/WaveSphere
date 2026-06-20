@@ -15,7 +15,7 @@ class MediaPlayerViewModel @Inject constructor() : ViewModel() {
 
     fun playMusic(myChannel: MyChannel) {
         try {
-            val mediaItem = MediaItem.fromUri(myChannel.url)
+            val mediaItem = MediaItem.fromUri(myChannel.url?: "")
             MyApplication.exoPlayer.apply {
                 setMediaItem(mediaItem)
                 prepare()

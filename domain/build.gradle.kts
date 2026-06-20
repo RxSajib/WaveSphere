@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 android {
@@ -36,4 +37,7 @@ dependencies {
 
     // paging3 dependency
     implementation(libs.androidx.paging.common)
+
+    //kotlin x serilization json
+    implementation(libs.kotlin.serialization.json)
 }

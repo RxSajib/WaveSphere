@@ -96,4 +96,9 @@ dependencies {
     // icon ectended
     implementation(libs.material.icons.extended)
 
+    implementation("io.github.2307vivek:seeker:1.2.2")
+
+    // lottie android
+    implementation(libs.lottie.compose)
+
 }

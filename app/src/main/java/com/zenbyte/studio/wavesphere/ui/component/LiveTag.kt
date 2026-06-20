@@ -21,31 +21,31 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.wavesphere.R
+import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
 import com.zenbyte.studio.wavesphere.ui.theme.buttonColor
 
 @Composable
 fun LiveTag() {
     Row(
         modifier = Modifier
-            .clip(shape = RoundedCornerShape(10.dp))
-            .border(width = 0.5.dp, color = buttonColor.copy(alpha = 0.5f), shape = RoundedCornerShape(10.dp))
+            .clip(shape = CircleShape)
+            .border(
+                width = 0.5.dp,
+                color = buttonColor.copy(alpha = 0.5f),
+                shape = CircleShape
+            )
             .background(color = buttonColor.copy(alpha = 0.1f))
-            .padding(horizontal = 8.dp, vertical = 3.dp),
+            .padding(horizontal = 8.dp, vertical = 2.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
-            modifier = Modifier
-                .size(5.dp)
-                .clip(shape = CircleShape)
-                .background(color = Color.Red)
-        )
+        MyLottie(modifier = Modifier.size(15.dp), animationResId = R.raw.live_pulse)
 
-        WidthSpace(width = 5.dp)
         Text(
             text = stringResource(R.string.live),
             style = MaterialTheme.typography.titleSmall.copy(
                 color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                fontSize = adjustedFontSize(8f)
             ),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis

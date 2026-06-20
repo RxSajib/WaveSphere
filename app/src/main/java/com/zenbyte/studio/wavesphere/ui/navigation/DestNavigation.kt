@@ -16,6 +16,7 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
 import com.zenbyte.studio.wavesphere.ui.screen.channelByCountry.ChannelByCountryScreen
+import com.zenbyte.studio.wavesphere.ui.screen.playerView.PlayerViewScreen
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 
@@ -30,7 +31,7 @@ fun DestNavigation(
         serializersModule = SerializersModule {
             polymorphic(NavKey::class) {
                 subclass(AppDestination.Dest.ChannelByCountry::class, AppDestination.Dest.ChannelByCountry.serializer())
-
+                subclass(AppDestination.Dest.PlayerView::class, AppDestination.Dest.PlayerView.serializer())
             }
         }
     }
@@ -38,8 +39,7 @@ fun DestNavigation(
 
     val firstDest = when {
         startDest.firstDestName == AppDestination.Dest.ChannelByCountry::class.simpleName -> AppDestination.Dest.ChannelByCountry
-        /*startDest.firstDestName == AppDestination.Dest.EarningHistory::class.simpleName -> AppDestination.Dest.EarningHistory
-        startDest.firstDestName == AppDestination.Dest.CategoryWiseBook::class.simpleName -> AppDestination.Dest.CategoryWiseBook
+      /*  startDest.firstDestName == AppDestination.Dest.CategoryWiseBook::class.simpleName -> AppDestination.Dest.CategoryWiseBook
         startDest.firstDestName == AppDestination.Dest.PrivacyPolicy::class.simpleName -> AppDestination.Dest.PrivacyPolicy
         startDest.firstDestName == AppDestination.Dest.Premium::class.simpleName -> AppDestination.Dest.Premium
         startDest.firstDestName == AppDestination.Dest.UploadStories::class.simpleName -> AppDestination.Dest.UploadStories
@@ -74,9 +74,11 @@ fun DestNavigation(
             entryProvider = entryProvider {
 
                 entry<AppDestination.Dest.ChannelByCountry> {
-                    ChannelByCountryScreen()
+                    ChannelByCountryScreen(backStack)
                 }
-
+                entry<AppDestination.Dest.PlayerView> {channelData ->
+                    PlayerViewScreen(channelData)
+                }
 
             },
 
