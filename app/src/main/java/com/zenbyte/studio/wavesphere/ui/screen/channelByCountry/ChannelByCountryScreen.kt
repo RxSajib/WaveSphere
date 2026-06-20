@@ -18,7 +18,7 @@ import com.zenbyte.studio.presentation.viewmodel.getChannelByCountry.GetChannelB
 import com.zenbyte.studio.wavesphere.ui.component.ChannelItem
 
 @Composable
-fun ChannelByCountry(modifier: Modifier = Modifier) {
+fun ChannelByCountryScreen(modifier: Modifier = Modifier) {
 
     val contextCoil = LocalPlatformContext.current
     val viewModel : GetChannelByCountryViewModel = hiltViewModel()

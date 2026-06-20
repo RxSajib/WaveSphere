@@ -22,4 +22,13 @@ sealed class AppDestination : NavKey {
         @Serializable
         data object Player : AppDestination()
     }
+
+
+
+    @Serializable
+    data class Dest(val firstDestName : String) : AppDestination() {
+
+        @Serializable
+        data object ChannelByCountry : AppDestination()
+    }
 }

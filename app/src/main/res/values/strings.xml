@@ -13,6 +13,8 @@
     <string name="news">News</string>
     <string name="popular_stations">Popular Stations</string>
     <string name="premium">PREMIUM</string>"
+    <string name="go_premium">Go Premium</string>
+    <string name="premium_details">Unlock unlimited features and ad-free listening on Wavesphere.</string>
     <string name="premium_lowercase">Premium</string>"
     <string name="home">Home</string>
     <string name="search">Search</string>
@@ -33,4 +35,14 @@
     <string name="about">About</string>
     <string name="countries">Countries</string>
     <string name="search_input_hilt">Search countries, languages, genres</string>
+    <string name="ad_free_experience">Ad-free Experience</string>
+    <string name="ad_free_experience_details">Enjoy uninterrupted listening.</string>
+    <string name="unlimited_favorites">Unlimited Favorites</string>"
+    <string name="unlimited_favorites_details">Save unlimited stations.</string>"
+    <string name="background_play">Background Play</string>
+    <string name="background_play_details">Listen while using other app.</string>
+    <string name="sleep_timer">Sleep Timer</string>
+    <string name="sleep_timer_details">Advance sleep timer options.</string>
+    <string name="high_quality_audio">High Quality Audio</string>
+    <string name="high_quality_audio_details">Batter streaming quality.</string>
 </resources>

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import com.zenbyte.studio.wavesphere.ui.navigation.BottomAppBarNavigation
+import com.zenbyte.studio.wavesphere.ui.navigation.RootNavigation
 import com.zenbyte.studio.wavesphere.ui.theme.WaveSphereTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             WaveSphereTheme {
                     Box(modifier = Modifier.fillMaxSize()){
-                        BottomAppBarNavigation()
+                        RootNavigation()
                     }
 
             }

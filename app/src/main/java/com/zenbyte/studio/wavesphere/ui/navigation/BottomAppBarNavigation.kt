@@ -49,7 +49,7 @@ import kotlinx.serialization.modules.polymorphic
 
 
 @Composable
-fun BottomAppBarNavigation() {
+fun BottomAppBarNavigation(rootBackStack: NavBackStack<NavKey>) {
     val appConfig = SavedStateConfiguration {
         this.serializersModule = SerializersModule {
             this.polymorphic(NavKey::class) {
@@ -279,7 +279,7 @@ fun BottomAppBarNavigation() {
                     HomeScreen()
                 }
                 entry<AppDestination.BottomAppBar.Search> {
-                    SearchScreen()
+                    SearchScreen(activeBackStack = activeBackStack, rootBackStack = rootBackStack)
                 }
 
                 entry<AppDestination.BottomAppBar.Favorite> {
