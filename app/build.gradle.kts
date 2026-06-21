@@ -104,6 +104,9 @@ dependencies {
     implementation(libs.androidx.media)
     implementation(libs.androidx.palette.ktx)
 
+    // room android
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 
 
 }

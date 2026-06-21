@@ -63,7 +63,9 @@ dependencies {
 
     // paging3 dependency
     implementation(libs.androidx.paging.common)
-
+    // room android
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 
     implementation(project(":domain"))
 }

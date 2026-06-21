@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.zenbyte.studio.data.api.WaveSphereApi
-import com.zenbyte.studio.data.mapper.DataMapper.toDomain
+import com.zenbyte.studio.data.mapper.toDomain
 import com.zenbyte.studio.data.model.CountryDtoItem
 import com.zenbyte.studio.data.utils.BaseRepository
 import com.zenbyte.studio.domain.model.MyChannel

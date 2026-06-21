@@ -23,6 +23,7 @@ pagingRuntime = "3.5.0"
 retrofit = "3.0.0"
 hilt = "2.59.2"
 ksp = "2.3.9"
+roomCompiler = "2.8.4"
 secrets = "2.0.1"
 navigationCompose = "1.0.0-alpha06"
 navigationViewModel = "2.10.0-alpha07"
@@ -45,6 +46,8 @@ androidx-media3-session = { module = "androidx.media3:media3-session", version.r
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingRuntime" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingRuntime" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomCompiler" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
