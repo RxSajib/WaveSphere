@@ -18,17 +18,33 @@ import com.zenbyte.studio.wavesphere.ui.navigation.AppDestination
 
 @Composable
 fun PlayerScreen(rootBackStack: NavBackStack<NavKey>) {
-    Column(modifier = Modifier.fillMaxSize().verticalScroll(state = rememberScrollState())){
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(state = rememberScrollState())) {
         HeightSpace(height = 10.dp)
         PremiumStatusCard(modifier = Modifier.padding(horizontal = 16.dp))
         HeightSpace(height = 15.dp)
         GeneralSetting(modifier = Modifier.padding(horizontal = 16.dp))
         HeightSpace(height = 15.dp)
-        OtherSetting(modifier = Modifier.padding(horizontal = 16.dp), onClickAbout = {
-            rootBackStack.add(
-                AppDestination.Dest(firstDestName = AppDestination.Dest.AboutUs::class.simpleName?: "")
-            )
-        })
+        OtherSetting(
+            modifier = Modifier.padding(horizontal = 16.dp), onClickAbout = {
+                rootBackStack.add(
+                    AppDestination.Dest(
+                        firstDestName = AppDestination.Dest.AboutUs::class.simpleName ?: ""
+                    )
+                )
+            },
+            onClickHelpAndSupport = {},
+            onClickLanguage = {},
+            onClickPremium = {
+                rootBackStack.add(
+                    AppDestination.Dest(
+                        AppDestination.Dest.Premium::class.simpleName ?: ""
+                    )
+                )
+            },
+            onClickRecording = {}
+        )
         HeightSpace(height = 10.dp)
     }
 }

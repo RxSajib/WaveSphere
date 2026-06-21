@@ -16,9 +16,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.wavesphere.R
+import org.intellij.lang.annotations.Language
 
 @Composable
-fun OtherSetting(modifier: Modifier = Modifier, onClickAbout: () -> Unit) {
+fun OtherSetting(
+    modifier: Modifier = Modifier,
+    onClickAbout: () -> Unit,
+    onClickHelpAndSupport: () -> Unit,
+    onClickLanguage: () -> Unit,
+    onClickPremium: () -> Unit,
+    onClickRecording: () -> Unit
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -44,9 +52,12 @@ fun OtherSetting(modifier: Modifier = Modifier, onClickAbout: () -> Unit) {
             icon = painterResource(R.drawable.recording_svgrepo_com),
             showToggle = false,
             isPremium = true,
-            showArrow = false
-        ){
-            
+            showArrow = false,
+            onCLickPremium = {
+                onClickPremium.invoke()
+            }
+        ) {
+            onClickRecording.invoke()
         }
 
         SettingItem(
@@ -56,8 +67,8 @@ fun OtherSetting(modifier: Modifier = Modifier, onClickAbout: () -> Unit) {
             isPremium = false,
             showArrow = false,
             enableChangeLanguage = true
-        ){
-            
+        ) {
+onClickLanguage.invoke()
         }
 
         SettingItem(
@@ -66,8 +77,8 @@ fun OtherSetting(modifier: Modifier = Modifier, onClickAbout: () -> Unit) {
             showToggle = false,
             isPremium = false,
             showArrow = true
-        ){
-            
+        ) {
+            onClickHelpAndSupport.invoke()
         }
 
         SettingItem(
@@ -76,7 +87,7 @@ fun OtherSetting(modifier: Modifier = Modifier, onClickAbout: () -> Unit) {
             showToggle = false,
             isPremium = false,
             showArrow = true
-        ){
+        ) {
             onClickAbout.invoke()
         }
     }
@@ -88,6 +99,11 @@ fun OtherSettingPreview(modifier: Modifier = Modifier) {
     OtherSetting(
         onClickAbout = {
 
-        }
+        },
+        modifier = Modifier,
+        onClickHelpAndSupport = {},
+        onClickLanguage = {},
+        onClickPremium = {},
+        onClickRecording = {}
     )
 }

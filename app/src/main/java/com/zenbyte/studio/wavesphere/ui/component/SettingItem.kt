@@ -25,7 +25,8 @@ fun SettingItem(
     isPremium: Boolean,
     showArrow: Boolean = false,
     enableChangeLanguage : Boolean = false,
-    onClick: () -> Unit
+    onCLickPremium: (() -> Unit)? = null,
+    onClick: () -> Unit,
 ) {
 
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -51,7 +52,7 @@ fun SettingItem(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (isPremium) {
                     PremiumTag {
-
+                        onCLickPremium?.invoke()
                     }
                     IconButton(onClick = {}) {
                         Icon(painterResource(R.drawable.icon_arrow_next), contentDescription = null)

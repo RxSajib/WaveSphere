@@ -37,5 +37,8 @@ sealed class AppDestination : NavKey {
 
         @Serializable
         data object AboutUs : AppDestination()
+
+        @Serializable
+        data object Premium : AppDestination()
     }
 }
