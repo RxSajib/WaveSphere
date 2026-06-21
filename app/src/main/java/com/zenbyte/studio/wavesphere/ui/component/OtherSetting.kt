@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.wavesphere.R
 
 @Composable
-fun OtherSetting(modifier: Modifier = Modifier) {
+fun OtherSetting(modifier: Modifier = Modifier, onClickAbout: () -> Unit) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -45,7 +45,9 @@ fun OtherSetting(modifier: Modifier = Modifier) {
             showToggle = false,
             isPremium = true,
             showArrow = false
-        )
+        ){
+            
+        }
 
         SettingItem(
             title = stringResource(R.string.languages),
@@ -54,7 +56,9 @@ fun OtherSetting(modifier: Modifier = Modifier) {
             isPremium = false,
             showArrow = false,
             enableChangeLanguage = true
-        )
+        ){
+            
+        }
 
         SettingItem(
             title = stringResource(R.string.help_support),
@@ -62,7 +66,9 @@ fun OtherSetting(modifier: Modifier = Modifier) {
             showToggle = false,
             isPremium = false,
             showArrow = true
-        )
+        ){
+            
+        }
 
         SettingItem(
             title = stringResource(R.string.about),
@@ -70,12 +76,18 @@ fun OtherSetting(modifier: Modifier = Modifier) {
             showToggle = false,
             isPremium = false,
             showArrow = true
-        )
+        ){
+            onClickAbout.invoke()
+        }
     }
 }
 
 @Composable
 @Preview
 fun OtherSettingPreview(modifier: Modifier = Modifier) {
-    OtherSetting()
+    OtherSetting(
+        onClickAbout = {
+
+        }
+    )
 }

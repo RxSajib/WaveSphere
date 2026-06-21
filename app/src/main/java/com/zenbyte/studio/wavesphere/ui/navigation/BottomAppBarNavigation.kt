@@ -286,7 +286,7 @@ fun BottomAppBarNavigation(rootBackStack: NavBackStack<NavKey>) {
                     FavoriteScreen()
                 }
                 entry<AppDestination.BottomAppBar.Player> {
-                    PlayerScreen()
+                    PlayerScreen(rootBackStack = rootBackStack)
                 }
             })
     }

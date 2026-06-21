@@ -34,5 +34,8 @@ sealed class AppDestination : NavKey {
 
         @Serializable
         data class PlayerView(val channel: MyChannel, val channelList : List<MyChannel> = emptyList()) : AppDestination()
+
+        @Serializable
+        data object AboutUs : AppDestination()
     }
 }

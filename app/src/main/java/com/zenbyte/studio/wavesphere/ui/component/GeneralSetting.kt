@@ -44,14 +44,18 @@ fun GeneralSetting(modifier: Modifier) {
             icon = painterResource(R.drawable.moon_svgrepo_com),
             showToggle = true,
             isPremium = false
-        )
+        ){
+
+        }
 
         SettingItem(
             title = stringResource(R.string.data_saver),
             icon = painterResource(R.drawable.icon_wifi),
             showToggle = true,
             isPremium = false
-        )
+        ){
+
+        }
 
         SettingItem(
             title = stringResource(R.string.playback_setting),
@@ -59,7 +63,9 @@ fun GeneralSetting(modifier: Modifier) {
             showToggle = false,
             isPremium = false,
             showArrow = true
-        )
+        ){
+
+        }
 
         SettingItem(
             title = stringResource(R.string.equlizer),
@@ -67,7 +73,9 @@ fun GeneralSetting(modifier: Modifier) {
             showToggle = false,
             isPremium = true,
             showArrow = false
-        )
+        ){
+
+        }
 
         SettingItem(
             title = stringResource(R.string.sleep_time),
@@ -75,7 +83,9 @@ fun GeneralSetting(modifier: Modifier) {
             showToggle = false,
             isPremium = true,
             showArrow = false
-        )
+        ){
+
+        }
     }
 }
 

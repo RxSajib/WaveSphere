@@ -24,7 +24,8 @@ fun SettingItem(
     showToggle: Boolean,
     isPremium: Boolean,
     showArrow: Boolean = false,
-    enableChangeLanguage : Boolean = false
+    enableChangeLanguage : Boolean = false,
+    onClick: () -> Unit
 ) {
 
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -60,7 +61,9 @@ fun SettingItem(
         }
 
         if (showArrow) {
-            IconButton(onClick = {}) {
+            IconButton(onClick = {
+                onClick.invoke()
+            }) {
                 Icon(painterResource(R.drawable.icon_arrow_next), contentDescription = null)
             }
         }

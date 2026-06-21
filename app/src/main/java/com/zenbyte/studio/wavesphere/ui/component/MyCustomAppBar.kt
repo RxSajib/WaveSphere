@@ -35,6 +35,7 @@ import com.zenbyte.studio.wavesphere.ui.theme.buttonColor
 fun MyCustomAppBar(
     homeHeaderEnable: Boolean = false,
     isBackButtonEnable: Boolean = true,
+    isPremiumEnable: Boolean = true,
     isActonButtonEnable: Boolean = false,
     title: String = "WaveSphere",
     onBackPress: () -> Unit,
@@ -74,12 +75,15 @@ fun MyCustomAppBar(
 
         },
         actions = {
-            PremiumTag(
-                onClick = {
+            if(isPremiumEnable){
+                PremiumTag(
+                    onClick = {
 
-                }
-            )
-            WidthSpace(width = 10.dp)
+                    }
+                )
+                WidthSpace(width = 10.dp)
+            }
+
         },
         navigationIcon = {
             if (isBackButtonEnable) {

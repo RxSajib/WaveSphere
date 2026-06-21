@@ -15,6 +15,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.zenbyte.studio.wavesphere.ui.screen.about.AboutScreen
 import com.zenbyte.studio.wavesphere.ui.screen.channelByCountry.ChannelByCountryScreen
 import com.zenbyte.studio.wavesphere.ui.screen.playerView.PlayerViewScreen
 import kotlinx.serialization.modules.SerializersModule
@@ -32,6 +33,7 @@ fun DestNavigation(
             polymorphic(NavKey::class) {
                 subclass(AppDestination.Dest.ChannelByCountry::class, AppDestination.Dest.ChannelByCountry.serializer())
                 subclass(AppDestination.Dest.PlayerView::class, AppDestination.Dest.PlayerView.serializer())
+                subclass(AppDestination.Dest.AboutUs::class, AppDestination.Dest.AboutUs.serializer())
             }
         }
     }
@@ -39,24 +41,24 @@ fun DestNavigation(
 
     val firstDest = when {
         startDest.firstDestName == AppDestination.Dest.ChannelByCountry::class.simpleName -> AppDestination.Dest.ChannelByCountry
-      /*  startDest.firstDestName == AppDestination.Dest.CategoryWiseBook::class.simpleName -> AppDestination.Dest.CategoryWiseBook
-        startDest.firstDestName == AppDestination.Dest.PrivacyPolicy::class.simpleName -> AppDestination.Dest.PrivacyPolicy
-        startDest.firstDestName == AppDestination.Dest.Premium::class.simpleName -> AppDestination.Dest.Premium
-        startDest.firstDestName == AppDestination.Dest.UploadStories::class.simpleName -> AppDestination.Dest.UploadStories
-        startDest.firstDestName == AppDestination.Dest.SubscriptionHistory::class.simpleName -> AppDestination.Dest.SubscriptionHistory
-        startDest.firstDestName == AppDestination.Dest.StoryTypeWiseBook::class.simpleName -> AppDestination.Dest.StoryTypeWiseBook(
-            typeName = ""
-        )
+        startDest.firstDestName == AppDestination.Dest.AboutUs::class.simpleName -> AppDestination.Dest.AboutUs
+        /*  startDest.firstDestName == AppDestination.Dest.PrivacyPolicy::class.simpleName -> AppDestination.Dest.PrivacyPolicy
+          startDest.firstDestName == AppDestination.Dest.Premium::class.simpleName -> AppDestination.Dest.Premium
+          startDest.firstDestName == AppDestination.Dest.UploadStories::class.simpleName -> AppDestination.Dest.UploadStories
+          startDest.firstDestName == AppDestination.Dest.SubscriptionHistory::class.simpleName -> AppDestination.Dest.SubscriptionHistory
+          startDest.firstDestName == AppDestination.Dest.StoryTypeWiseBook::class.simpleName -> AppDestination.Dest.StoryTypeWiseBook(
+              typeName = ""
+          )
 
-        startDest.firstDestName == AppDestination.Dest.SearchStoryResult::class.simpleName -> AppDestination.Dest.SearchStoryResult
-        startDest.firstDestName == AppDestination.Dest.PublishedPendingStory::class.simpleName -> AppDestination.Dest.PublishedPendingStory
-        startDest.firstDestName == AppDestination.Dest.AllReleaseStory::class.simpleName -> AppDestination.Dest.AllReleaseStory
-        startDest.firstDestName == AppDestination.Dest.NewReleaseStory::class.simpleName -> AppDestination.Dest.NewReleaseStory
-        startDest.firstDestName == AppDestination.Dest.MostPopular::class.simpleName -> AppDestination.Dest.MostPopular
-        startDest.firstDestName == AppDestination.Dest.ChangeLanguage::class.simpleName -> AppDestination.Dest.ChangeLanguage
-        startDest.firstDestName == AppDestination.Dest.StoryDetails::class.simpleName -> AppDestination.Dest.StoryDetails
-        startDest.firstDestName == AppDestination.Dest.PublishedStory::class.simpleName -> AppDestination.Dest.PublishedStory
-*/
+          startDest.firstDestName == AppDestination.Dest.SearchStoryResult::class.simpleName -> AppDestination.Dest.SearchStoryResult
+          startDest.firstDestName == AppDestination.Dest.PublishedPendingStory::class.simpleName -> AppDestination.Dest.PublishedPendingStory
+          startDest.firstDestName == AppDestination.Dest.AllReleaseStory::class.simpleName -> AppDestination.Dest.AllReleaseStory
+          startDest.firstDestName == AppDestination.Dest.NewReleaseStory::class.simpleName -> AppDestination.Dest.NewReleaseStory
+          startDest.firstDestName == AppDestination.Dest.MostPopular::class.simpleName -> AppDestination.Dest.MostPopular
+          startDest.firstDestName == AppDestination.Dest.ChangeLanguage::class.simpleName -> AppDestination.Dest.ChangeLanguage
+          startDest.firstDestName == AppDestination.Dest.StoryDetails::class.simpleName -> AppDestination.Dest.StoryDetails
+          startDest.firstDestName == AppDestination.Dest.PublishedStory::class.simpleName -> AppDestination.Dest.PublishedStory
+  */
         else -> throw Exception("Invalid destination")
     }
 
@@ -79,7 +81,9 @@ fun DestNavigation(
                 entry<AppDestination.Dest.PlayerView> {channelData ->
                     PlayerViewScreen(channelData)
                 }
-
+                entry<AppDestination.Dest.AboutUs> {
+                    AboutScreen(rootBackStack = rootBackStack)
+                }
             },
 
             transitionSpec = {
