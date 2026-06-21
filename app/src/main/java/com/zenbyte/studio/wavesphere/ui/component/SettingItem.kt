@@ -24,9 +24,12 @@ fun SettingItem(
     showToggle: Boolean,
     isPremium: Boolean,
     showArrow: Boolean = false,
+    setToggleButton : Boolean = false,
     enableChangeLanguage : Boolean = false,
     onCLickPremium: (() -> Unit)? = null,
+    onToggleChanged: ((Boolean) -> Unit)? = null,
     onClick: () -> Unit,
+
 ) {
 
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -47,7 +50,9 @@ fun SettingItem(
         )
         WidthSpace(width = 10.dp)
         if (showToggle) {
-            Switch(checked = true, onCheckedChange = {})
+            Switch(checked = setToggleButton, onCheckedChange = {
+                onToggleChanged?.invoke(it)
+            })
         } else {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (isPremium) {

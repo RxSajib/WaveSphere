@@ -18,7 +18,17 @@ import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.wavesphere.R
 
 @Composable
-fun GeneralSetting(modifier: Modifier) {
+fun GeneralSetting(
+    modifier: Modifier,
+    onClickEqualizer: () -> Unit,
+    onClickSleepTime: () -> Unit,
+    onClickPlayBackSetting: () -> Unit,
+    onClickPremium: () -> Unit,
+    isDarkModeCheck : Boolean = false,
+    isDataSaverCheck : Boolean = false,
+    isDataSaverChanged: ((Boolean) -> Unit)?= null,
+    onDarkModeChanged: ((Boolean) -> Unit)  ?= null
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -43,8 +53,12 @@ fun GeneralSetting(modifier: Modifier) {
             title = stringResource(R.string.dark_mode),
             icon = painterResource(R.drawable.moon_svgrepo_com),
             showToggle = true,
-            isPremium = false
-        ){
+            isPremium = false,
+            setToggleButton = isDarkModeCheck,
+            onToggleChanged = {
+                onDarkModeChanged?.invoke(it)
+            }
+        ) {
 
         }
 
@@ -52,9 +66,13 @@ fun GeneralSetting(modifier: Modifier) {
             title = stringResource(R.string.data_saver),
             icon = painterResource(R.drawable.icon_wifi),
             showToggle = true,
-            isPremium = false
-        ){
-
+            isPremium = false,
+            setToggleButton = isDataSaverCheck,
+            onToggleChanged = {
+                isDataSaverChanged?.invoke(it)
+            }
+        ) {
+           
         }
 
         SettingItem(
@@ -63,8 +81,8 @@ fun GeneralSetting(modifier: Modifier) {
             showToggle = false,
             isPremium = false,
             showArrow = true
-        ){
-
+        ) {
+            onClickPlayBackSetting.invoke()
         }
 
         SettingItem(
@@ -72,9 +90,12 @@ fun GeneralSetting(modifier: Modifier) {
             icon = painterResource(R.drawable.audio_equlizer),
             showToggle = false,
             isPremium = true,
-            showArrow = false
-        ){
-
+            showArrow = false,
+            onCLickPremium = {
+                onClickPremium.invoke()
+            }
+        ) {
+            onClickEqualizer.invoke()
         }
 
         SettingItem(
@@ -82,9 +103,12 @@ fun GeneralSetting(modifier: Modifier) {
             icon = painterResource(R.drawable.icon_clock),
             showToggle = false,
             isPremium = true,
-            showArrow = false
-        ){
-
+            showArrow = false,
+            onCLickPremium = {
+                onClickPremium.invoke()
+            }
+        ) {
+            onClickSleepTime.invoke()
         }
     }
 }
@@ -92,5 +116,11 @@ fun GeneralSetting(modifier: Modifier) {
 @Composable
 @Preview
 fun GeneralSettingPreview() {
-    GeneralSetting(modifier = Modifier)
+    GeneralSetting(
+        modifier = Modifier,
+        onClickEqualizer = {},
+        onClickSleepTime = {},
+        onClickPlayBackSetting = {},
+        onClickPremium = {}
+    )
 }
