@@ -185,25 +185,33 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
                     icon = painterResource(R.drawable.icon_favorite_heart_hover_pinch),
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.favorite)
-                )
+                ){
+                    viewModel.saveChannel(myChannel = channelData.channel)
+                }
 
                 QuickAction(
                     icon = painterResource(R.drawable.icon_clock),
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.sleep_timer)
-                )
+                ){
+
+                }
 
                 QuickAction(
                     icon = painterResource(R.drawable.record_circle),
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.record),
                     isPremium = true
-                )
+                ){
+
+                }
                 QuickAction(
                     icon = painterResource(R.drawable.share_svgrepo_com),
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.share)
-                )
+                ){
+
+                }
             }
 
             HeightSpace(height = 15.dp)

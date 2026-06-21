@@ -3,6 +3,8 @@ package com.zenbyte.studio.presentation.viewmodel.playerView
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zenbyte.studio.domain.model.MyChannel
+import com.zenbyte.studio.domain.usecase.SaveChannelUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +16,9 @@ import javax.inject.Inject
 private const val TAG = "PlayerViewModel"
 
 @HiltViewModel
-class PlayerViewModel @Inject constructor() : ViewModel() {
+class PlayerViewModel @Inject constructor(
+    val saveChannelUseCase: SaveChannelUseCase
+) : ViewModel() {
 
     private val _volume = MutableStateFlow(50f)
     val volume = _volume.asStateFlow()
@@ -49,6 +53,12 @@ class PlayerViewModel @Inject constructor() : ViewModel() {
         Log.d(TAG, "value: ${playingUID == channelUID}")
         playingUID == channelUID
 
+    }
+
+    fun saveChannel(myChannel: MyChannel){
+        viewModelScope.launch {
+            saveChannelUseCase.saveChannel(myChannel = myChannel)
+        }
     }
 
 }

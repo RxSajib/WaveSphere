@@ -22,14 +22,18 @@ import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
 import com.zenbyte.studio.wavesphere.ui.theme.genresColor
 
 @Composable
-fun QuickAction(modifier: Modifier, icon: Painter, title: String, isPremium: Boolean = false) {
+fun QuickAction(modifier: Modifier, icon: Painter, title: String, isPremium: Boolean = false,
+                onClick: () -> Unit) {
 
-    Column(modifier = modifier,    horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Column(
             modifier = Modifier
 
                 .clip(shape = RoundedCornerShape(8.dp))
-                .clickable {}    .padding(5.dp),
+                .clickable {
+                    onClick.invoke()
+                }
+                .padding(5.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
@@ -46,14 +50,19 @@ fun QuickAction(modifier: Modifier, icon: Painter, title: String, isPremium: Boo
                 )
             )
             HeightSpace(height = 2.dp)
-            if(isPremium){
+            if (isPremium) {
                 Text(
                     text = stringResource(R.string.premium),
                     style = MaterialTheme.typography.bodySmall.copy(
                         fontSize = adjustedFontSize(5f),
                         color = genresColor
                     ),
-                    modifier = Modifier.border(width = 0.5.dp, color = genresColor, shape = CircleShape)
+                    modifier = Modifier
+                        .border(
+                            width = 0.5.dp,
+                            color = genresColor,
+                            shape = CircleShape
+                        )
                         .padding(horizontal = 5.dp, vertical = 2.dp)
                 )
             }

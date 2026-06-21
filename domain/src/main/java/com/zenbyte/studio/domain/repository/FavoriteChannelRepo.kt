@@ -6,4 +6,10 @@ import kotlinx.coroutines.flow.Flow
 interface FavoriteChannelRepo {
 
     fun getAllFavoriteChannel() : Flow<List<MyChannel>>
+
+    suspend fun deleteChannel(channelID : String)
+
+    suspend fun saveChannel(myChannel: MyChannel)
+
+    suspend fun getChannel(channelID : String) : Flow<MyChannel>
 }
