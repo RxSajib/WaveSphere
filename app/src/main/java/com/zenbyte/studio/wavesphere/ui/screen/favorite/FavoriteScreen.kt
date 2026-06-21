@@ -12,13 +12,17 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zenbyte.studio.presentation.viewmodel.favorite.FavoriteChannelViewModel
 import com.zenbyte.studio.presentation.viewmodel.search.SearchViewModel
-import com.zenbyte.studio.wavesphere.utils.MyCustomLogger
+import com.zenbyte.studio.wavesphere.ui.component.EmptyChannel
 
 private const val TAG = "FavoriteScreen"
+
 @Composable
 fun FavoriteScreen(modifier: Modifier = Modifier) {
-    val viewModel : FavoriteChannelViewModel = hiltViewModel()
+    val viewModel: FavoriteChannelViewModel = hiltViewModel()
     val favoriteChannelList = viewModel.favoriteChannel.collectAsStateWithLifecycle(emptyList())
 
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
+        EmptyChannel()
+    }
 }
