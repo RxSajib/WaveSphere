@@ -17,10 +17,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -40,6 +40,7 @@ import coil3.request.ImageRequest
 import com.zenbyte.studio.presentation.viewmodel.playerView.PlayerViewModel
 import com.zenbyte.studio.wavesphere.MediaPlayerViewModel
 import com.zenbyte.studio.wavesphere.R
+import com.zenbyte.studio.wavesphere.app.MyApplication
 import com.zenbyte.studio.wavesphere.root.LocalPlayerService
 import com.zenbyte.studio.wavesphere.service.PlayerService
 import com.zenbyte.studio.wavesphere.ui.component.HeightSpace
@@ -49,25 +50,51 @@ import com.zenbyte.studio.wavesphere.ui.component.PremiumTag
 import com.zenbyte.studio.wavesphere.ui.component.QuickAction
 import com.zenbyte.studio.wavesphere.ui.component.WidthSpace
 import com.zenbyte.studio.wavesphere.ui.navigation.AppDestination
+import com.zenbyte.studio.wavesphere.utils.MyCustomLogger
 import dev.vivvvek.seeker.Seeker
 
+private const val TAG = "PlayerViewScreen"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlayerViewScreen(channelData : AppDestination.Dest.PlayerView) {
+fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
 
     val coilsContext = LocalPlatformContext.current
     val context = LocalContext.current
-    val viewModel : PlayerViewModel = hiltViewModel()
+    val viewModel: PlayerViewModel = hiltViewModel()
     val volume = viewModel.volume.collectAsStateWithLifecycle()
     val playerService = LocalPlayerService.current
     val channelList = channelData.channelList
 
-    val serviceChannel by playerService?.currentChannelFlow?.collectAsState() ?: remember { mutableStateOf(null) }
-    val currentChannel = serviceChannel ?: channelData.channel
+    val isLoading = playerService?.isLoading?.collectAsStateWithLifecycle()
+    val isPlaying = playerService?.playing?.collectAsStateWithLifecycle()
+    val isButtonEnable by viewModel.isButtonEnable.collectAsStateWithLifecycle(false)
+
+    // Sync UI with the selected channel, then follow service updates (Next/Prev)
+    var isSynced by remember(channelData.channel) { mutableStateOf(false) }
+    var currentChannel by remember(channelData.channel) { mutableStateOf(channelData.channel) }
+    val serviceChannel by playerService?.currentChannelFlow?.collectAsStateWithLifecycle() ?: remember { mutableStateOf(null) }
+
+    LaunchedEffect(serviceChannel) {
+        if (serviceChannel?.stationuuid == channelData.channel.stationuuid) {
+            isSynced = true
+        }
+        if (isSynced && serviceChannel != null) {
+            currentChannel = serviceChannel!!
+        }
+    }
+
+    LaunchedEffect(isPlaying?.value) {
+        viewModel.updatePlayingUID(value = MyApplication.exoPlayer.currentMediaItem?.mediaId?: "")
+    }
+    LaunchedEffect(currentChannel) {
+        viewModel.updateChannelUID(value = currentChannel.stationuuid)
+    }
 
     LaunchedEffect(Unit) {
         playerService?.setChannelList(channelList)
     }
+
+
 
     Scaffold(
         topBar = {
@@ -143,7 +170,9 @@ fun PlayerViewScreen(channelData : AppDestination.Dest.PlayerView) {
                 style = MaterialTheme.typography.bodySmall.copy(
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
                 ),
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp),
                 textAlign = TextAlign.Center,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -191,7 +220,7 @@ fun PlayerViewScreen(channelData : AppDestination.Dest.PlayerView) {
                 Seeker(
                     value = volume.value,
                     range = 1f..100f,
-                    onValueChange = {value ->
+                    onValueChange = { value ->
                         viewModel.updateVolume(value)
                     },
                     modifier = Modifier.weight(1f)
@@ -208,11 +237,26 @@ fun PlayerViewScreen(channelData : AppDestination.Dest.PlayerView) {
                     playerService?.playPrevious()
                 }
                 WidthSpace(width = 10.dp)
-                MusicController(isPlayPushButton = true, icon = painterResource(R.drawable.pause)) {
+                MusicController(
+                    isLoading = isLoading?.value == true,
+                    isPlayPushButton = true,
+                    icon = if (isButtonEnable) painterResource(R.drawable.pause) else painterResource(
+                        R.drawable.system_solid_26_play_hover_play
+                    )
+                ) {
+                    if(isButtonEnable){
+                        if(!MyApplication.exoPlayer.isPlaying){
+                            val intent = Intent(context, PlayerService::class.java)
+                            ContextCompat.startForegroundService(context, intent)
+                            playerService?.playChannel(currentChannel)
+                        }else {
+                            MyApplication.exoPlayer.pause()
+                        }
+                    }else {
                         val intent = Intent(context, PlayerService::class.java)
                         ContextCompat.startForegroundService(context, intent)
                         playerService?.playChannel(currentChannel)
-
+                    }
                 }
                 WidthSpace(width = 10.dp)
                 MusicController(icon = painterResource(R.drawable.next_svgrepo_com)) {

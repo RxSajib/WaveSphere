@@ -11,13 +11,16 @@ import android.os.IBinder
 import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.media.session.PlaybackState
 import android.os.Build
+import android.util.Log
 import androidx.annotation.OptIn
 import androidx.core.app.NotificationCompat
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.common.ForwardingPlayer
+import androidx.media3.common.PlaybackException
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.CommandButton
@@ -50,6 +53,12 @@ private const val TAG = "PlayerService"
 
 
 class PlayerService : MediaSessionService() {
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
+    private val _isPlaying = MutableStateFlow(false)
+    val playing = _isPlaying.asStateFlow()
 
     private lateinit var exoPlayer: ExoPlayer
     private var mediaSession: MediaSession? = null
@@ -212,6 +221,45 @@ class PlayerService : MediaSessionService() {
                 }
             })
             .build()
+
+
+
+        exoPlayer.addListener(object : Player.Listener {
+
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                when (playbackState) {
+
+                    Player.STATE_BUFFERING -> {
+                        _isLoading.value = true
+                    }
+
+                    Player.STATE_READY -> {
+                        _isLoading.value = false
+                    }
+
+                    Player.STATE_IDLE -> {
+                        _isLoading.value = false
+                    }
+
+                    Player.STATE_ENDED -> {
+                        _isLoading.value = false
+                    }
+
+                }
+            }
+
+            override fun onPlayerError(error: PlaybackException) {
+                _isLoading.value = false
+            }
+
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                _isPlaying.value = isPlaying
+                super.onIsPlayingChanged(isPlaying)
+            }
+        })
+
+
+
         createNotificationChannel()
     }
 
@@ -292,6 +340,7 @@ class PlayerService : MediaSessionService() {
                 .build()
 
             val mediaItem = MediaItem.Builder()
+                .setMediaId(channel.stationuuid)
                 .setUri(streamUrl)
                 .setMediaMetadata(mediaMetadata)
                 .build()
