@@ -8,16 +8,18 @@ plugins {
 
 android {
     namespace = "com.zenbyte.studio.wavesphere"
-    compileSdk {
-        version = release(36) {
+   /* compileSdk {
+        version = release(37) {
             minorApiLevel = 1
         }
-    }
+    }*/
+
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.zenbyte.studio.wavesphere"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
@@ -71,6 +73,7 @@ dependencies {
     // hilt android
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    ksp(libs.kotlin.metadata.jvm)
 
     // hilt navigation compose
     implementation(libs.androidx.hilt.navigation.compose)
@@ -97,7 +100,7 @@ dependencies {
     // icon ectended
     implementation(libs.material.icons.extended)
 
-    implementation("io.github.2307vivek:seeker:1.2.2")
+    implementation(libs.seeker)
 
     // lottie android
     implementation(libs.lottie.compose)
@@ -108,5 +111,6 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
 
+    implementation(libs.swipeable.kmp)
 
 }

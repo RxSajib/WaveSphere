@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.usecase.GetAllFavoriteChannelUseCase
 import com.zenbyte.studio.domain.usecase.GetSingleSaveChannel
+import com.zenbyte.studio.domain.usecase.RemoveSaveChannelUseCase
 import com.zenbyte.studio.domain.usecase.SaveChannelUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,7 +19,8 @@ import javax.inject.Inject
 class FavoriteChannelViewModel @Inject constructor(
     val getAllFavoriteChannelUseCase: GetAllFavoriteChannelUseCase,
     val getSingleSaveChannel: GetSingleSaveChannel,
-    val saveChannelUseCase: SaveChannelUseCase
+    val saveChannelUseCase: SaveChannelUseCase,
+    val removeSaveChannelUseCase: RemoveSaveChannelUseCase
 ) : ViewModel() {
 
     val favoriteChannel = getAllFavoriteChannelUseCase.getFavoriteChannel()
@@ -40,6 +42,12 @@ class FavoriteChannelViewModel @Inject constructor(
     fun saveChannel(myChannel: MyChannel){
         viewModelScope.launch {
             saveChannelUseCase.saveChannel(myChannel = myChannel)
+        }
+    }
+
+    fun removeChannel(channelID : String){
+        viewModelScope.launch {
+            removeSaveChannelUseCase.removeSaveChannel(channelID = channelID)
         }
     }
 

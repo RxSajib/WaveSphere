@@ -34,6 +34,7 @@ dependencies {
     // hilt android
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    ksp(libs.kotlin.metadata.jvm)
 
     // paging3 dependency
     implementation(libs.androidx.paging.common)
