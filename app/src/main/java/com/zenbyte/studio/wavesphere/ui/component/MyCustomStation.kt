@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -23,19 +24,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.PlatformContext
 import coil3.compose.AsyncImage
-import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
+import com.zenbyte.studio.wavesphere.ui.theme.genresColor
 
 @Composable
-fun MyCustomStation(context: PlatformContext, myChannel: MyChannel, onClick: (MyChannel) -> Unit) {
+fun MyCustomStation(
+    isSelected: Boolean = false,
+    context: PlatformContext,
+    myChannel: MyChannel,
+    onClick: (MyChannel) -> Unit
+) {
 
     val randomColor = remember(myChannel.stationuuid) {
         Color(
@@ -52,27 +57,33 @@ fun MyCustomStation(context: PlatformContext, myChannel: MyChannel, onClick: (My
                 .aspectRatio(1f), contentAlignment = Alignment.Center
         ) {
 
+
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
                     .clip(RoundedCornerShape(10.dp))
                     .border(
-                        width = 1.dp,
-                        color =  MaterialTheme.colorScheme.primary.copy(
+                        width = if (isSelected) 3.dp else 1.dp,
+                        color = if (isSelected) genresColor else MaterialTheme.colorScheme.primary.copy(
                             alpha = 0.2f
                         ),
                         shape = RoundedCornerShape(10.dp)
-                    ).clickable{
-            onClick.invoke(myChannel)
+                    )
+                    .clickable {
+                        onClick.invoke(myChannel)
                     },
                 contentAlignment = Alignment.Center
             ) {
-                Box(modifier = Modifier.fillMaxWidth(.8f).aspectRatio(1f)
-                    .clip(shape = RoundedCornerShape(10.dp))
-                    .background(if (myChannel.favicon.isEmpty() || myChannel.favicon == "null") randomColor else Color.Transparent)
-
-                    , contentAlignment = Alignment.Center){
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(.8f)
+                        .aspectRatio(1f)
+                        .clip(shape = RoundedCornerShape(10.dp))
+                        .background(if (myChannel.favicon.isEmpty() || myChannel.favicon == "null") randomColor else Color.Transparent),
+                    contentAlignment = Alignment.Center
+                ) {
                     AsyncImage(
                         modifier = Modifier
                             .fillMaxSize()
@@ -90,7 +101,11 @@ fun MyCustomStation(context: PlatformContext, myChannel: MyChannel, onClick: (My
                 }
 
             }
+            if (isSelected) {
 
+                MusicPlayingIndicator(modifier = Modifier.align(Alignment.TopEnd).padding(10.dp))
+
+            }
 
         }
 

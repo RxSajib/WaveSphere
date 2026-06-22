@@ -12,4 +12,8 @@ interface FavoriteChannelRepo {
     suspend fun saveChannel(myChannel: MyChannel)
 
     suspend fun getChannel(channelID : String) : Flow<MyChannel>
+
+    fun isSavedChannel(stationuuid: String): Flow<Boolean>
+
+    suspend fun removeChannel(channelID: String)
 }

@@ -22,4 +22,7 @@ interface FavoriteChannelDao{
     @Query("SELECT * FROM FavoriteChannelDB WHERE stationuuid = :stationuuid")
     fun getChannel(stationuuid: String) : Flow<MyFavoriteChannel>
 
+
+    @Query("SELECT EXISTS (SELECT 1 FROM FavoriteChannelDB WHERE stationuuid = :stationuuid)")
+    fun isChannelSaved(stationuuid: String) : Flow<Boolean>
 }

@@ -15,14 +15,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.wavesphere.R
+import com.zenbyte.studio.wavesphere.ui.theme.Black
 import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
 import com.zenbyte.studio.wavesphere.ui.theme.genresColor
+import com.zenbyte.studio.wavesphere.ui.theme.newsColor
 
 @Composable
-fun QuickAction(modifier: Modifier, icon: Painter, title: String, isPremium: Boolean = false,
+fun QuickAction(isSavedChannel : Boolean?= null, modifier: Modifier, icon: Painter, title: String, isPremium: Boolean = false,
                 onClick: () -> Unit) {
 
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
@@ -36,11 +39,16 @@ fun QuickAction(modifier: Modifier, icon: Painter, title: String, isPremium: Boo
                 .padding(5.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(
-                painter = icon,
+            isSavedChannel?.let { saved ->
+                Icon(
+                    painter = if(isSavedChannel) painterResource(R.drawable.icon_heart_selected) else painterResource(R.drawable.icon_favorite_heart_hover_pinch),
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+            }?: Icon(painter = icon,
                 contentDescription = null,
-                modifier = Modifier.size(20.dp)
-            )
+                modifier = Modifier.size(20.dp))
+
             HeightSpace(height = 5.dp)
             Text(
                 text = title,

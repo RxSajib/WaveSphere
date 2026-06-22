@@ -37,8 +37,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
+import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.presentation.viewmodel.playerView.PlayerViewModel
-import com.zenbyte.studio.wavesphere.MediaPlayerViewModel
+import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.wavesphere.app.MyApplication
 import com.zenbyte.studio.wavesphere.root.LocalPlayerService
@@ -50,7 +51,6 @@ import com.zenbyte.studio.wavesphere.ui.component.PremiumTag
 import com.zenbyte.studio.wavesphere.ui.component.QuickAction
 import com.zenbyte.studio.wavesphere.ui.component.WidthSpace
 import com.zenbyte.studio.wavesphere.ui.navigation.AppDestination
-import com.zenbyte.studio.wavesphere.utils.MyCustomLogger
 import dev.vivvvek.seeker.Seeker
 
 private const val TAG = "PlayerViewScreen"
@@ -68,6 +68,7 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
     val isLoading = playerService?.isLoading?.collectAsStateWithLifecycle()
     val isPlaying = playerService?.playing?.collectAsStateWithLifecycle()
     val isButtonEnable by viewModel.isButtonEnable.collectAsStateWithLifecycle(false)
+    val isChannelSaved by viewModel.isChannelSaved.collectAsStateWithLifecycle(false)
 
     // Sync UI with the selected channel, then follow service updates (Next/Prev)
     var isSynced by remember(channelData.channel) { mutableStateOf(false) }
@@ -93,6 +94,7 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
     LaunchedEffect(Unit) {
         playerService?.setChannelList(channelList)
     }
+
 
 
 
@@ -182,11 +184,12 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
             HeightSpace(height = 15.dp)
             Row(modifier = Modifier.fillMaxWidth()) {
                 QuickAction(
+                    isSavedChannel = isChannelSaved,
                     icon = painterResource(R.drawable.icon_favorite_heart_hover_pinch),
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.favorite)
                 ){
-                    viewModel.saveChannel(myChannel = channelData.channel)
+                    viewModel.saveChannel(myChannel = serviceChannel?: MyChannel())
                 }
 
                 QuickAction(

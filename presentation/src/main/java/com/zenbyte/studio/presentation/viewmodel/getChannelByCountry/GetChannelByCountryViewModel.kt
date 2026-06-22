@@ -19,11 +19,13 @@ class GetChannelByCountryViewModel @Inject constructor(
     val getChannelByCountryUseCase: GetChannelByCountryUseCase
 ) : ViewModel() {
 
+
+
     private var channelListMutableStateFlow = MutableStateFlow<List<MyChannel>>(emptyList())
     val channelList = channelListMutableStateFlow.asStateFlow()
 
     init {
-        getChannelByCountry(countryName = "Bangladesh")
+        getChannelByCountry(countryName = "Israel")
     }
 
     fun getChannelByCountry(countryName: String) {

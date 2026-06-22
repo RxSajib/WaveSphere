@@ -30,4 +30,12 @@ class FavoriteChannelRepoImpl @Inject constructor(val favoriteChannelDao: Favori
            it.toDomain()
        }
     }
+
+    override fun isSavedChannel(stationuuid: String): Flow<Boolean> {
+        return favoriteChannelDao.isChannelSaved(stationuuid = stationuuid)
+    }
+
+    override suspend fun removeChannel(channelID: String) {
+        favoriteChannelDao.deleteChannel(channelID)
+    }
 }
