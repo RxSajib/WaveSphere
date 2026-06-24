@@ -28,6 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zenbyte.studio.presentation.viewmodel.premium.PremiumViewModel
 import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.wavesphere.ui.component.HeightSpace
+import com.zenbyte.studio.wavesphere.ui.component.MyCustomAppBar
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomButton
 import com.zenbyte.studio.wavesphere.ui.component.PremiumBenefitsCard
 import com.zenbyte.studio.wavesphere.ui.component.SubscriptionPlanCardItem
@@ -39,7 +40,14 @@ fun PremiumScreen() {
     val viewModel: PremiumViewModel = hiltViewModel()
     val selectedItem = viewModel.selectedItem.collectAsStateWithLifecycle()
 
-    Scaffold { innerPadding ->
+    Scaffold(
+        topBar = {
+            MyCustomAppBar(
+                title = stringResource(R.string.premium_lowercase),
+                isPremiumEnable = false
+            ) { }
+        }
+    ) { innerPadding ->
 
         Column(
             modifier = Modifier
@@ -48,7 +56,6 @@ fun PremiumScreen() {
                 .verticalScroll(state = rememberScrollState())
                 .background(color = MaterialTheme.colorScheme.surface)
         ) {
-            HeightSpace(height = 20.dp)
             Text(
                 text = stringResource(R.string.go_premium),
                 style = MaterialTheme.typography.titleLarge.copy(

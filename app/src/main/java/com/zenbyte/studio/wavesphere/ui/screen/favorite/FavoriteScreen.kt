@@ -64,7 +64,6 @@ fun FavoriteScreen(modifier: Modifier = Modifier) {
                     key = { it.stationuuid }
                 ) { myChannel ->
 
-
                     Swipeable(
                         behavior = SwipeBehavior.REVEAL,
                         rightRevealActions = listOf(
@@ -87,8 +86,8 @@ fun FavoriteScreen(modifier: Modifier = Modifier) {
                             myChannel = myChannel,
                             modifier = Modifier
                         )
-
                     }
+
                 }
             }
 
