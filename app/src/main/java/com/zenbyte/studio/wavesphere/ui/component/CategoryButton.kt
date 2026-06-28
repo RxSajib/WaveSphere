@@ -3,13 +3,16 @@ package com.zenbyte.studio.wavesphere.ui.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,12 +30,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.zenbyte.studio.presentation.ui.component.HeightGap
+import com.zenbyte.studio.presentation.ui.component.MyCustomStationShimmerItem
+import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
-import com.zenbyte.studio.wavesphere.ui.theme.countryColor
-import com.zenbyte.studio.wavesphere.ui.theme.genresColor
-import com.zenbyte.studio.wavesphere.ui.theme.languagesColor
-import com.zenbyte.studio.wavesphere.ui.theme.newsColor
+import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.ui.theme.countryColor
+import com.zenbyte.studio.presentation.ui.theme.genresColor
+import com.zenbyte.studio.presentation.ui.theme.languagesColor
+import com.zenbyte.studio.presentation.ui.theme.newsColor
 
 @Composable
 fun CategoryButton(
@@ -63,7 +69,7 @@ fun CategoryButton(
                 colorFilter = ColorFilter.tint(color = color)
             )
         }
-        HeightSpace(height = 10.dp)
+        HeightGap(height = 10.dp)
         Text(
             text = categoryTitle,
             modifier = Modifier.fillMaxWidth(),
@@ -95,7 +101,7 @@ fun CategoryList(
                 onClickCountry.invoke(category)
             })
 
-        WidthSpace(10.dp)
+        WidthGap(10.dp)
         CategoryButton(
             modifier = Modifier.weight(1f),
             color = languagesColor,
@@ -104,7 +110,7 @@ fun CategoryList(
             onClickCategory = { category ->
                 onClickLanguages.invoke(category)
             })
-        WidthSpace(10.dp)
+        WidthGap(10.dp)
         CategoryButton(
             modifier = Modifier.weight(1f),
             color = genresColor,
@@ -113,7 +119,7 @@ fun CategoryList(
             onClickCategory = { category ->
                 onClickGenres.invoke(category)
             })
-        WidthSpace(10.dp)
+        WidthGap(10.dp)
         CategoryButton(
             modifier = Modifier.weight(1f),
             color = newsColor,
@@ -129,5 +135,13 @@ fun CategoryList(
 @Composable
 @Preview
 fun CategoryButtonPreview() {
-    CategoryList(onClickCountry = {}, onClickLanguages = {}, onClickGenres = {}, onClickNews = {})
+   // CategoryList(onClickCountry = {}, onClickLanguages = {}, onClickGenres = {}, onClickNews = {})
+    LazyVerticalGrid(modifier = Modifier.fillMaxSize(), columns = GridCells.Fixed(3),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        contentPadding = PaddingValues(16.dp)) {
+        items(30){
+            MyCustomStationShimmerItem()
+        }
+    }
 }

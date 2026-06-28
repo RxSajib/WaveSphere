@@ -2,7 +2,6 @@ package com.zenbyte.studio.wavesphere.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,9 +32,11 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 
 import androidx.compose.runtime.remember
+import com.zenbyte.studio.presentation.ui.component.HeightGap
+import com.zenbyte.studio.presentation.ui.component.WidthGap
 
 @Composable
 fun ChannelItem(modifier: Modifier, context: PlatformContext, myChannel: MyChannel) {
@@ -98,7 +98,7 @@ fun ChannelItem(modifier: Modifier, context: PlatformContext, myChannel: MyChann
 
 
 
-        WidthSpace(width = 16.dp)
+        WidthGap(width = 16.dp)
 
         Column(modifier = Modifier.weight(1f)) {
 
@@ -112,7 +112,7 @@ fun ChannelItem(modifier: Modifier, context: PlatformContext, myChannel: MyChann
                     color = MaterialTheme.colorScheme.primary
                 )
             )
-            HeightSpace(height = 2.dp)
+            HeightGap(height = 2.dp)
 
             Text(
                 text = myChannel.tags,

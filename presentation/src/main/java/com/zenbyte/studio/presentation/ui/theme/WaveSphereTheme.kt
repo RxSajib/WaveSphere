@@ -1,4 +1,4 @@
-package com.zenbyte.studio.wavesphere.ui.theme
+package com.zenbyte.studio.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

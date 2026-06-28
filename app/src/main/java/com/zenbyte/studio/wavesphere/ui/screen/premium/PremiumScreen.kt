@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -25,14 +24,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.zenbyte.studio.presentation.ui.component.HeightGap
+import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.presentation.viewmodel.premium.PremiumViewModel
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.component.HeightSpace
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomAppBar
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomButton
 import com.zenbyte.studio.wavesphere.ui.component.PremiumBenefitsCard
 import com.zenbyte.studio.wavesphere.ui.component.SubscriptionPlanCardItem
-import com.zenbyte.studio.wavesphere.ui.component.WidthSpace
 
 @Composable
 fun PremiumScreen() {
@@ -65,7 +64,7 @@ fun PremiumScreen() {
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
-            HeightSpace(height = 5.dp)
+            HeightGap(height = 5.dp)
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 Text(
@@ -91,7 +90,7 @@ fun PremiumScreen() {
                     .padding(horizontal = 16.dp)
             )
 
-            HeightSpace(height = 20.dp)
+            HeightGap(height = 20.dp)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -113,7 +112,7 @@ fun PremiumScreen() {
                     }
                 )
 
-                WidthSpace(width = 20.dp)
+                WidthGap(width = 20.dp)
 
                 SubscriptionPlanCardItem(
                     modifier = Modifier.weight(1f),
@@ -131,7 +130,7 @@ fun PremiumScreen() {
 
             }
 
-            HeightSpace(height = 20.dp)
+            HeightGap(height = 20.dp)
             MyCustomButton(
                 title = stringResource(R.string.start_premium),
                 modifier = Modifier
@@ -139,7 +138,7 @@ fun PremiumScreen() {
                     .padding(horizontal = 16.dp),
                 onClickButton = {},
             )
-            HeightSpace(height = 20.dp)
+            HeightGap(height = 20.dp)
         }
     }
     //  }

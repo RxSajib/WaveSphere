@@ -1,12 +1,11 @@
 package com.zenbyte.studio.presentation.viewmodel.getChannelByCountry
 
-import android.content.res.Resources
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.usecase.GetChannelByCountryUseCase
 import com.zenbyte.studio.domain.utils.Resource
+import com.zenbyte.studio.presentation.viewmodel.state.ApiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,9 +19,9 @@ class GetChannelByCountryViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-
-    private var channelListMutableStateFlow = MutableStateFlow<List<MyChannel>>(emptyList())
+    private var channelListMutableStateFlow = MutableStateFlow<ApiState<MyChannel>>(ApiState())
     val channelList = channelListMutableStateFlow.asStateFlow()
+
 
     init {
         getChannelByCountry(countryName = "Israel")
@@ -30,17 +29,20 @@ class GetChannelByCountryViewModel @Inject constructor(
 
     fun getChannelByCountry(countryName: String) {
         viewModelScope.launch {
+            channelListMutableStateFlow.emit(ApiState( isLoading = true))
             when(val response = getChannelByCountryUseCase.getChannelByCountry(countryName)){
                is Resource.Success -> {
-                   channelListMutableStateFlow.emit(response.data?: emptyList())
+                   channelListMutableStateFlow.emit(ApiState(data = response.data?: emptyList(), isSuccess = true, isLoading = false))
                }
                is Resource.Error -> {
-                   channelListMutableStateFlow.emit(emptyList())
+                   channelListMutableStateFlow.emit(ApiState(errorMessage = response.message, isSuccess = false, isLoading = false))
+                   channelListMutableStateFlow.emit(ApiState(data = emptyList()))
                }
                is Resource.Loading -> {
-
+                   channelListMutableStateFlow.emit(ApiState( isLoading = true))
                }
            }
         }
     }
+
 }

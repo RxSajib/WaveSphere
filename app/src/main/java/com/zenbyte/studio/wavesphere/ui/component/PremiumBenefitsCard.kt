@@ -12,6 +12,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.wavesphere.R
 
 @Composable
@@ -32,7 +33,7 @@ fun PremiumBenefitsCard(modifier: Modifier = Modifier) {
             details = stringResource(R.string.ad_free_experience_details)
         )
 
-        HeightSpace(height = 5.dp)
+        HeightGap(height = 5.dp)
 
         PremiumBenefitsItem(
             icon = painterResource(R.drawable.heart_tick_svgrepo_com),
@@ -40,7 +41,7 @@ fun PremiumBenefitsCard(modifier: Modifier = Modifier) {
             details = stringResource(R.string.unlimited_favorites_details)
         )
 
-        HeightSpace(height = 5.dp)
+        HeightGap(height = 5.dp)
 
         PremiumBenefitsItem(
             icon = painterResource(R.drawable.play_stream_svgrepo_com),
@@ -48,7 +49,7 @@ fun PremiumBenefitsCard(modifier: Modifier = Modifier) {
             details = stringResource(R.string.background_play_details)
         )
 
-        HeightSpace(height = 5.dp)
+        HeightGap(height = 5.dp)
 
         PremiumBenefitsItem(
             icon = painterResource(R.drawable.icon_clock),
@@ -56,7 +57,7 @@ fun PremiumBenefitsCard(modifier: Modifier = Modifier) {
             details = stringResource(R.string.sleep_timer_details)
         )
 
-        HeightSpace(height = 5.dp)
+        HeightGap(height = 5.dp)
 
         PremiumBenefitsItem(
             icon = painterResource(R.drawable.high_definition_svgrepo_com),

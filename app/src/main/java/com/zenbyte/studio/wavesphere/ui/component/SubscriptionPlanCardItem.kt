@@ -7,34 +7,28 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
-import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
-import com.zenbyte.studio.wavesphere.ui.theme.buttonColor
-import java.util.Locale
-import java.util.Locale.getDefault
+import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.ui.theme.buttonColor
 import androidx.compose.ui.platform.LocalLocale
-import com.zenbyte.studio.wavesphere.ui.theme.genresColor
+import com.zenbyte.studio.presentation.ui.component.HeightGap
+import com.zenbyte.studio.presentation.ui.theme.genresColor
 
 @Composable
 fun SubscriptionPlanCardItem(
@@ -92,7 +86,7 @@ fun SubscriptionPlanCardItem(
             )
         )
 
-        HeightSpace(height = 10.dp)
+        HeightGap(height = 10.dp)
 
         val constraintSet = ConstraintSet {
             val price = createRefFor("price")
@@ -129,7 +123,7 @@ fun SubscriptionPlanCardItem(
 
         note?.let { note ->
             Column() {
-                HeightSpace(height = 10.dp)
+                HeightGap(height = 10.dp)
                 Text(
                     text = note,
                     style = MaterialTheme.typography.titleSmall.copy(

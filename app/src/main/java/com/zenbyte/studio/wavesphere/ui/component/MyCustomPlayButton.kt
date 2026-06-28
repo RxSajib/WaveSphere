@@ -10,9 +10,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.theme.buttonColor
-import com.zenbyte.studio.wavesphere.ui.theme.playButtonColor
-import com.zenbyte.studio.wavesphere.ui.theme.playIconColor
+import com.zenbyte.studio.presentation.ui.theme.playButtonColor
+import com.zenbyte.studio.presentation.ui.theme.playIconColor
 
 @Composable
 fun MyCustomPlayButton(modifier: Modifier = Modifier) {

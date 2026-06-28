@@ -18,11 +18,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import coil3.compose.LocalPlatformContext
+import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.presentation.viewmodel.search.SearchViewModel
 import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.wavesphere.ui.component.ChannelItem
 import com.zenbyte.studio.wavesphere.ui.component.CountryItem
-import com.zenbyte.studio.wavesphere.ui.component.HeightSpace
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomInputFiled
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomMenuGroup
 import com.zenbyte.studio.wavesphere.ui.navigation.AppDestination
@@ -38,7 +38,7 @@ fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackSt
     val newsList = viewModel.newsList.collectAsStateWithLifecycle()
 
     Column(modifier = Modifier.fillMaxSize()) {
-        HeightSpace(height = 10.dp)
+        HeightGap(height = 10.dp)
         MyCustomInputFiled(
             placeHolderText = stringResource(R.string.search_input_hilt),
             text = searchData.value,
@@ -54,7 +54,7 @@ fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackSt
             }
         ) {}
 
-        HeightSpace(height = 20.dp)
+        HeightGap(height = 20.dp)
         MyCustomMenuGroup(
             viewModel = viewModel,
             modifier = Modifier.padding(horizontal = 16.dp),

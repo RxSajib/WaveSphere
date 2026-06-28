@@ -38,20 +38,21 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import com.zenbyte.studio.domain.model.MyChannel
+import com.zenbyte.studio.presentation.ui.component.HeightGap
+import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.presentation.viewmodel.playerView.PlayerViewModel
-import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.wavesphere.app.MyApplication
 import com.zenbyte.studio.wavesphere.root.LocalPlayerService
 import com.zenbyte.studio.wavesphere.service.PlayerService
-import com.zenbyte.studio.wavesphere.ui.component.HeightSpace
 import com.zenbyte.studio.wavesphere.ui.component.LiveTag
 import com.zenbyte.studio.wavesphere.ui.component.MusicController
 import com.zenbyte.studio.wavesphere.ui.component.PremiumTag
 import com.zenbyte.studio.wavesphere.ui.component.QuickAction
-import com.zenbyte.studio.wavesphere.ui.component.WidthSpace
 import com.zenbyte.studio.wavesphere.ui.navigation.AppDestination
+import com.zenbyte.studio.presentation.ui.theme.genresColor
 import dev.vivvvek.seeker.Seeker
+import dev.vivvvek.seeker.SeekerDefaults
 
 private const val TAG = "PlayerViewScreen"
 @OptIn(ExperimentalMaterial3Api::class)
@@ -140,7 +141,7 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
             PremiumTag {
 
             }
-            HeightSpace(height = 15.dp)
+            HeightGap(height = 15.dp)
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth(.5f)
@@ -151,7 +152,7 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
                 error = painterResource(R.drawable.applogowhite),
                 contentDescription = null
             )
-            HeightSpace(height = 15.dp)
+            HeightGap(height = 15.dp)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = currentChannel.name,
@@ -160,7 +161,7 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
                         fontWeight = FontWeight.Bold
                     )
                 )
-                WidthSpace(width = 5.dp)
+                WidthGap(width = 5.dp)
                 Icon(
                     painter = painterResource(R.drawable.ic_verified),
                     contentDescription = null,
@@ -179,9 +180,9 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            HeightSpace(height = 15.dp)
+            HeightGap(height = 15.dp)
             LiveTag()
-            HeightSpace(height = 15.dp)
+            HeightGap(height = 15.dp)
             Row(modifier = Modifier.fillMaxWidth()) {
                 QuickAction(
                     isSavedChannel = isChannelSaved,
@@ -217,7 +218,7 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
                 }
             }
 
-            HeightSpace(height = 15.dp)
+            HeightGap(height = 15.dp)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -230,6 +231,10 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
 
                 Seeker(
                     value = volume.value,
+                    colors = SeekerDefaults.seekerColors(
+                        thumbColor = genresColor,
+                        progressColor = genresColor.copy(alpha = 0.5f)
+                    ),
                     range = 1f..100f,
                     onValueChange = { value ->
                         viewModel.updateVolume(value)
@@ -242,12 +247,12 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
                     modifier = Modifier.size(18.dp)
                 )
             }
-            HeightSpace(height = 15.dp)
+            HeightGap(height = 15.dp)
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 MusicController(icon = painterResource(R.drawable.previous_svgrepo_com)) {
                     playerService?.playPrevious()
                 }
-                WidthSpace(width = 10.dp)
+                WidthGap(width = 10.dp)
                 MusicController(
                     isLoading = isLoading?.value == true,
                     isPlayPushButton = true,
@@ -269,7 +274,7 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
                         playerService?.playChannel(currentChannel)
                     }
                 }
-                WidthSpace(width = 10.dp)
+                WidthGap(width = 10.dp)
                 MusicController(icon = painterResource(R.drawable.next_svgrepo_com)) {
                     playerService?.playNext()
                 }

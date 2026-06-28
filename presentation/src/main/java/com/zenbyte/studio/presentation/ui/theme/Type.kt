@@ -1,15 +1,16 @@
-package com.zenbyte.studio.wavesphere.ui.theme
+package com.zenbyte.studio.presentation.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.zenbyte.studio.wavesphere.R
+import com.zenbyte.studio.presentation.R
 
 @Composable
 fun adjustedFontSize(baseSize: Float): TextUnit {
@@ -29,7 +30,7 @@ fun adjustedFontSize(baseSize: Float): TextUnit {
 fun getMaterialTypography(): Typography {
 
     val poppinsRegular = FontFamily(
-        androidx.compose.ui.text.font.Font(
+        Font(
             R.font.poppins_regular,
             weight = FontWeight.Normal
         )

@@ -22,7 +22,7 @@ import androidx.annotation.OptIn
 import androidx.media3.common.util.UnstableApi
 import com.zenbyte.studio.wavesphere.service.PlayerService
 import com.zenbyte.studio.wavesphere.ui.navigation.RootNavigation
-import com.zenbyte.studio.wavesphere.ui.theme.WaveSphereTheme
+import com.zenbyte.studio.presentation.ui.theme.WaveSphereTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 val LocalPlayerService = compositionLocalOf<PlayerService?> { null }

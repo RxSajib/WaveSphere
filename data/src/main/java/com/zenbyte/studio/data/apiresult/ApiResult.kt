@@ -6,11 +6,11 @@ import retrofit2.HttpException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-suspend fun <T> apiResult(
+suspend fun <T> safeApiCall(
     apiCall: suspend () ->T
 ) : Resource<T> {
     return try {
-        val result = apiCall()
+        val result = apiCall.invoke()
         Resource.Success(data = result)
     }catch (e : IOException){
         Resource.Error(message = "Check your internet connection")

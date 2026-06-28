@@ -1,4 +1,4 @@
-package com.zenbyte.studio.wavesphere.ui.component
+package com.zenbyte.studio.presentation.ui.component
 
 import androidx.annotation.RawRes
 import androidx.compose.runtime.Composable

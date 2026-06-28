@@ -13,9 +13,9 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
+import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.presentation.viewmodel.player.PlayerViewModel
 import com.zenbyte.studio.wavesphere.ui.component.GeneralSetting
-import com.zenbyte.studio.wavesphere.ui.component.HeightSpace
 import com.zenbyte.studio.wavesphere.ui.component.OtherSetting
 import com.zenbyte.studio.wavesphere.ui.component.PremiumStatusCard
 import com.zenbyte.studio.wavesphere.ui.navigation.AppDestination
@@ -30,9 +30,9 @@ fun PlayerScreen(rootBackStack: NavBackStack<NavKey>) {
     Column(modifier = Modifier
         .fillMaxSize()
         .verticalScroll(state = rememberScrollState())) {
-        HeightSpace(height = 10.dp)
+        HeightGap(height = 10.dp)
         PremiumStatusCard(modifier = Modifier.padding(horizontal = 16.dp))
-        HeightSpace(height = 15.dp)
+        HeightGap(height = 15.dp)
         GeneralSetting(
             modifier = Modifier.padding(horizontal = 16.dp),
             onClickEqualizer = {},
@@ -54,7 +54,7 @@ fun PlayerScreen(rootBackStack: NavBackStack<NavKey>) {
                 )
             }
         )
-        HeightSpace(height = 15.dp)
+        HeightGap(height = 15.dp)
         OtherSetting(
             modifier = Modifier.padding(horizontal = 16.dp), onClickAbout = {
                 rootBackStack.add(
@@ -74,6 +74,6 @@ fun PlayerScreen(rootBackStack: NavBackStack<NavKey>) {
             },
             onClickRecording = {}
         )
-        HeightSpace(height = 10.dp)
+        HeightGap(height = 10.dp)
     }
 }

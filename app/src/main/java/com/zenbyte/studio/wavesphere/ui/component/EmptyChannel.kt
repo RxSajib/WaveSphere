@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 
 @Composable
 fun EmptyChannel() {

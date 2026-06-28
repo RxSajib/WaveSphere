@@ -19,16 +19,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.PlatformContext
 import coil3.compose.AsyncImage
-import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.zenbyte.studio.domain.model.MyCountry
+import com.zenbyte.studio.presentation.ui.component.HeightGap
+import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 
 @Composable
 fun CountryItem(context: PlatformContext, country: MyCountry?, onClickCountry: (MyCountry) -> Unit) {
@@ -53,7 +53,7 @@ fun CountryItem(context: PlatformContext, country: MyCountry?, onClickCountry: (
             contentDescription = null,
             contentScale = ContentScale.FillBounds
         )
-        WidthSpace(width = 16.dp)
+        WidthGap(width = 16.dp)
 
         Column(modifier = Modifier.weight(1f)) {
 
@@ -66,7 +66,7 @@ fun CountryItem(context: PlatformContext, country: MyCountry?, onClickCountry: (
                     fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary
                 )
             )
-            HeightSpace(height = 2.dp)
+            HeightGap(height = 2.dp)
 
             Text(
                 text = "${country?.stationCount} ${stringResource(R.string.channel)}",

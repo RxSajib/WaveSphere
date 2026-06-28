@@ -1,6 +1,5 @@
 package com.zenbyte.studio.wavesphere.ui.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -28,8 +27,10 @@ import coil3.PlatformContext
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
+import com.zenbyte.studio.presentation.ui.component.HeightGap
+import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.theme.buttonColor
+import com.zenbyte.studio.presentation.ui.theme.buttonColor
 
 @Composable
 fun NowPlayingComponent(context: PlatformContext) {
@@ -60,7 +61,7 @@ fun NowPlayingComponent(context: PlatformContext) {
             )
             LiveTag()
         }
-        HeightSpace(height = 15.dp)
+        HeightGap(height = 15.dp)
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(
                 model = ImageRequest.Builder(context)
@@ -75,7 +76,7 @@ fun NowPlayingComponent(context: PlatformContext) {
                     .clip(shape = RoundedCornerShape(15.dp)),
                 contentScale = ContentScale.Crop
             )
-            WidthSpace(width = 10.dp)
+            WidthGap(width = 10.dp)
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
                 Text(
                     text = "FOORTI 88.0 FM",
@@ -98,7 +99,7 @@ fun NowPlayingComponent(context: PlatformContext) {
                 )
             }
 
-            WidthSpace(width = 5.dp)
+            WidthGap(width = 5.dp)
             MyCustomPlayButton()
         }
     }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,9 +29,10 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.zenbyte.studio.domain.model.MyChannel
+import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
-import com.zenbyte.studio.wavesphere.ui.theme.genresColor
+import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.ui.theme.genresColor
 
 @Composable
 fun MyCustomStation(
@@ -109,7 +109,7 @@ fun MyCustomStation(
 
         }
 
-        HeightSpace(height = 10.dp)
+        HeightGap(height = 10.dp)
         Text(
             text = myChannel.name,
             modifier = Modifier.fillMaxWidth(),

@@ -22,11 +22,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
+import com.zenbyte.studio.presentation.ui.component.HeightGap
+import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
-import com.zenbyte.studio.wavesphere.ui.theme.buttonColor
-import com.zenbyte.studio.wavesphere.ui.theme.genresColor
+import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.ui.theme.genresColor
 
 @Composable
 fun PremiumStatusCard(modifier: Modifier) {
@@ -48,7 +48,7 @@ fun PremiumStatusCard(modifier: Modifier) {
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
-        HeightSpace(height = 10.dp)
+        HeightGap(height = 10.dp)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -67,7 +67,7 @@ fun PremiumStatusCard(modifier: Modifier) {
                 contentDescription = null,
                 modifier = Modifier.size(50.dp)
             )
-            WidthSpace(width = 10.dp)
+            WidthGap(width = 10.dp)
 
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
                 Text(

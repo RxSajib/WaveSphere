@@ -19,9 +19,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
-import com.zenbyte.studio.wavesphere.ui.theme.genresColor
+import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.ui.theme.genresColor
 
 @Composable
 fun PremiumTag(onClick : () -> Unit) {
@@ -43,7 +44,7 @@ fun PremiumTag(onClick : () -> Unit) {
             colorFilter = ColorFilter.tint(color = genresColor),
             modifier = Modifier.size(15.dp)
         )
-        WidthSpace(width = 5.dp)
+        WidthGap(width = 5.dp)
         Text(
             text = stringResource(R.string.premium),
             style = MaterialTheme.typography.titleSmall.copy(

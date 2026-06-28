@@ -1,4 +1,4 @@
-package com.zenbyte.studio.wavesphere.ui.component
+package com.zenbyte.studio.presentation.ui.component
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -9,11 +9,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HeightSpace(height : Dp ) {
+fun HeightGap(height : Dp = 0.dp) {
     Spacer(modifier = Modifier.height(height))
 }
 
 @Composable
-fun WidthSpace(width : Dp) {
+fun WidthGap(width : Dp = 0.dp) {
     Spacer(modifier = Modifier.width(width))
 }

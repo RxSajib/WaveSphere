@@ -35,15 +35,15 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomAppBar
-import com.zenbyte.studio.wavesphere.ui.component.WidthSpace
 import com.zenbyte.studio.wavesphere.ui.screen.favorite.FavoriteScreen
 import com.zenbyte.studio.wavesphere.ui.screen.home.HomeScreen
 import com.zenbyte.studio.wavesphere.ui.screen.player.PlayerScreen
 import com.zenbyte.studio.wavesphere.ui.screen.search.SearchScreen
-import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
-import com.zenbyte.studio.wavesphere.ui.theme.buttonColor
+import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.ui.theme.buttonColor
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 
@@ -147,7 +147,7 @@ fun BottomAppBarNavigation(rootBackStack: NavBackStack<NavKey>) {
                                 null,
                                 modifier = Modifier.size(24.dp)
                             )
-                            WidthSpace(width = 2.dp)
+                            WidthGap(width = 2.dp)
                             Text(
                                 stringResource(R.string.home),
                                 style = MaterialTheme.typography.titleSmall.copy(
@@ -180,7 +180,7 @@ fun BottomAppBarNavigation(rootBackStack: NavBackStack<NavKey>) {
                                 null,
                                 modifier = Modifier.size(24.dp)
                             )
-                            WidthSpace(width = 2.dp)
+                            WidthGap(width = 2.dp)
                             Text(
                                 text = stringResource(R.string.search),
                                 style = MaterialTheme.typography.titleSmall.copy(
@@ -216,7 +216,7 @@ fun BottomAppBarNavigation(rootBackStack: NavBackStack<NavKey>) {
                                 null,
                                 modifier = Modifier.size(24.dp)
                             )
-                            WidthSpace(width = 2.dp)
+                            WidthGap(width = 2.dp)
                             Text(
                                 stringResource(R.string.favorite),
                                 style = MaterialTheme.typography.titleSmall.copy(

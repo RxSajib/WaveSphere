@@ -18,11 +18,10 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.theme.Black
-import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
-import com.zenbyte.studio.wavesphere.ui.theme.genresColor
-import com.zenbyte.studio.wavesphere.ui.theme.newsColor
+import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.ui.theme.genresColor
 
 @Composable
 fun QuickAction(isSavedChannel : Boolean?= null, modifier: Modifier, icon: Painter, title: String, isPremium: Boolean = false,
@@ -49,7 +48,7 @@ fun QuickAction(isSavedChannel : Boolean?= null, modifier: Modifier, icon: Paint
                 contentDescription = null,
                 modifier = Modifier.size(20.dp))
 
-            HeightSpace(height = 5.dp)
+            HeightGap(height = 5.dp)
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodySmall.copy(
@@ -57,7 +56,7 @@ fun QuickAction(isSavedChannel : Boolean?= null, modifier: Modifier, icon: Paint
                     color = MaterialTheme.colorScheme.primary
                 )
             )
-            HeightSpace(height = 2.dp)
+            HeightGap(height = 2.dp)
             if (isPremium) {
                 Text(
                     text = stringResource(R.string.premium),

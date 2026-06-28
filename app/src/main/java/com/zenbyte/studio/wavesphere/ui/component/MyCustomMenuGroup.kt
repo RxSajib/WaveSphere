@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.presentation.viewmodel.search.SearchViewModel
 import com.zenbyte.studio.wavesphere.R
 
@@ -27,7 +28,7 @@ fun MyCustomMenuGroup(viewModel: SearchViewModel, modifier: Modifier, onClickCou
                 onClickCountries.invoke()
             }
         )
-        WidthSpace(width = 15.dp)
+        WidthGap(width = 15.dp)
         MyCustomMenuButton(
             modifier = Modifier.weight(1f),
             isSelected = selectedMenuPosition.value == 2,
@@ -37,7 +38,7 @@ fun MyCustomMenuGroup(viewModel: SearchViewModel, modifier: Modifier, onClickCou
                 onClickGenres.invoke()
             }
         )
-        WidthSpace(width = 15.dp)
+        WidthGap(width = 15.dp)
         MyCustomMenuButton(
             modifier = Modifier.weight(1f),
             isSelected = selectedMenuPosition.value == 3,

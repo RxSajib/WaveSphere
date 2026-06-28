@@ -17,15 +17,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.LocalPlatformContext
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.component.HeightSpace
 import com.zenbyte.studio.wavesphere.ui.component.HomeHeader
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomStation
 import com.zenbyte.studio.wavesphere.ui.component.MySectionHeader
 import com.zenbyte.studio.wavesphere.ui.component.NowPlayingComponent
-
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.presentation.viewmodel.home.HomeViewModel
 import com.zenbyte.studio.wavesphere.MediaPlayerViewModel
 import com.zenbyte.studio.wavesphere.ui.component.CategoryList
@@ -56,10 +55,10 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
         item{
             HomeHeader()
-            HeightSpace(height = 20.dp)
+            HeightGap(height = 20.dp)
 
             NowPlayingComponent(context)
-            HeightSpace(height = 15.dp)
+            HeightGap(height = 15.dp)
             MySectionHeader(
                 title = stringResource(R.string.trending_stations),
                 showSeeAll = true,
@@ -67,7 +66,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
                 }
             )
-            HeightSpace(height = 20.dp)
+            HeightGap(height = 20.dp)
         }
 
 
@@ -90,19 +89,19 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         }
 
         item {
-            HeightSpace(height = 20.dp)
+            HeightGap(height = 20.dp)
             MySectionHeader(
                 title = stringResource(R.string.categories),
                 showSeeAll = false
             )
-            HeightSpace(height = 15.dp)
+            HeightGap(height = 15.dp)
             CategoryList(
                 onClickCountry = {},
                 onClickLanguages = {},
                 onClickGenres = {},
                 onClickNews = {}
             )
-            HeightSpace(height = 20.dp)
+            HeightGap(height = 20.dp)
             MySectionHeader(
                 title = stringResource(R.string.popular_stations),
                 showSeeAll = true,

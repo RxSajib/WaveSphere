@@ -1,15 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace = "com.zenbyte.studio.presentation"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 24
@@ -19,6 +16,12 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+
+
+    buildFeatures {
+        compose = true
+        buildConfig = true
     }
 
 }
@@ -43,4 +46,34 @@ dependencies {
 
     // paging3 dependency
     implementation(libs.androidx.paging.common)
+
+
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+
+
+
+
+
+    implementation(project(":domain"))
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    ksp(libs.kotlin.metadata.jvm)
+
+    // coil for image loading
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
+
+    // android lottie
+    implementation(libs.lottie.compose)
+
+    // android shimmer
+    implementation(libs.compose.shimmer)
+
 }

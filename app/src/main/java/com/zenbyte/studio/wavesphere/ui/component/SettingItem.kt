@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.wavesphere.R
 
 @Composable
@@ -37,7 +38,7 @@ fun SettingItem(
             painter = icon,
             contentDescription = null
         )
-        WidthSpace(width = 10.dp)
+        WidthGap(width = 10.dp)
         Text(
             text = title,
             style = MaterialTheme.typography.titleSmall.copy(
@@ -48,7 +49,7 @@ fun SettingItem(
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f)
         )
-        WidthSpace(width = 10.dp)
+        WidthGap(width = 10.dp)
         if (showToggle) {
             Switch(checked = setToggleButton, onCheckedChange = {
                 onToggleChanged?.invoke(it)

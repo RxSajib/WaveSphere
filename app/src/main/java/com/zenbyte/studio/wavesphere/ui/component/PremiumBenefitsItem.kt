@@ -1,6 +1,5 @@
 package com.zenbyte.studio.wavesphere.ui.component
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,9 +17,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.theme.adjustedFontSize
-import com.zenbyte.studio.wavesphere.ui.theme.buttonColor
+import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.ui.theme.buttonColor
 
 @Composable
 fun PremiumBenefitsItem(icon : Painter, title : String, details : String, iconColor : Color = buttonColor) {
@@ -30,7 +30,7 @@ fun PremiumBenefitsItem(icon : Painter, title : String, details : String, iconCo
             contentDescription = null,
             tint = iconColor
         )
-        WidthSpace(width = 10.dp)
+        WidthGap(width = 10.dp)
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,

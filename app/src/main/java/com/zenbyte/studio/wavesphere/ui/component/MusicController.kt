@@ -14,7 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
-import com.zenbyte.studio.wavesphere.ui.theme.genresColor
+import com.zenbyte.studio.presentation.ui.theme.genresColor
 
 @Composable
 fun MusicController(isLoading : Boolean = false, icon : Painter, isPlayPushButton : Boolean = false, onClick: () -> Unit) {

@@ -1,4 +1,4 @@
-package com.zenbyte.studio.wavesphere.ui.theme
+package com.zenbyte.studio.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

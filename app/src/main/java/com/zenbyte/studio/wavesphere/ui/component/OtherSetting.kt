@@ -15,8 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.wavesphere.R
-import org.intellij.lang.annotations.Language
 
 @Composable
 fun OtherSetting(
@@ -46,7 +46,7 @@ fun OtherSetting(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
-        HeightSpace(height = 10.dp)
+        HeightGap(height = 10.dp)
         SettingItem(
             title = stringResource(R.string.recording),
             icon = painterResource(R.drawable.recording_svgrepo_com),
