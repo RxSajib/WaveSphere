@@ -1,10 +1,10 @@
 package com.zenbyte.studio.wavesphere.ui.screen.search
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -19,10 +19,10 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import coil3.compose.LocalPlatformContext
 import com.zenbyte.studio.presentation.ui.component.HeightGap
+import com.zenbyte.studio.presentation.ui.screen.CountriesScreen
 import com.zenbyte.studio.presentation.viewmodel.search.SearchViewModel
 import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.wavesphere.ui.component.ChannelItem
-import com.zenbyte.studio.wavesphere.ui.component.CountryItem
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomInputFiled
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomMenuGroup
 import com.zenbyte.studio.wavesphere.ui.navigation.AppDestination
@@ -32,7 +32,7 @@ fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackSt
 
     val context = LocalPlatformContext.current
     val viewModel: SearchViewModel = hiltViewModel()
-    val countryList = viewModel.countryList.collectAsStateWithLifecycle(emptyList())
+    val countryList = viewModel.countryState.collectAsStateWithLifecycle()
     val searchData = viewModel.searchInput.collectAsStateWithLifecycle()
     val selectedMenuPosition = viewModel.selectedMenuPosition.collectAsStateWithLifecycle()
     val newsList = viewModel.newsList.collectAsStateWithLifecycle()
@@ -62,7 +62,7 @@ fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackSt
             onClickGenres = {},
             onClickNews = {}
         )
-        LazyColumn(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
@@ -73,19 +73,17 @@ fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackSt
                 )
         ) {
             if (selectedMenuPosition.value == 1) {
-                items(items = countryList.value) { country ->
-                    CountryItem(context = context, country = country) {
-                        rootBackStack.add(
-                            AppDestination.Dest(
-                                AppDestination.Dest.ChannelByCountry::class.simpleName ?: ""
-                            )
-                        )
-                    }
+                CountriesScreen(countryList = countryList, viewModel = viewModel){
+                      rootBackStack.add(
+                       AppDestination.Dest(
+                           AppDestination.Dest.ChannelByCountry::class.simpleName ?: ""
+                       )
+                   )
                 }
             } else if (selectedMenuPosition.value == 3) {
-                items(items = newsList.value) { news ->
-                    ChannelItem(modifier = Modifier.padding(horizontal = 10.dp), context = context, myChannel = news)
-                }
+                /*   items(items = newsList.value) { news ->
+                       ChannelItem(modifier = Modifier.padding(horizontal = 10.dp), context = context, myChannel = news)
+                   }*/
             }
         }
     }

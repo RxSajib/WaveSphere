@@ -7,6 +7,7 @@ import com.zenbyte.studio.domain.model.MyCountry
 import com.zenbyte.studio.domain.usecase.CountryListUseCase
 import com.zenbyte.studio.domain.usecase.SearchChannelUseCase
 import com.zenbyte.studio.domain.utils.Resource
+import com.zenbyte.studio.presentation.viewmodel.state.ApiState
 import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,10 +58,9 @@ class SearchViewModel @Inject constructor(
     private var selectedMenuPositionMutableStateFlow = MutableStateFlow(1)
     val selectedMenuPosition = selectedMenuPositionMutableStateFlow.asStateFlow()
 
-    private val countryListMutableStateFlow = MutableStateFlow<List<MyCountry>>(emptyList())
-    val countryList = countryListMutableStateFlow.asStateFlow().map {country ->
-        country.sortedBy { it.countryCode }
-    }
+    private val countryListMutableStateFlow = MutableStateFlow<ApiState<MyCountry>>(ApiState(isLoading = true))
+    val countryState = countryListMutableStateFlow.asStateFlow()
+
 
     fun setSelectedMenuPosition(position: Int){
         viewModelScope.launch {
@@ -77,13 +77,13 @@ class SearchViewModel @Inject constructor(
 
     fun getAllCountry(){
         viewModelScope.launch {
-            val response = countryListUseCase.getCountryList()
-            when(response){
+            countryListMutableStateFlow.emit(ApiState(isLoading = true))
+            when(val response = countryListUseCase.getCountryList()){
                 is Resource.Success -> {
-                    countryListMutableStateFlow.emit(response.data?: emptyList())
+                    countryListMutableStateFlow.emit(ApiState(data = response.data?: emptyList(), isSuccess = true))
                 }
                 is Resource.Error -> {
-                    countryListMutableStateFlow.emit(emptyList())
+                    countryListMutableStateFlow.emit(ApiState(errorMessage = response.message, isSuccess = false))
                 }
                 is Resource.Loading -> {
 
