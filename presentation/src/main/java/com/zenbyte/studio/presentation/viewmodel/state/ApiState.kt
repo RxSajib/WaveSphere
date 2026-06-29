@@ -7,5 +7,5 @@ data class ApiState<T>(
     val isSuccess : Boolean= false,
     val isLoading : Boolean= false,
     val errorMessage : String?= null,
-    val data: List<T> = emptyList()
+    val data: T?= null
 )

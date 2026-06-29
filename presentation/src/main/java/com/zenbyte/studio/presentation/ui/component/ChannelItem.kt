@@ -1,4 +1,4 @@
-package com.zenbyte.studio.wavesphere.ui.component
+package com.zenbyte.studio.presentation.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,12 +31,10 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.zenbyte.studio.domain.model.MyChannel
-import com.zenbyte.studio.wavesphere.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 
 import androidx.compose.runtime.remember
-import com.zenbyte.studio.presentation.ui.component.HeightGap
-import com.zenbyte.studio.presentation.ui.component.WidthGap
+import com.zenbyte.studio.presentation.R
 
 @Composable
 fun ChannelItem(modifier: Modifier, context: PlatformContext, myChannel: MyChannel) {

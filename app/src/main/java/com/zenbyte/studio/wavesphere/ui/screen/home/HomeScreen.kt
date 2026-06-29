@@ -28,7 +28,7 @@ import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.presentation.viewmodel.home.HomeViewModel
 import com.zenbyte.studio.wavesphere.MediaPlayerViewModel
 import com.zenbyte.studio.wavesphere.ui.component.CategoryList
-import com.zenbyte.studio.wavesphere.ui.component.ChannelItem
+import com.zenbyte.studio.presentation.ui.component.ChannelItem
 
 
 @SuppressLint("ConfigurationScreenWidthHeight")

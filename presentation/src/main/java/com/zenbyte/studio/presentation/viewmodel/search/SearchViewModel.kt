@@ -27,22 +27,23 @@ class SearchViewModel @Inject constructor(
     val searchInput = searchInputMutableStateFlow.asStateFlow()
 
 
-    private val newsListMutableStateFlow = MutableStateFlow<List<MyChannel>>(emptyList())
+    private val newsListMutableStateFlow = MutableStateFlow< ApiState<List<MyChannel>>>(ApiState(isLoading = true))
     val newsList = newsListMutableStateFlow.asStateFlow()
 
     fun getNewsList(countryCode : String){
         viewModelScope.launch {
+            newsListMutableStateFlow.emit(ApiState(isLoading = true))
             val response = searchChannelUseCase.getChannelBySearch(tag = "news", order = "news", countryCode = countryCode)
             when(response){
                 is Resource.Success -> {
                     MyCustomLogger.logMessageDebug(tag = TAG, message = response.data.toString())
-                    newsListMutableStateFlow.emit(response.data?: emptyList())
+                    newsListMutableStateFlow.emit(ApiState(data = response.data?: emptyList(), isLoading = false, isSuccess = true))
                 }
                 is Resource.Loading -> {
 
                 }
                 is Resource.Error -> {
-                    newsListMutableStateFlow.emit(emptyList())
+                    newsListMutableStateFlow.emit(ApiState(errorMessage = response.message, isLoading = false, isSuccess = false))
                 }
             }
         }
@@ -58,7 +59,7 @@ class SearchViewModel @Inject constructor(
     private var selectedMenuPositionMutableStateFlow = MutableStateFlow(1)
     val selectedMenuPosition = selectedMenuPositionMutableStateFlow.asStateFlow()
 
-    private val countryListMutableStateFlow = MutableStateFlow<ApiState<MyCountry>>(ApiState(isLoading = true))
+    private val countryListMutableStateFlow = MutableStateFlow<ApiState< List<MyCountry>>>(ApiState(isLoading = true))
     val countryState = countryListMutableStateFlow.asStateFlow()
 
 

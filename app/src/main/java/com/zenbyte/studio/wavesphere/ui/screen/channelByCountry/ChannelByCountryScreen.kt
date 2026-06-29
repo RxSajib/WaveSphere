@@ -60,13 +60,13 @@ fun ChannelByCountryScreen(backStack: NavBackStack<NavKey>) {
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     contentPadding = PaddingValues(16.dp)
                 ) {
-                    items(channelListState.data) { channelData ->
+                    items(channelListState.data?: emptyList()) { channelData ->
                         MyCustomStation(
                             isSelected = serviceChannel?.stationuuid == channelData.stationuuid,
                             context = contextCoil, myChannel = channelData,
                             onClick = {myChannel ->
                                 backStack.add(
-                                    AppDestination.Dest.PlayerView(channel = myChannel, channelList = channelListState.data)
+                                    AppDestination.Dest.PlayerView(channel = myChannel, channelList = channelListState.data?: emptyList())
                                 )
                             }
                         )

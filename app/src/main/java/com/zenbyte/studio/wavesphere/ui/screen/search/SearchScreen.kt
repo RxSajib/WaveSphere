@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -17,12 +16,11 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
-import coil3.compose.LocalPlatformContext
 import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.presentation.ui.screen.CountriesScreen
+import com.zenbyte.studio.presentation.ui.screen.NewsChannelListScreen
 import com.zenbyte.studio.presentation.viewmodel.search.SearchViewModel
 import com.zenbyte.studio.wavesphere.R
-import com.zenbyte.studio.wavesphere.ui.component.ChannelItem
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomInputFiled
 import com.zenbyte.studio.wavesphere.ui.component.MyCustomMenuGroup
 import com.zenbyte.studio.wavesphere.ui.navigation.AppDestination
@@ -30,7 +28,6 @@ import com.zenbyte.studio.wavesphere.ui.navigation.AppDestination
 @Composable
 fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackStack<NavKey>) {
 
-    val context = LocalPlatformContext.current
     val viewModel: SearchViewModel = hiltViewModel()
     val countryList = viewModel.countryState.collectAsStateWithLifecycle()
     val searchData = viewModel.searchInput.collectAsStateWithLifecycle()
@@ -73,17 +70,16 @@ fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackSt
                 )
         ) {
             if (selectedMenuPosition.value == 1) {
-                CountriesScreen(countryList = countryList, viewModel = viewModel){
-                      rootBackStack.add(
-                       AppDestination.Dest(
-                           AppDestination.Dest.ChannelByCountry::class.simpleName ?: ""
-                       )
-                   )
+                    CountriesScreen(countryList = countryList.value, viewModel = viewModel){
+                    rootBackStack.add(
+                        AppDestination.Dest(
+                            AppDestination.Dest.ChannelByCountry::class.simpleName ?: ""
+                        )
+                    )
                 }
+
             } else if (selectedMenuPosition.value == 3) {
-                /*   items(items = newsList.value) { news ->
-                       ChannelItem(modifier = Modifier.padding(horizontal = 10.dp), context = context, myChannel = news)
-                   }*/
+                NewsChannelListScreen(newsList = newsList, viewModel = viewModel)
             }
         }
     }

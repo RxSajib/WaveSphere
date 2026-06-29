@@ -19,7 +19,7 @@ class GetChannelByCountryViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    private var channelListMutableStateFlow = MutableStateFlow<ApiState<MyChannel>>(ApiState())
+    private var channelListMutableStateFlow = MutableStateFlow<ApiState< List<MyChannel>>>(ApiState())
     val channelList = channelListMutableStateFlow.asStateFlow()
 
 
@@ -32,7 +32,7 @@ class GetChannelByCountryViewModel @Inject constructor(
             channelListMutableStateFlow.emit(ApiState( isLoading = true))
             when(val response = getChannelByCountryUseCase.getChannelByCountry(countryName)){
                is Resource.Success -> {
-                   channelListMutableStateFlow.emit(ApiState(data = response.data?: emptyList(), isSuccess = true, isLoading = false))
+                   channelListMutableStateFlow.emit(ApiState(data = response.data, isSuccess = true, isLoading = false))
                }
                is Resource.Error -> {
                    channelListMutableStateFlow.emit(ApiState(errorMessage = response.message, isSuccess = false, isLoading = false))
