@@ -6,13 +6,22 @@ import androidx.media3.exoplayer.ExoPlayer
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.usecase.GetChannelByCountryUseCase
 import com.zenbyte.studio.domain.utils.Resource
+import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+private const val TAG = "HomeViewModel"
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     val getChannelByCountryUseCase: GetChannelByCountryUseCase
@@ -37,7 +46,7 @@ class HomeViewModel @Inject constructor(
 
     private fun getChannelByCountry(){
         viewModelScope.launch {
-            val response = getChannelByCountryUseCase.getChannelByCountry("Bangladesh")
+            val response = getChannelByCountryUseCase.getChannelByCountry("Israel")
             when(response){
                 is Resource.Success -> {
                     channelMutableStateFlow.emit(response.data?: emptyList())

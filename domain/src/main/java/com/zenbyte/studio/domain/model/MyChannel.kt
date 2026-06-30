@@ -13,5 +13,7 @@ data class MyChannel(
     val favicon : String = "",
     val language : String = "",
     val votes : Int = 0,
-    val tags : String = ""
+    val tags : String = "",
+    val lastcheckok : Int = 0,
+    val sslError : Int = 0
 )

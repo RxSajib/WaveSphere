@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 android {
@@ -29,20 +30,16 @@ android {
 dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.media3.exoplayer)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
-
+    implementation(libs.androidx.constraintlayout.compose)
     api(project(":domain"))
     implementation(project(":data"))
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
-    // hilt android
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
-    ksp(libs.kotlin.metadata.jvm)
+
 
     // paging3 dependency
     implementation(libs.androidx.paging.common)
@@ -75,5 +72,27 @@ dependencies {
 
     // android shimmer
     implementation(libs.compose.shimmer)
+
+    //kotlin x serilization json
+    implementation(libs.kotlin.serialization.json)
+
+    // navigation
+    implementation(libs.navigation3.ui)
+    implementation(libs.jetbrains.lifecycle.viewmodelNavigation3)
+
+    // exo player android
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.dash)
+    implementation(libs.androidx.media3.session)
+
+    // hilt navigation compose
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.swipeable.kmp)
+
+    // icon ectended
+    implementation(libs.material.icons.extended)
+
+    implementation(libs.seeker)
 
 }

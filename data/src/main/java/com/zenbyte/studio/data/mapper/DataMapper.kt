@@ -18,7 +18,9 @@ fun ChannelDtoItem.toDomain(): MyChannel {
         language = this.language,
         votes = this.votes,
         tags = this.tags,
-        name = this.name
+        name = this.name,
+        lastcheckok = this.lastcheckok,
+        sslError = this.ssl_error,
     )
 }
 
@@ -33,7 +35,9 @@ fun MyFavoriteChannel.toDomain(): MyChannel {
         language = this.language,
         votes = this.votes,
         tags = this.tags,
-        name = this.name
+        name = this.name,
+        lastcheckok = this.lastcheckok,
+        sslError = this.ssl_error
     )
 }
 

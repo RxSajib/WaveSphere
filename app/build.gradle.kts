@@ -50,7 +50,7 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.constraintlayout.compose)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.navigation3.ui)
@@ -88,6 +88,7 @@ dependencies {
     // exo player android
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.exoplayer.dash)
+    implementation(libs.androidx.media3.exoplayer.hls)
     implementation(libs.androidx.media3.session)
 
     // navigation
@@ -112,5 +113,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.swipeable.kmp)
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.11.0")
 
 }

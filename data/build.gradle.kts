@@ -13,11 +13,7 @@ val secrets = Properties().apply {
 
 android {
     namespace = "com.zenbyte.studio.data"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 24
@@ -41,6 +37,10 @@ android {
         buildConfig = true
     }
 
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {

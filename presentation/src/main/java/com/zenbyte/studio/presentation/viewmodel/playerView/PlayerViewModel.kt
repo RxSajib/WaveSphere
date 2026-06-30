@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.usecase.GetSingleSaveChannel
 import com.zenbyte.studio.domain.usecase.IsChannelSavedUseCase
+import com.zenbyte.studio.domain.usecase.MediaPlayControllerUseCase
 import com.zenbyte.studio.domain.usecase.RemoveSaveChannelUseCase
 import com.zenbyte.studio.domain.usecase.SaveChannelUseCase
 import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
@@ -28,8 +29,31 @@ class PlayerViewModel @Inject constructor(
     val saveChannelUseCase: SaveChannelUseCase,
     val getSingleSaveChannel: GetSingleSaveChannel,
     val isChannelSavedUseCase: IsChannelSavedUseCase,
-    val removeSaveChannelUseCase: RemoveSaveChannelUseCase
+    val removeSaveChannelUseCase: RemoveSaveChannelUseCase,
+    val mediaPlayControllerUseCase: MediaPlayControllerUseCase
 ) : ViewModel() {
+
+
+    val currentChannel = mediaPlayControllerUseCase.playerController.currentChannel
+    val isPlaying = mediaPlayControllerUseCase.playerController.isPlaying
+    val isLoading = mediaPlayControllerUseCase.playerController.isLoading
+
+    fun playAudio(myChannel: List<MyChannel>, index: Int) {
+        mediaPlayControllerUseCase.playAudio(myChannel, index)
+    }
+
+    fun pauseAudio() {
+        mediaPlayControllerUseCase.playerController.pause()
+    }
+
+    fun nextPlayBack() {
+        mediaPlayControllerUseCase.playerController.next()
+    }
+
+    fun previousPlayBack() {
+        mediaPlayControllerUseCase.playerController.previous()
+    }
+
 
     private val _volume = MutableStateFlow(50f)
     val volume = _volume.asStateFlow()
