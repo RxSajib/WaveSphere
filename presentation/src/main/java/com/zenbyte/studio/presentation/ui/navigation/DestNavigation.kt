@@ -65,7 +65,7 @@ fun DestNavigation(
     }
 
 
-    val backStack = rememberNavBackStack(appConfig, firstDest)
+ /*   val backStack = rememberNavBackStack(appConfig, firstDest)
 
     Box(modifier = Modifier.fillMaxSize()) {
         NavDisplay(
@@ -78,7 +78,7 @@ fun DestNavigation(
             entryProvider = entryProvider {
 
                 entry<AppDestination.Dest.ChannelByCountry> {
-                    ChannelByCountryScreen(backStack)
+                    ChannelByCountryScreen(backStack, countryName)
                 }
                 entry<AppDestination.Dest.PlayerView> {channelData ->
                     PlayerViewScreen(channelData)
@@ -105,7 +105,7 @@ fun DestNavigation(
             },
         )
 
-    }
+    }*/
 
 
 }

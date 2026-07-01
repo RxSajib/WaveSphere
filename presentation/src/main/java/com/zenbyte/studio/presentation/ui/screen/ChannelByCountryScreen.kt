@@ -12,8 +12,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -28,11 +26,13 @@ import com.zenbyte.studio.presentation.ui.component.MyCustomStationShimmerItem
 import com.zenbyte.studio.presentation.ui.component.ServerError
 import com.zenbyte.studio.presentation.viewmodel.getChannelByCountry.GetChannelByCountryViewModel
 import com.zenbyte.studio.presentation.ui.navigation.AppDestination
-import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 
 private const val TAG = "ChannelByCountryScreen"
 @Composable
-fun ChannelByCountryScreen(backStack: NavBackStack<NavKey>) {
+fun ChannelByCountryScreen(
+    backStack: NavBackStack<NavKey>,
+    countryName: AppDestination.Dest.ChannelByCountry
+) {
 
     val contextCoil = LocalPlatformContext.current
     val viewModel : GetChannelByCountryViewModel = hiltViewModel()
@@ -40,12 +40,18 @@ fun ChannelByCountryScreen(backStack: NavBackStack<NavKey>) {
     val currentPlayingChannel by viewModel.currentPlayingChannel.collectAsStateWithLifecycle()
 
 
+    LaunchedEffect(Unit) {
+        viewModel.getChannelByCountry(countryName = countryName.countryName)
+    }
+
     Scaffold(
         topBar = {
             MyCustomAppBar(
-                title = "Bangladesh"
+                title = countryName.countryName,
+                isBackButtonEnable = true,
+                isPremiumEnable = false
             ) {
-
+                backStack.removeLastOrNull()
             }
         }
     ) {innerPadding ->

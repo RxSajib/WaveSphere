@@ -68,16 +68,16 @@ fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackSt
                 )
         ) {
             if (selectedMenuPosition.value == 1) {
-                    CountriesScreen(countryList = countryList.value, viewModel = viewModel){
+                  /*  CountriesScreen(countryList = countryList.value, viewModel = viewModel){
                     rootBackStack.add(
                         AppDestination.Dest(
                             AppDestination.Dest.ChannelByCountry::class.simpleName ?: ""
                         )
                     )
-                }
+                }*/
 
             } else if (selectedMenuPosition.value == 3) {
-                NewsChannelListScreen(newsList = newsList, viewModel = viewModel)
+              //  NewsChannelListScreen(newsList = newsList, viewModel = viewModel)
             }
         }
     }

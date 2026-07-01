@@ -39,12 +39,6 @@ class GetChannelByCountryViewModel @Inject constructor(
 
 
 
-    init {
-        getChannelByCountry(countryName = "Israel")
-    }
-
-
-
 
 
     fun getChannelByCountry(countryName: String) {

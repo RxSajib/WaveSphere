@@ -10,51 +10,44 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import android.content.Intent
-import androidx.core.content.ContextCompat
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
-import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.presentation.viewmodel.playerView.PlayerViewModel
 import com.zenbyte.studio.presentation.ui.component.LiveTag
 import com.zenbyte.studio.presentation.ui.component.MusicController
+import com.zenbyte.studio.presentation.ui.component.MyCustomAppBar
 import com.zenbyte.studio.presentation.ui.component.PremiumTag
-import com.zenbyte.studio.presentation.ui.component.QuickAction
 import com.zenbyte.studio.presentation.ui.navigation.AppDestination
 import com.zenbyte.studio.presentation.ui.theme.genresColor
-import dev.vivvvek.seeker.Seeker
-import dev.vivvvek.seeker.SeekerDefaults
 
 private const val TAG = "PlayerViewScreen"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
+fun PlayerViewScreen(
+    channelData: AppDestination.Dest.PlayerView,
+    rootBackStack: NavBackStack<NavKey>
+) {
 
     val coilsContext = LocalPlatformContext.current
     val viewModel: PlayerViewModel = hiltViewModel()
@@ -84,7 +77,7 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            /*TopAppBar(
                 title = {
                     Text(
                         text = stringResource(R.string.now_playing),
@@ -111,7 +104,13 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
                         )
                     }
                 }
-            )
+            )*/
+
+
+                MyCustomAppBar(title = "Now Playing", isBackButtonEnable = true, isPremiumEnable = false) {
+                    rootBackStack.removeLastOrNull()
+                }
+
         }
     ) { innerPadding ->
         Column(
@@ -121,9 +120,9 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            PremiumTag {
+           /* PremiumTag {
 
-            }
+            }*/
             HeightGap(height = 15.dp)
             AsyncImage(
                 modifier = Modifier
@@ -172,7 +171,7 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
                 )
             }
             HeightGap(height = 15.dp)
-            Row(modifier = Modifier.fillMaxWidth()) {
+           /* Row(modifier = Modifier.fillMaxWidth()) {
                 QuickAction(
                     isSavedChannel = isChannelSaved,
                     icon = painterResource(R.drawable.icon_favorite_heart_hover_pinch),
@@ -207,8 +206,10 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
                 }
             }
 
-            HeightGap(height = 15.dp)
-            Row(
+            HeightGap(height = 15.dp)*/
+
+
+           /* Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -235,8 +236,8 @@ fun PlayerViewScreen(channelData: AppDestination.Dest.PlayerView) {
                     contentDescription = null,
                     modifier = Modifier.size(18.dp)
                 )
-            }
-            HeightGap(height = 15.dp)
+            }*/
+       //     HeightGap(height = 15.dp)
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 MusicController(icon = painterResource(R.drawable.previous_svgrepo_com)) {
                     viewModel.previousPlayBack()

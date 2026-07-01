@@ -2,6 +2,7 @@ package com.zenbyte.studio.presentation.ui.navigation
 
 import androidx.navigation3.runtime.NavKey
 import com.zenbyte.studio.domain.model.MyChannel
+import com.zenbyte.studio.domain.model.MyCountry
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -27,10 +28,15 @@ sealed class AppDestination : NavKey {
 
 
     @Serializable
-    data class Dest(val firstDestName : String) : AppDestination() {
+    data class Dest(val firstDestName : String) : AppDestination()
+
+    {
 
         @Serializable
-        data object ChannelByCountry : AppDestination()
+        data object AllCountry : AppDestination()
+
+        @Serializable
+        data class ChannelByCountry(val countryName : String) : AppDestination()
 
         @Serializable
         data class PlayerView(val channel: MyChannel, val channelList : List<MyChannel> = emptyList()) : AppDestination()

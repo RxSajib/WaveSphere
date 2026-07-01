@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.media3.common.util.UnstableApi
 import com.zenbyte.studio.wavesphere.service.PlayerService
 import com.zenbyte.studio.presentation.ui.navigation.RootNavigation
+import com.zenbyte.studio.presentation.ui.navigation.SampleDes
 import com.zenbyte.studio.presentation.ui.theme.WaveSphereTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,7 +43,8 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(color = MaterialTheme.colorScheme.surface)
                 ) {
-                    RootNavigation()
+                 //   RootNavigation()
+                    SampleDes()
                 }
 
             }
