@@ -28,15 +28,23 @@ sealed class AppDestination : NavKey {
 
 
     @Serializable
-    data class Dest(val firstDestName : String) : AppDestination()
+    data class Dest(val firstDestName : String,
+                    val countryName: String? = null) : AppDestination()
 
     {
+
+        @Serializable
+        data object TrendingStations : AppDestination()
+
+        @Serializable
+        data object PopularStations : AppDestination()
+
 
         @Serializable
         data object AllCountry : AppDestination()
 
         @Serializable
-        data class ChannelByCountry(val countryName : String) : AppDestination()
+        data class ChannelByCountry(val name: String) : AppDestination()
 
         @Serializable
         data class PlayerView(val channel: MyChannel, val channelList : List<MyChannel> = emptyList()) : AppDestination()

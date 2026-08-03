@@ -10,15 +10,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -38,8 +41,12 @@ import com.zenbyte.studio.presentation.ui.component.LiveTag
 import com.zenbyte.studio.presentation.ui.component.MusicController
 import com.zenbyte.studio.presentation.ui.component.MyCustomAppBar
 import com.zenbyte.studio.presentation.ui.component.PremiumTag
+import com.zenbyte.studio.presentation.ui.component.QuickAction
 import com.zenbyte.studio.presentation.ui.navigation.AppDestination
 import com.zenbyte.studio.presentation.ui.theme.genresColor
+import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
+import dev.vivvvek.seeker.Seeker
+import dev.vivvvek.seeker.SeekerDefaults
 
 private const val TAG = "PlayerViewScreen"
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,8 +64,9 @@ fun PlayerViewScreen(
     val currentChannelByPlayer by viewModel.currentChannel.collectAsStateWithLifecycle()
     val isPlaying by viewModel.isPlaying.collectAsStateWithLifecycle()
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
-
+    val isPlayingChannel by viewModel.isPlayingChannel.collectAsStateWithLifecycle(false)
     val isChannelSaved by viewModel.isChannelSaved.collectAsStateWithLifecycle(false)
+
 
     // Sync UI with the selected channel, then follow service updates (Next/Prev)
     val currentChannel = currentChannelByPlayer ?: channelData.channel
@@ -66,18 +74,21 @@ fun PlayerViewScreen(
     LaunchedEffect(currentChannel) {
         viewModel.updateChannelUID(value = currentChannel.stationuuid)
         viewModel.updatePlayingUID(value = currentChannel.stationuuid)
+        viewModel.selectedChannel(selectedChannel = channelData.channel)
     }
 
     LaunchedEffect(Unit) {
     //    playerService?.setChannelList(channelList)
     }
 
+ //   MyCustomLogger.logMessageInfo(tag = TAG, message = "is playing media $buttonEnable")
+    MyCustomLogger.logMessageInfo(tag = TAG, message = "selected channel id ${channelData.channel.stationuuid}")
 
 
 
     Scaffold(
         topBar = {
-            /*TopAppBar(
+            TopAppBar(
                 title = {
                     Text(
                         text = stringResource(R.string.now_playing),
@@ -104,7 +115,7 @@ fun PlayerViewScreen(
                         )
                     }
                 }
-            )*/
+            )
 
 
                 MyCustomAppBar(title = "Now Playing", isBackButtonEnable = true, isPremiumEnable = false) {
@@ -120,16 +131,16 @@ fun PlayerViewScreen(
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-           /* PremiumTag {
+            PremiumTag {
 
-            }*/
+            }
             HeightGap(height = 15.dp)
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth(.5f)
                     .aspectRatio(1f),
                 model = ImageRequest.Builder(coilsContext)
-                    .data(currentChannel.favicon).size(500).build(),
+                    .data(channelData.channel.favicon).size(500).build(),
                 placeholder = painterResource(R.drawable.applogowhite),
                 error = painterResource(R.drawable.applogowhite),
                 contentDescription = null
@@ -137,7 +148,7 @@ fun PlayerViewScreen(
             HeightGap(height = 15.dp)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = currentChannel.name,
+                    text = channelData.channel.name,
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
@@ -151,7 +162,7 @@ fun PlayerViewScreen(
                 )
             }
             Text(
-                text = currentChannel.tags,
+                text = channelData.channel.tags,
                 style = MaterialTheme.typography.bodySmall.copy(
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
                 ),
@@ -171,7 +182,7 @@ fun PlayerViewScreen(
                 )
             }
             HeightGap(height = 15.dp)
-           /* Row(modifier = Modifier.fillMaxWidth()) {
+            Row(modifier = Modifier.fillMaxWidth()) {
                 QuickAction(
                     isSavedChannel = isChannelSaved,
                     icon = painterResource(R.drawable.icon_favorite_heart_hover_pinch),
@@ -206,10 +217,10 @@ fun PlayerViewScreen(
                 }
             }
 
-            HeightGap(height = 15.dp)*/
+            HeightGap(height = 15.dp)
 
 
-           /* Row(
+            Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -236,8 +247,8 @@ fun PlayerViewScreen(
                     contentDescription = null,
                     modifier = Modifier.size(18.dp)
                 )
-            }*/
-       //     HeightGap(height = 15.dp)
+            }
+            HeightGap(height = 15.dp)
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 MusicController(icon = painterResource(R.drawable.previous_svgrepo_com)) {
                     viewModel.previousPlayBack()
@@ -246,10 +257,10 @@ fun PlayerViewScreen(
                 MusicController(
                     isPlayPushButton = true,
                     icon = if (isLoading) painterResource(R.drawable.record_circle) // Buffering indicator
-                    else if (isPlaying) painterResource(R.drawable.pause)
+                    else if (isPlayingChannel) painterResource(R.drawable.pause)
                     else painterResource(R.drawable.system_solid_26_play_hover_play)
                 ) {
-                    if (isPlaying) {
+                    if (isPlayingChannel) {
                         viewModel.pauseAudio()
                     } else {
                         viewModel.playAudio(myChannel = channelList, channelList.indexOf(currentChannel))

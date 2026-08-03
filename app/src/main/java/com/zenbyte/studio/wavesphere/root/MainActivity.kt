@@ -43,8 +43,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(color = MaterialTheme.colorScheme.surface)
                 ) {
-                 //   RootNavigation()
-                    SampleDes()
+                    RootNavigation()
                 }
 
             }

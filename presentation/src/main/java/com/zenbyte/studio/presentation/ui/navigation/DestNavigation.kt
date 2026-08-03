@@ -18,7 +18,9 @@ import androidx.savedstate.serialization.SavedStateConfiguration
 import com.zenbyte.studio.presentation.ui.screen.AboutScreen
 import com.zenbyte.studio.presentation.ui.screen.ChannelByCountryScreen
 import com.zenbyte.studio.presentation.ui.screen.PlayerViewScreen
+import com.zenbyte.studio.presentation.ui.screen.PopularStationsScreen
 import com.zenbyte.studio.presentation.ui.screen.PremiumScreen
+import com.zenbyte.studio.presentation.ui.screen.TrendingStationsScreen
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 
@@ -32,19 +34,43 @@ fun DestNavigation(
     val appConfig = SavedStateConfiguration {
         serializersModule = SerializersModule {
             polymorphic(NavKey::class) {
-                subclass(AppDestination.Dest.ChannelByCountry::class, AppDestination.Dest.ChannelByCountry.serializer())
-                subclass(AppDestination.Dest.PlayerView::class, AppDestination.Dest.PlayerView.serializer())
-                subclass(AppDestination.Dest.AboutUs::class, AppDestination.Dest.AboutUs.serializer())
-                subclass(AppDestination.Dest.Premium::class, AppDestination.Dest.Premium.serializer())
+                subclass(
+                    AppDestination.Dest.ChannelByCountry::class,
+                    AppDestination.Dest.ChannelByCountry.serializer()
+                )
+                subclass(
+                    AppDestination.Dest.PlayerView::class,
+                    AppDestination.Dest.PlayerView.serializer()
+                )
+                subclass(
+                    AppDestination.Dest.AboutUs::class,
+                    AppDestination.Dest.AboutUs.serializer()
+                )
+                subclass(
+                    AppDestination.Dest.Premium::class,
+                    AppDestination.Dest.Premium.serializer()
+                )
+                subclass(
+                    AppDestination.Dest.TrendingStations::class,
+                    AppDestination.Dest.TrendingStations.serializer()
+                )
+                subclass(
+                    AppDestination.Dest.PopularStations::class,
+                    AppDestination.Dest.PopularStations.serializer()
+                )
             }
         }
     }
 
 
     val firstDest = when {
-        startDest.firstDestName == AppDestination.Dest.ChannelByCountry::class.simpleName -> AppDestination.Dest.ChannelByCountry
+        startDest.firstDestName == "ChannelByCountry" ->
+            AppDestination.Dest.ChannelByCountry(startDest.countryName ?: "Unknown")
+
         startDest.firstDestName == AppDestination.Dest.AboutUs::class.simpleName -> AppDestination.Dest.AboutUs
-         startDest.firstDestName == AppDestination.Dest.Premium::class.simpleName -> AppDestination.Dest.Premium
+        startDest.firstDestName == AppDestination.Dest.Premium::class.simpleName -> AppDestination.Dest.Premium
+        startDest.firstDestName == AppDestination.Dest.TrendingStations::class.simpleName -> AppDestination.Dest.TrendingStations
+        startDest.firstDestName == AppDestination.Dest.PopularStations::class.simpleName -> AppDestination.Dest.PopularStations
         /*  startDest.firstDestName == AppDestination.Dest.Premium::class.simpleName -> AppDestination.Dest.Premium
          startDest.firstDestName == AppDestination.Dest.UploadStories::class.simpleName -> AppDestination.Dest.UploadStories
          startDest.firstDestName == AppDestination.Dest.SubscriptionHistory::class.simpleName -> AppDestination.Dest.SubscriptionHistory
@@ -65,7 +91,7 @@ fun DestNavigation(
     }
 
 
- /*   val backStack = rememberNavBackStack(appConfig, firstDest)
+    val backStack = rememberNavBackStack(appConfig, firstDest)
 
     Box(modifier = Modifier.fillMaxSize()) {
         NavDisplay(
@@ -78,16 +104,22 @@ fun DestNavigation(
             entryProvider = entryProvider {
 
                 entry<AppDestination.Dest.ChannelByCountry> {
-                    ChannelByCountryScreen(backStack, countryName)
+                    ChannelByCountryScreen(backStack, it.name)
                 }
-                entry<AppDestination.Dest.PlayerView> {channelData ->
-                    PlayerViewScreen(channelData)
+                entry<AppDestination.Dest.PlayerView> { channelData ->
+                    PlayerViewScreen(channelData = channelData, rootBackStack = rootBackStack)
                 }
                 entry<AppDestination.Dest.AboutUs> {
                     AboutScreen(rootBackStack = rootBackStack)
                 }
                 entry<AppDestination.Dest.Premium> {
                     PremiumScreen()
+                }
+                entry<AppDestination.Dest.TrendingStations> {
+                    TrendingStationsScreen(rootBackStack = rootBackStack)
+                }
+                entry<AppDestination.Dest.PopularStations> {
+                    PopularStationsScreen(rootBackStack = rootBackStack)
                 }
             },
 
@@ -105,7 +137,7 @@ fun DestNavigation(
             },
         )
 
-    }*/
+    }
 
 
 }

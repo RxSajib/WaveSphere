@@ -1,6 +1,5 @@
 package com.zenbyte.studio.presentation.ui.screen
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +18,8 @@ import coil3.compose.LocalPlatformContext
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.presentation.viewmodel.home.HomeViewModel
@@ -27,10 +28,11 @@ import com.zenbyte.studio.presentation.ui.component.HomeHeader
 import com.zenbyte.studio.presentation.ui.component.MyCustomStation
 import com.zenbyte.studio.presentation.ui.component.MySectionHeader
 import com.zenbyte.studio.presentation.ui.component.NowPlayingComponent
+import com.zenbyte.studio.presentation.ui.navigation.AppDestination
 
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey>) {
 
     val viewModel : HomeViewModel = hiltViewModel()
 
@@ -59,7 +61,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 title = stringResource(R.string.trending_stations),
                 showSeeAll = true,
                 onClickSeeAll = {
-
+                    rootBackStack.add(
+                        AppDestination.Dest(firstDestName = AppDestination.Dest.TrendingStations::class.simpleName?: "")
+                    )
                 }
             )
             HeightGap(height = 20.dp)
@@ -102,7 +106,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 title = stringResource(R.string.popular_stations),
                 showSeeAll = true,
                 onClickSeeAll = {
-
+                    rootBackStack.add(
+                        AppDestination.Dest(firstDestName = AppDestination.Dest.PopularStations::class.simpleName?: "")
+                    )
                 }
             )
         }
@@ -115,8 +121,3 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
 }
 
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen()
-}

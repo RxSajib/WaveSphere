@@ -32,6 +32,7 @@ import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 import com.zenbyte.studio.presentation.ui.theme.genresColor
+import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
 @Composable
 fun MyCustomStation(
@@ -70,7 +71,7 @@ fun MyCustomStation(
                         ),
                         shape = RoundedCornerShape(10.dp)
                     )
-                    .clickable {
+                    .debounceClickable {
                         onClick.invoke(myChannel)
                     },
                 contentAlignment = Alignment.Center

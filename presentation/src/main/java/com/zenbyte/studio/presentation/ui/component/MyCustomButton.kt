@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 import com.zenbyte.studio.presentation.ui.theme.onPrimaryLight
+import com.zenbyte.studio.presentation.viewmodel.utils.rememberDebouncedClick
 
 @Composable
 fun MyCustomButton(
@@ -37,7 +38,7 @@ fun MyCustomButton(
 ) {
 
     Button(
-        onClick = {
+        onClick = rememberDebouncedClick {
 
             onClickButton.invoke() },
         colors = ButtonDefaults.buttonColors(

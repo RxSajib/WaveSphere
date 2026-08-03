@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 import com.zenbyte.studio.presentation.ui.theme.genresColor
+import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
 @Composable
 fun PremiumTag(onClick : () -> Unit) {
@@ -31,7 +32,7 @@ fun PremiumTag(onClick : () -> Unit) {
                 width = 0.5.dp,
                 color = genresColor,
                 shape = RoundedCornerShape(10.dp)
-            ).clip(shape = RoundedCornerShape(10.dp)).clickable{
+            ).clip(shape = RoundedCornerShape(10.dp)).debounceClickable{
                 onClick.invoke()
             }
             .padding(5.dp),

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 import com.zenbyte.studio.presentation.ui.theme.buttonColor
+import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
 @Composable
 fun MySectionHeader(title: String, showSeeAll: Boolean = true, onClickSeeAll: (() -> Unit)? = null) {
@@ -45,7 +46,7 @@ fun MySectionHeader(title: String, showSeeAll: Boolean = true, onClickSeeAll: ((
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(5.dp))
                     .background(color = buttonColor.copy(alpha = 0.5f))
-                    .clickable{
+                    .debounceClickable{
                         onClickSeeAll?.invoke()
                     }
                     .padding(horizontal = 8.dp, vertical = 3.dp)

@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.presentation.ui.theme.buttonColor
+import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
 @Composable
 fun MyCustomMenuButton(
@@ -39,7 +40,7 @@ fun MyCustomMenuButton(
                 color = if (isSelected) buttonColor.copy(alpha = 0.1f) else Color.Transparent,
                 shape = RoundedCornerShape(10.dp)
             )
-            .clickable {
+            .debounceClickable {
                 onClick.invoke()
             }
             .padding(horizontal = 10.dp, vertical = 8.dp),

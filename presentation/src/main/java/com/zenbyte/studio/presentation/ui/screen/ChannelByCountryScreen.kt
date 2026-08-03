@@ -31,7 +31,7 @@ private const val TAG = "ChannelByCountryScreen"
 @Composable
 fun ChannelByCountryScreen(
     backStack: NavBackStack<NavKey>,
-    countryName: AppDestination.Dest.ChannelByCountry
+    countryName: String
 ) {
 
     val contextCoil = LocalPlatformContext.current
@@ -41,13 +41,13 @@ fun ChannelByCountryScreen(
 
 
     LaunchedEffect(Unit) {
-        viewModel.getChannelByCountry(countryName = countryName.countryName)
+        viewModel.getChannelByCountry(countryName = countryName)
     }
 
     Scaffold(
         topBar = {
             MyCustomAppBar(
-                title = countryName.countryName,
+                title = countryName,
                 isBackButtonEnable = true,
                 isPremiumEnable = false
             ) {

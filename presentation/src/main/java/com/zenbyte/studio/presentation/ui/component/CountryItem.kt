@@ -27,13 +27,14 @@ import coil3.request.crossfade
 import com.zenbyte.studio.domain.model.MyCountry
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
 @Composable
 fun CountryItem(context: PlatformContext, country: MyCountry?, onClickCountry: (MyCountry) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable{
+            .debounceClickable{
                 onClickCountry.invoke(country!!)
             }
             .padding(10.dp),

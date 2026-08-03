@@ -60,7 +60,7 @@ fun ChannelItem(modifier: Modifier, context: PlatformContext, myChannel: MyChann
                 .clip(itemShape)
                 .border(
                     width = 1.dp,
-                    color =  MaterialTheme.colorScheme.primary.copy(
+                    color = MaterialTheme.colorScheme.primary.copy(
                         alpha = 0.2f
                     ),
                     shape = itemShape
@@ -68,12 +68,14 @@ fun ChannelItem(modifier: Modifier, context: PlatformContext, myChannel: MyChann
             contentAlignment = Alignment.Center
         ) {
 
-            Box(modifier = Modifier.fillMaxWidth(.8f).aspectRatio(1f)
-                .clip(shape = RoundedCornerShape(10.dp))
-                .background(if (myChannel.favicon.isNullOrEmpty() || myChannel.favicon == "null") randomColor else Color.Transparent)
-
-
-               , contentAlignment = Alignment.Center){
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(.8f)
+                    .aspectRatio(1f)
+                    .clip(shape = RoundedCornerShape(10.dp))
+                    .background(if (myChannel.favicon.isEmpty() || myChannel.favicon == "null") randomColor else Color.Transparent),
+                contentAlignment = Alignment.Center
+            ) {
                 AsyncImage(
                     modifier = Modifier
                         .fillMaxSize()
@@ -89,7 +91,6 @@ fun ChannelItem(modifier: Modifier, context: PlatformContext, myChannel: MyChann
                     contentScale = ContentScale.Fit
                 )
             }
-
 
 
         }

@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import com.zenbyte.studio.presentation.R
+import com.zenbyte.studio.presentation.viewmodel.utils.rememberDebouncedClick
 
 @Composable
 fun ChangeLanguageButton(onChangeLanguage: () ->  Unit) {
@@ -21,7 +22,7 @@ fun ChangeLanguageButton(onChangeLanguage: () ->  Unit) {
                 color = MaterialTheme.colorScheme.primary
             )
         )
-        IconButton(onClick = {
+        IconButton(onClick = rememberDebouncedClick {
             onChangeLanguage.invoke()
         }) {
             Icon(painter = painterResource(R.drawable.icon_arrow_next), contentDescription = null)

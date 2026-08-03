@@ -276,7 +276,7 @@ fun BottomAppBarNavigation(rootBackStack: NavBackStack<NavKey>) {
             ),
             entryProvider = entryProvider {
                 entry<AppDestination.BottomAppBar.Home> {
-                    HomeScreen()
+                    HomeScreen( rootBackStack = rootBackStack)
                 }
                 entry<AppDestination.BottomAppBar.Search> {
                     SearchScreen(activeBackStack = activeBackStack, rootBackStack = rootBackStack)

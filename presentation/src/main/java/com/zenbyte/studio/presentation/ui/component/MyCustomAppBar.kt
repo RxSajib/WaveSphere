@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.buttonColor
+import com.zenbyte.studio.presentation.viewmodel.utils.rememberDebouncedClick
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,9 +81,12 @@ fun MyCustomAppBar(
         },
         navigationIcon = {
             if (isBackButtonEnable) {
-                IconButton(onClick = {
-                    onBackPress.invoke()
-                }) {
+                IconButton(onClick =
+                    rememberDebouncedClick{
+                        onBackPress.invoke()
+                    }
+
+                ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_back),
                         contentDescription = null,

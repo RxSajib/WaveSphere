@@ -30,7 +30,7 @@ class PlayerViewModel @Inject constructor(
     val getSingleSaveChannel: GetSingleSaveChannel,
     val isChannelSavedUseCase: IsChannelSavedUseCase,
     val removeSaveChannelUseCase: RemoveSaveChannelUseCase,
-    val mediaPlayControllerUseCase: MediaPlayControllerUseCase
+    val mediaPlayControllerUseCase: MediaPlayControllerUseCase,
 ) : ViewModel() {
 
 
@@ -75,6 +75,9 @@ class PlayerViewModel @Inject constructor(
     private val _channelUID = MutableStateFlow<String>("")
     val channelUID = _channelUID.asStateFlow()
 
+    private val _selectedChannelMutableStateFlow = MutableStateFlow<MyChannel>(MyChannel())
+    val selectedChannel = _selectedChannelMutableStateFlow.asStateFlow()
+
     fun updateChannelUID(value: String) {
         MyCustomLogger.logMessageInfo(tag = TAG, message = "channel id $value")
         viewModelScope.launch {
@@ -82,30 +85,58 @@ class PlayerViewModel @Inject constructor(
         }
     }
 
-    val isButtonEnable: Flow<Boolean> = combine(playingUID, channelUID) { playingUID, channelUID ->
+    fun selectedChannel(selectedChannel: MyChannel){
+        viewModelScope.launch {
+            _selectedChannelMutableStateFlow.emit(selectedChannel)
+        }
+    }
+
+    val isPlayingChannel: Flow<Boolean> = combine(
+        selectedChannel,
+        currentChannel,
+        playingUID,
+        channelUID,
+        mediaPlayControllerUseCase.playerController.isPlaying
+    ) {selectedChannel, currentChannel, playingUID, channelUID, isPlayingMyAudio ->
+        Log.d(TAG, "currentChannel: $currentChannel")
         Log.d(TAG, "updateChannelUID: $channelUID")
         Log.d(TAG, "updatePlayingUID: $playingUID")
-        Log.d(TAG, "value: ${playingUID == channelUID}")
-        playingUID == channelUID
+        Log.d(TAG, "selectedChannel: ${selectedChannel.stationuuid}")
+     //   Log.d(TAG, "value: ${playingUID == channelUID}")
+            if(selectedChannel.stationuuid == channelUID){
+                Log.d(TAG, "same value: ${playingUID == channelUID}")
+                if(isPlayingMyAudio){
+                    true
+                }else {
+                    false
+                }
 
+            }else {
+                false
+            }
     }
 
 
+    val isPlayingAudio: Flow<Boolean> =
+        combine(mediaPlayControllerUseCase.playerController.isPlaying) { isPlayingMyAudio ->
+            true
+        }
+
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val isChannelSaved = playingUID.flatMapLatest{id ->
+    val isChannelSaved = playingUID.flatMapLatest { id ->
         isChannelSavedUseCase.isChannelSaved(stationuuid = id)
     }
 
 
-    fun saveChannel(myChannel: MyChannel){
+    fun saveChannel(myChannel: MyChannel) {
         viewModelScope.launch {
 
-                if(isChannelSaved.first()){
-                    removeSaveChannelUseCase.removeSaveChannel(channelID = myChannel.stationuuid)
-                }else {
-                    saveChannelUseCase.saveChannel(myChannel = myChannel)
-                }
+            if (isChannelSaved.first()) {
+                removeSaveChannelUseCase.removeSaveChannel(channelID = myChannel.stationuuid)
+            } else {
+                saveChannelUseCase.saveChannel(myChannel = myChannel)
+            }
         }
     }
 

@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.viewmodel.utils.rememberDebouncedClick
 
 @Composable
 fun ServerError(onClick: () -> Unit){
@@ -63,7 +64,7 @@ fun ServerError(onClick: () -> Unit){
             MyCustomButton(
                 isEnable = true, title = stringResource(R.string.retry),
                 leftIcon = painterResource(R.drawable.refresh_cw_alt_svgrepo_com),
-                onClickButton = {
+                onClickButton = rememberDebouncedClick { 
                     onClick.invoke()
                 }
             )

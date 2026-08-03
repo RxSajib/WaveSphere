@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 import com.zenbyte.studio.presentation.ui.theme.genresColor
+import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
 @Composable
 fun QuickAction(isSavedChannel : Boolean?= null, modifier: Modifier, icon: Painter, title: String, isPremium: Boolean = false,
@@ -31,7 +32,7 @@ fun QuickAction(isSavedChannel : Boolean?= null, modifier: Modifier, icon: Paint
             modifier = Modifier
 
                 .clip(shape = RoundedCornerShape(8.dp))
-                .clickable {
+                .debounceClickable {
                     onClick.invoke()
                 }
                 .padding(5.dp),

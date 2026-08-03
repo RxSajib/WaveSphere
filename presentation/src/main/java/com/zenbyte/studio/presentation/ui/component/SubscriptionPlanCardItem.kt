@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalLocale
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.zenbyte.studio.presentation.ui.theme.genresColor
+import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
 @Composable
 fun SubscriptionPlanCardItem(
@@ -73,7 +74,7 @@ fun SubscriptionPlanCardItem(
                 shape = RoundedCornerShape(10.dp)
             )
             .background(color = backgroundColor)
-            .clickable {
+            .debounceClickable {
                 onClickListener.invoke()
             }
             .padding(16.dp)

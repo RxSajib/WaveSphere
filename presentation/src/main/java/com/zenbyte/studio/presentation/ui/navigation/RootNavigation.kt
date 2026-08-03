@@ -25,8 +25,7 @@ fun RootNavigation() {
         this.serializersModule = SerializersModule {
             this.polymorphic(NavKey::class) {
                 subclass(
-                    AppDestination.BottomAppBar::class,
-                    AppDestination.BottomAppBar.serializer()
+                    AppDestination.BottomAppBar::class, AppDestination.BottomAppBar.serializer()
                 )
                 subclass(AppDestination.Dest::class, AppDestination.Dest.serializer())
             }
@@ -54,21 +53,19 @@ fun RootNavigation() {
             },
 
             transitionSpec = {
-                slideInHorizontally(initialOffsetX = { it }) togetherWith
-                        slideOutHorizontally(targetOffsetX = { -it })
+                slideInHorizontally(initialOffsetX = { it }) togetherWith slideOutHorizontally(
+                    targetOffsetX = { -it })
             },
             popTransitionSpec = {
-                slideInHorizontally(initialOffsetX = { -it }) togetherWith
-                        slideOutHorizontally(targetOffsetX = { it })
+                slideInHorizontally(initialOffsetX = { -it }) togetherWith slideOutHorizontally(
+                    targetOffsetX = { it })
             },
             predictivePopTransitionSpec = {
-                slideInHorizontally(initialOffsetX = { -it }) togetherWith
-                        slideOutHorizontally(targetOffsetX = { it })
+                slideInHorizontally(initialOffsetX = { -it }) togetherWith slideOutHorizontally(
+                    targetOffsetX = { it })
             },
 
             )
-
-
     }
 
 }

@@ -1,20 +1,7 @@
 package com.zenbyte.studio.wavesphere.service
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+
 import android.content.Intent
-import android.os.Binder
-import android.os.Bundle
-import android.os.IBinder
-import android.content.pm.ServiceInfo
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.media.session.MediaController
-import android.media.session.PlaybackState
-import android.os.Build
-import android.util.Log
 import androidx.annotation.OptIn
 import androidx.core.app.NotificationCompat
 import androidx.media3.common.MediaItem

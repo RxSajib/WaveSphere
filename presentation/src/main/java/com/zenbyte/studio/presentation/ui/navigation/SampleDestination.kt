@@ -44,10 +44,10 @@ fun SampleDes() {
             ),
             entryProvider = entryProvider {
                 entry<AppDestination.Dest.AllCountry> {country ->
-                    CountriesScreen(rootBackStack = rootBackStack)
+                //    CountriesScreen(rootBackStack = rootBackStack, viewModel = view)
                 }
                 entry<AppDestination.Dest.ChannelByCountry> {countryName ->
-                    ChannelByCountryScreen(backStack = rootBackStack, countryName)
+               //     ChannelByCountryScreen(backStack = rootBackStack, countryName)
                 }
                 entry<AppDestination.Dest.PlayerView> {
                     PlayerViewScreen( rootBackStack = rootBackStack, channelData = it)
