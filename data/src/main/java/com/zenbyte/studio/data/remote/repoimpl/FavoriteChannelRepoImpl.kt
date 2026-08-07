@@ -1,8 +1,8 @@
-package com.zenbyte.studio.data.repoimpl
+package com.zenbyte.studio.data.remote.repoimpl
 
 import com.zenbyte.studio.data.local.dao.FavoriteChannelDao
-import com.zenbyte.studio.data.mapper.toDomain
-import com.zenbyte.studio.data.mapper.toEntity
+import com.zenbyte.studio.data.remote.mapper.toDomain
+import com.zenbyte.studio.data.remote.mapper.toEntity
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.repository.FavoriteChannelRepo
 import kotlinx.coroutines.flow.Flow

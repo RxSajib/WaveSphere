@@ -1,6 +1,6 @@
-package com.zenbyte.studio.data.mapper
+package com.zenbyte.studio.data.remote.mapper
 
-import com.zenbyte.studio.data.model.Language
+import com.zenbyte.studio.data.remote.model.Language
 import com.zenbyte.studio.domain.model.AppLanguages
 
 object AppSettingMapper {

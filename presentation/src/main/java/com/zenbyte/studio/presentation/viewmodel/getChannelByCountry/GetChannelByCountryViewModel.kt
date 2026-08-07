@@ -1,9 +1,11 @@
 package com.zenbyte.studio.presentation.viewmodel.getChannelByCountry
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.usecase.GetChannelByCountryUseCase
+import com.zenbyte.studio.domain.usecase.LocalChannelUseCase
 import com.zenbyte.studio.domain.usecase.MediaPlayControllerUseCase
 import com.zenbyte.studio.domain.utils.Resource
 import com.zenbyte.studio.presentation.viewmodel.state.ApiState
@@ -28,7 +30,8 @@ private const val TAG = "GetChannelByCountry"
 @HiltViewModel
 class GetChannelByCountryViewModel @Inject constructor(
     val getChannelByCountryUseCase: GetChannelByCountryUseCase,
-    val mediaPlayControllerUseCase: MediaPlayControllerUseCase
+    val mediaPlayControllerUseCase: MediaPlayControllerUseCase,
+    val localChannelUseCase: LocalChannelUseCase
 ) : ViewModel() {
 
 
@@ -38,25 +41,12 @@ class GetChannelByCountryViewModel @Inject constructor(
     var currentPlayingChannel = mediaPlayControllerUseCase.playerController.currentChannel
 
 
-
-
-
     fun getChannelByCountry(countryName: String) {
         viewModelScope.launch {
-            MyCustomLogger.logMessageInfo(tag = TAG, message = "country $countryName")
-            channelListMutableStateFlow.emit(ApiState( isLoading = true))
-            when(val response = getChannelByCountryUseCase.getChannelByCountry(countryName)){
-               is Resource.Success -> {
-                   channelListMutableStateFlow.emit(ApiState(data = response.data, isSuccess = true, isLoading = false))
-               }
-               is Resource.Error -> {
-                   channelListMutableStateFlow.emit(ApiState(errorMessage = response.message, isSuccess = false, isLoading = false))
-                   channelListMutableStateFlow.emit(ApiState(data = emptyList()))
-               }
-               is Resource.Loading -> {
-                   channelListMutableStateFlow.emit(ApiState( isLoading = true))
-               }
-           }
+            localChannelUseCase.getChannelByCountry(countryName = countryName).collect {
+                MyCustomLogger.logMessageInfo(TAG, "countryname ${countryName} getChannelByCountry: $it")
+                channelListMutableStateFlow.emit(ApiState(data = it, isSuccess = true, isLoading = false))
+            }
         }
     }
 

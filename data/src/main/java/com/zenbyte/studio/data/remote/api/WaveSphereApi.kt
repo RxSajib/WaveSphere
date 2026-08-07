@@ -1,15 +1,14 @@
-package com.zenbyte.studio.data.api
+package com.zenbyte.studio.data.remote.api
 
-import com.zenbyte.studio.data.model.ChannelDto
-import com.zenbyte.studio.data.model.CountryDto
-import com.zenbyte.studio.data.model.CountryDtoItem
+import com.zenbyte.studio.data.remote.model.ChannelDto
+import com.zenbyte.studio.data.remote.model.CountryDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface WaveSphereApi {
 
-    @GET("stations/bycountrycodeexact/{countryName}")
+    @GET("stations/bycountry/{countryName}")
     suspend fun getChannelsByCountry(@Path("countryName") countryName: String): ChannelDto
 
     @GET("countries")

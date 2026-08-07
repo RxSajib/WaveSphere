@@ -1,8 +1,10 @@
 package com.zenbyte.studio.data.di
 
-import com.zenbyte.studio.data.repoimpl.AppSettingImpl
-import com.zenbyte.studio.data.repoimpl.WaveSphereImpl
+import com.zenbyte.studio.data.remote.repoimpl.AppSettingImpl
+import com.zenbyte.studio.data.remote.repoimpl.LocalChannelRepoImpl
+import com.zenbyte.studio.data.remote.repoimpl.WaveSphereImpl
 import com.zenbyte.studio.domain.repository.AppSetting
+import com.zenbyte.studio.domain.repository.LocalChannelRepo
 import com.zenbyte.studio.domain.repository.WaveSphereRepo
 import dagger.Binds
 import dagger.Module
@@ -25,4 +27,8 @@ abstract class WaveSphereRepoDi {
     abstract fun bindAppSetting(
         appSettingImpl: AppSettingImpl
     ): AppSetting
+
+    @Binds
+    @Singleton
+    abstract fun bindLocalChannelRepo(localChannelRepoImpl: LocalChannelRepoImpl) : LocalChannelRepo
 }

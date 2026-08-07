@@ -1,6 +1,6 @@
 package com.zenbyte.studio.data.di
 
-import com.zenbyte.studio.data.api.WaveSphereApi
+import com.zenbyte.studio.data.remote.api.WaveSphereApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

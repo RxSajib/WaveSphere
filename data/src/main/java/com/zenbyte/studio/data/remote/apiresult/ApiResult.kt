@@ -1,4 +1,4 @@
-package com.zenbyte.studio.data.apiresult
+package com.zenbyte.studio.data.remote.apiresult
 
 import com.zenbyte.studio.domain.result.Resource
 import okio.IOException

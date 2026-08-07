@@ -1,7 +1,7 @@
 package com.zenbyte.studio.data.di
 
 import com.zenbyte.studio.data.local.dao.FavoriteChannelDao
-import com.zenbyte.studio.data.repoimpl.FavoriteChannelRepoImpl
+import com.zenbyte.studio.data.remote.repoimpl.FavoriteChannelRepoImpl
 import com.zenbyte.studio.domain.repository.FavoriteChannelRepo
 import dagger.Module
 import dagger.Provides

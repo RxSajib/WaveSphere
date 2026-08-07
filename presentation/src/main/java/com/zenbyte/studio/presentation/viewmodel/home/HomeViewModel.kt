@@ -4,17 +4,15 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.media3.exoplayer.ExoPlayer
 import com.zenbyte.studio.domain.model.MyChannel
+import com.zenbyte.studio.domain.usecase.CountryListUseCase
 import com.zenbyte.studio.domain.usecase.GetAllRadioStationsUseCase
 import com.zenbyte.studio.domain.usecase.GetChannelByCountryUseCase
+import com.zenbyte.studio.domain.usecase.LocalChannelUseCase
 import com.zenbyte.studio.domain.utils.Resource
-import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.viewmodel.utils.Extras
-import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
@@ -26,7 +24,9 @@ private const val TAG = "HomeViewModel"
 class HomeViewModel @Inject constructor(
     @ApplicationContext val myContext: Context,
     val getChannelByCountryUseCase: GetChannelByCountryUseCase,
-    val getAllRadioStationsUseCase: GetAllRadioStationsUseCase
+    val getAllRadioStationsUseCase: GetAllRadioStationsUseCase,
+    val localChannelUseCase: LocalChannelUseCase,
+    val countryListUseCase: CountryListUseCase,
 ) : ViewModel() {
 
 
@@ -43,16 +43,45 @@ class HomeViewModel @Inject constructor(
     }
 
     init {
-        getChannelByCountry()
-        getAllChannel()
+       // getChannelByCountry()
+   //     getAllChannel()
+            //   getAllLocalChannel()
+        getChannelByCountryCode()
+    }
+
+    private fun getChannelByCountryCode(){
+        viewModelScope.launch {
+            localChannelUseCase.getChannelByCountryCode(Extras.getSimCountry(context = myContext).ifEmpty{"USA"}).collect{channelList ->
+                channelMutableStateFlow.emit(channelList)
+            }
+        }
+    }
+    
+    private fun getAllLocalChannel(){
+       viewModelScope.launch {
+           when(countryListUseCase.getCountryList()){
+               is Resource.Success -> {
+
+               }
+               is Resource.Error -> {
+
+               }
+               is Resource.Loading -> {
+
+               }
+           }
+       }
     }
 
     private fun getAllChannel(){
         viewModelScope.launch {
-            val allchannelResponse = getAllRadioStationsUseCase.getAllRadioStations()
+            val allchannelResponse = countryListUseCase.getCountryList()
             when(allchannelResponse){
                 is Resource.Success -> {
-
+                    for (channel in allchannelResponse.data?: emptyList()){
+                        Log.d(TAG, "getAllChannel: ${channel.name}")
+                        getChannelByCountryUseCase.getChannelByCountry(countryName = channel.name)
+                    }
                 }
                 is Resource.Error -> {
 

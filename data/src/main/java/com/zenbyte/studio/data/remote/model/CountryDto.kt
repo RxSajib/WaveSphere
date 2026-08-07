@@ -1,4 +1,4 @@
-package com.zenbyte.studio.data.model
+package com.zenbyte.studio.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 

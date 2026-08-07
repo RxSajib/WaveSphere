@@ -1,6 +1,6 @@
 package com.zenbyte.studio.data.local.Extras
 
-import com.zenbyte.studio.data.model.Language
+import com.zenbyte.studio.data.remote.model.Language
 
 object AppExtras {
 
