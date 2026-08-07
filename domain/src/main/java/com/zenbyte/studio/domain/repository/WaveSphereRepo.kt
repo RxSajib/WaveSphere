@@ -17,4 +17,6 @@ interface WaveSphereRepo {
         hideBroken: Boolean
     ): Resource<List<MyChannel>>
 
+    suspend fun getAllRadioStations() : Resource<List<MyChannel>>
+
 }

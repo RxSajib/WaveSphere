@@ -114,6 +114,13 @@ dependencies {
 
     implementation(libs.swipeable.kmp)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.11.0")
+    implementation(libs.kotlinx.coroutines.guava)
+
+// Manages the Locale used by the app
+    implementation("dev.b3nedikt.applocale:applocale:3.1.0")
+// Needed to intercept view inflation
+    implementation("dev.b3nedikt.viewpump:viewpump:4.0.15")
+// Allows to update the text of views at runtime without recreating the activity
+    implementation("dev.b3nedikt.reword:reword:4.0.4")
 
 }

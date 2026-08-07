@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface WaveSphereApi {
 
-    @GET("stations/bycountry/{countryName}")
+    @GET("stations/bycountrycodeexact/{countryName}")
     suspend fun getChannelsByCountry(@Path("countryName") countryName: String): ChannelDto
 
     @GET("countries")
@@ -23,4 +23,7 @@ interface WaveSphereApi {
         @Query("countrycode") countryCode: String,
         @Query("hidebroken") hideBroken: Boolean = true
     ): ChannelDto
+
+    @GET("stations")
+    suspend fun getAllStations() : ChannelDto
 }

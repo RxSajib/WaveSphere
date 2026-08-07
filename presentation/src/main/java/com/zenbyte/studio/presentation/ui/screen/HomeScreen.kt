@@ -1,5 +1,9 @@
 package com.zenbyte.studio.presentation.ui.screen
 
+import android.content.Context
+import android.telephony.TelephonyManager
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,8 +33,10 @@ import com.zenbyte.studio.presentation.ui.component.MyCustomStation
 import com.zenbyte.studio.presentation.ui.component.MySectionHeader
 import com.zenbyte.studio.presentation.ui.component.NowPlayingComponent
 import com.zenbyte.studio.presentation.ui.navigation.AppDestination
+import java.util.Locale
+import androidx.compose.ui.platform.LocalLocale
 
-
+private const val TAG = "HomeScreen"
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey>) {
 
@@ -43,11 +49,10 @@ fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey
     val trendingChannel = viewModel.tranChannel.collectAsStateWithLifecycle(emptyList())
     val popularShort = viewModel.popularStation.collectAsStateWithLifecycle(emptyList())
 
-
-
     LazyColumn (
         modifier = modifier
-            .fillMaxSize().padding(16.dp)
+            .fillMaxSize()
+            .padding(16.dp)
 
     ) {
 

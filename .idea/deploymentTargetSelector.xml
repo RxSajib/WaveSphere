@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-08-03T18:29:19.491416400Z">
+        <DropdownSelection timestamp="2026-08-07T11:28:14.490543Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Asus\.android\avd\Pixel_4.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=1407125531100233" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -79,7 +79,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="CategoryButtonPreview">
+      <SelectionState runConfigName="CountryShimmerItemPreview">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2026-06-24T10:22:19.246640700Z">
           <Target type="DEFAULT_BOOT">
@@ -90,12 +90,12 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="CountryShimmerItemPreview">
+      <SelectionState runConfigName="ChooseLanguagesSheetPreview">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-06-24T10:22:19.246640700Z">
+        <DropdownSelection timestamp="2026-08-05T15:46:05.921394900Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=1407125531100233" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Asus\.android\avd\Pixel_4.avd" />
             </handle>
           </Target>
         </DropdownSelection>

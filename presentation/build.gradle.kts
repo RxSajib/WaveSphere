@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.dagger.hilt)
 }
 
 android {
@@ -95,4 +96,11 @@ dependencies {
 
     implementation(libs.seeker)
 
+
+    // Manages the Locale used by the app
+    implementation("dev.b3nedikt.applocale:applocale:3.1.0")
+// Needed to intercept view inflation
+    implementation("dev.b3nedikt.viewpump:viewpump:4.0.15")
+// Allows to update the text of views at runtime without recreating the activity
+    implementation("dev.b3nedikt.reword:reword:4.0.4")
 }

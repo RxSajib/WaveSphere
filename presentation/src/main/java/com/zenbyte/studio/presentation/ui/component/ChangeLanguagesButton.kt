@@ -13,10 +13,10 @@ import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.viewmodel.utils.rememberDebouncedClick
 
 @Composable
-fun ChangeLanguageButton(onChangeLanguage: () ->  Unit) {
+fun ChangeLanguageButton(selectedLanguages : String,onChangeLanguage: () ->  Unit) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
-            text = "English",
+            text = selectedLanguages,
             style = MaterialTheme.typography.titleSmall.copy(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary

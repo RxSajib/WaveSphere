@@ -1,30 +1,32 @@
 package com.zenbyte.studio.presentation.viewmodel.home
 
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.exoplayer.ExoPlayer
 import com.zenbyte.studio.domain.model.MyChannel
+import com.zenbyte.studio.domain.usecase.GetAllRadioStationsUseCase
 import com.zenbyte.studio.domain.usecase.GetChannelByCountryUseCase
 import com.zenbyte.studio.domain.utils.Resource
+import com.zenbyte.studio.presentation.R
+import com.zenbyte.studio.presentation.viewmodel.utils.Extras
 import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import java.net.HttpURLConnection
-import java.net.URL
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 private const val TAG = "HomeViewModel"
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    val getChannelByCountryUseCase: GetChannelByCountryUseCase
+    @ApplicationContext val myContext: Context,
+    val getChannelByCountryUseCase: GetChannelByCountryUseCase,
+    val getAllRadioStationsUseCase: GetAllRadioStationsUseCase
 ) : ViewModel() {
 
 
@@ -36,17 +38,36 @@ class HomeViewModel @Inject constructor(
     val tranChannel = channelMutableStateFlow.asStateFlow().map {
        it.sortedByDescending { it.votes }.take(8)
     }
-    val popularStation = channelMutableStateFlow.asStateFlow().map {
+    val popularStation = channelMutableStateFlow.asStateFlow().map { it ->
         it.sortedBy { it.name }.take(5)
     }
 
     init {
         getChannelByCountry()
+        getAllChannel()
+    }
+
+    private fun getAllChannel(){
+        viewModelScope.launch {
+            val allchannelResponse = getAllRadioStationsUseCase.getAllRadioStations()
+            when(allchannelResponse){
+                is Resource.Success -> {
+
+                }
+                is Resource.Error -> {
+
+                }
+                is Resource.Loading -> {
+
+                }
+            }
+        }
     }
 
     private fun getChannelByCountry(){
         viewModelScope.launch {
-            val response = getChannelByCountryUseCase.getChannelByCountry("Israel")
+
+            val response = getChannelByCountryUseCase.getChannelByCountry(Extras.getSimCountry(context = myContext).ifEmpty { "IR" })
             when(response){
                 is Resource.Success -> {
                     channelMutableStateFlow.emit(response.data?: emptyList())

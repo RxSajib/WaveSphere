@@ -1,8 +1,9 @@
 package com.zenbyte.studio.wavesphere.root
 
-import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.content.res.Resources
 import android.os.Bundle
 import android.os.IBinder
 import androidx.activity.ComponentActivity
@@ -26,12 +27,16 @@ import com.zenbyte.studio.presentation.ui.navigation.RootNavigation
 import com.zenbyte.studio.presentation.ui.navigation.SampleDes
 import com.zenbyte.studio.presentation.ui.theme.WaveSphereTheme
 import dagger.hilt.android.AndroidEntryPoint
+import dev.b3nedikt.app_locale.AppLocale
 
 
 @OptIn(UnstableApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(AppLocale.wrap(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

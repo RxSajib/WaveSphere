@@ -62,4 +62,12 @@ class WaveSphereImpl @Inject constructor(val api: WaveSphereApi) : WaveSphereRep
             }
         )
     }
+
+    override suspend fun getAllRadioStations(): Resource<List<MyChannel>> {
+        return safeApiCall(apiCall = {api.getAllStations()}, mapper = {channelDtoItems ->
+            channelDtoItems.map {
+                it.toDomain()
+            }
+        })
+    }
 }

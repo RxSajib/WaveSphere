@@ -20,6 +20,7 @@ import com.zenbyte.studio.presentation.viewmodel.utils.rememberDebouncedClick
 
 @Composable
 fun SettingItem(
+    selectedLanguages : String = "",
     title: String,
     icon: Painter,
     showToggle: Boolean,
@@ -76,8 +77,8 @@ fun SettingItem(
         }
 
         if(enableChangeLanguage){
-            ChangeLanguageButton{
-
+            ChangeLanguageButton(selectedLanguages = selectedLanguages){
+                onClick.invoke()
             }
         }
     }

@@ -20,6 +20,7 @@ import com.zenbyte.studio.presentation.R
 @Composable
 fun OtherSetting(
     modifier: Modifier = Modifier,
+    selectedLanguages : String = "",
     onClickAbout: () -> Unit,
     onClickHelpAndSupport: () -> Unit,
     onClickLanguage: () -> Unit,
@@ -65,6 +66,7 @@ fun OtherSetting(
             showToggle = false,
             isPremium = false,
             showArrow = false,
+            selectedLanguages = selectedLanguages,
             enableChangeLanguage = true
         ) {
             onClickLanguage.invoke()

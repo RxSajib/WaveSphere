@@ -43,6 +43,7 @@ class GetChannelByCountryViewModel @Inject constructor(
 
     fun getChannelByCountry(countryName: String) {
         viewModelScope.launch {
+            MyCustomLogger.logMessageInfo(tag = TAG, message = "country $countryName")
             channelListMutableStateFlow.emit(ApiState( isLoading = true))
             when(val response = getChannelByCountryUseCase.getChannelByCountry(countryName)){
                is Resource.Success -> {
