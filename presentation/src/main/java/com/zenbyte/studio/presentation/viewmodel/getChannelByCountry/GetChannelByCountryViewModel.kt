@@ -44,7 +44,6 @@ class GetChannelByCountryViewModel @Inject constructor(
     fun getChannelByCountry(countryName: String) {
         viewModelScope.launch {
             localChannelUseCase.getChannelByCountry(countryName = countryName).collect {
-                MyCustomLogger.logMessageInfo(TAG, "countryname ${countryName} getChannelByCountry: $it")
                 channelListMutableStateFlow.emit(ApiState(data = it, isSuccess = true, isLoading = false))
             }
         }
