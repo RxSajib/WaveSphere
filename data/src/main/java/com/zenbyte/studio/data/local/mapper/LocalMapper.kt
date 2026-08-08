@@ -2,10 +2,13 @@ package com.zenbyte.studio.data.local.mapper
 
 import com.zenbyte.studio.data.local.dao.MyChannelDao
 import com.zenbyte.studio.data.local.entity.MyChannelEntity
+import com.zenbyte.studio.data.local.model.Genres
 import com.zenbyte.studio.data.remote.model.ChannelDtoItem
 import com.zenbyte.studio.domain.model.MyChannel
+import com.zenbyte.studio.domain.model.MyGenres
 
 object LocalMapper {
+
 
     fun ChannelDtoItem.toMyChannelEntity() : MyChannelEntity {
         return MyChannelEntity(

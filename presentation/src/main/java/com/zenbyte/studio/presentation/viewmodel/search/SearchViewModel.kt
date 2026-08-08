@@ -1,18 +1,24 @@
 package com.zenbyte.studio.presentation.viewmodel.search
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.model.MyCountry
+import com.zenbyte.studio.domain.model.MyGenres
 import com.zenbyte.studio.domain.usecase.CountryListUseCase
+import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
 import com.zenbyte.studio.domain.usecase.SearchChannelUseCase
 import com.zenbyte.studio.domain.utils.Resource
 import com.zenbyte.studio.presentation.viewmodel.state.ApiState
+import com.zenbyte.studio.presentation.viewmodel.utils.AppConst.NEWS_TAG
+import com.zenbyte.studio.presentation.viewmodel.utils.Extras
 import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
+import com.zenbyte.studio.presentation.viewmodel.utils.localDataSources.GenresData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,7 +26,9 @@ private const val TAG = "SearchViewModel"
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     val countryListUseCase: CountryListUseCase,
-    val searchChannelUseCase: SearchChannelUseCase
+    val searchChannelUseCase: SearchChannelUseCase,
+    val localChannelUseCase: LocalChannelUseCase,
+    @ApplicationContext val context: Context
 ) : ViewModel() {
 
     private val searchInputMutableStateFlow = MutableStateFlow("")
@@ -71,9 +79,24 @@ class SearchViewModel @Inject constructor(
 
     init {
         getAllCountry()
-        getNewsList(
+       /* getNewsList(
             countryCode = "in"
-        )
+        )*/
+        getNewsListByCountry()
+        getGenresData()
+    }
+
+    fun getGenresData() : List<MyGenres>{
+        return GenresData.getGenres(context = context)
+    }
+
+    private fun getNewsListByCountry(){
+        viewModelScope.launch {
+            localChannelUseCase.getChannelByTags(tags = NEWS_TAG, country = Extras.getSimCountry(context = context))
+                .collect { channels ->
+                    newsListMutableStateFlow.emit(ApiState(data = channels, isLoading = false, isSuccess = true))
+                }
+        }
     }
 
     fun getAllCountry(){

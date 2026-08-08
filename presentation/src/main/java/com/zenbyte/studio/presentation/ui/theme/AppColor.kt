@@ -39,3 +39,22 @@ val languagesColor = Color(0xff8A33E2)
 val genresColor = Color(0xFFDE9607)
 val newsColor = Color(0xffFC0F49)
 val countryColor = Color(0xff18D1C3)
+
+
+val Pop = Color(0xFFF981C8)
+val Rock = Color(0xFFF56823)
+val HipHop = Color(0xFF8743F6)
+val Jazz = Color(0xFFE39D2B)
+val Classical = Color(0xFF5D6CE0)
+
+val Electronic = Color(0xFF1CB2AF)
+val Dance = Color(0xFFEA3ACA)
+val Country = Color(0xFFBF6D2C)
+val RnB = Color(0xFFF5247F)
+val Reggae = Color(0xFF34BB5C)
+
+val Latin = Color(0xFFF15558)
+val Metal = Color(0xFF5A5A5B)
+val Blues = Color(0xFF5B6FD8)
+val Folk = Color(0xFFC2712D)
+val World = Color(0xFF845FE6)

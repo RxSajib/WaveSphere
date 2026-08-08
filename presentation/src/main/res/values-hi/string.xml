@@ -61,4 +61,21 @@
     <string name="something_went_wrong">कुछ गलत हो गया।</string>
     <string name="something_went_wrong_details">जिस पृष्ठ को आप खोज रहे हैं उसे लोड नहीं किया जा सका। कृपया पुनः प्रयास करें।</string>
     <string name="retry">पुनः प्रयास करें</string>
+
+    <string name="genre_pop">पॉप</string>
+    <string name="genre_rock">रॉक</string>
+    <string name="genre_hip_hop">हिप हॉप</string>
+    <string name="genre_jazz">जैज़</string>
+    <string name="genre_classical">शास्त्रीय</string>
+    <string name="genre_electronic">इलेक्ट्रॉनिक</string>
+    <string name="genre_dance">डांस</string>
+    <string name="genre_country">कंट्री</string>
+    <string name="genre_rb">आर एंड बी</string>
+    <string name="genre_reggae">रेगे</string>
+    <string name="genre_latin">लैटिन</string>
+    <string name="genre_metal">मेटल</string>
+    <string name="genre_blues">ब्लूज़</string>
+    <string name="genre_folk">लोक</string>
+    <string name="genre_world">विश्व</string>
+
 </resources>

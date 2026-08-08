@@ -60,4 +60,21 @@
     <string name="something_went_wrong">Что-то пошло не так.</string>
     <string name="something_went_wrong_details">Не удалось загрузить нужную страницу. Пожалуйста, попробуйте ещё раз.</string>
     <string name="retry">Повторить</string>
+
+    <string name="genre_pop">Поп</string>
+    <string name="genre_rock">Рок</string>
+    <string name="genre_hip_hop">Хип-хоп</string>
+    <string name="genre_jazz">Джаз</string>
+    <string name="genre_classical">Классика</string>
+    <string name="genre_electronic">Электронная</string>
+    <string name="genre_dance">Танцевальная</string>
+    <string name="genre_country">Кантри</string>
+    <string name="genre_rb">R&amp;B</string>
+    <string name="genre_reggae">Регги</string>
+    <string name="genre_latin">Латино</string>
+    <string name="genre_metal">Метал</string>
+    <string name="genre_blues">Блюз</string>
+    <string name="genre_folk">Фолк</string>
+    <string name="genre_world">Мировая</string>
+
 </resources>

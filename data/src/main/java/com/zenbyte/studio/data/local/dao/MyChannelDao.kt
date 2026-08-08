@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.zenbyte.studio.data.local.entity.MyChannelEntity
+import com.zenbyte.studio.domain.model.MyChannel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -27,5 +28,16 @@ interface MyChannelDao {
 
     @Query("SELECT * FROM channel_db WHERE countrycode like :countryCode")
     fun getChannelByCountryCode(countryCode: String) : Flow<List<MyChannelEntity>>
+
+    @Query("""
+        SELECT * FROM channel_db 
+        WHERE (tags LIKE '%' || :tags || '%') 
+        AND (
+            countrycode = :country 
+            OR 
+            NOT EXISTS (SELECT 1 FROM channel_db WHERE (tags LIKE '%' || :tags || '%') AND countrycode = :country order by votes desc)
+        )
+    """)
+    fun getChannelByTags(tags : String, country : String) : Flow<List<MyChannelEntity>>
 
 }

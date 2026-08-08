@@ -3,11 +3,10 @@ package com.zenbyte.studio.presentation.viewmodel.popularStations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
-import com.zenbyte.studio.domain.usecase.LocalChannelUseCase
+import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
 import com.zenbyte.studio.presentation.viewmodel.state.ApiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject

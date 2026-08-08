@@ -21,7 +21,6 @@ import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.presentation.ui.component.MyCustomInputFiled
 import com.zenbyte.studio.presentation.ui.component.MyCustomMenuGroup
 import com.zenbyte.studio.presentation.viewmodel.search.SearchViewModel
-import com.zenbyte.studio.presentation.ui.navigation.AppDestination
 
 @Composable
 fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackStack<NavKey>) {
@@ -70,7 +69,12 @@ fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackSt
             if (selectedMenuPosition.value == 1) {
                     CountriesScreen(rootBackStack = rootBackStack, viewModel = viewModel)
 
-            } else if (selectedMenuPosition.value == 3) {
+            }
+            else if(selectedMenuPosition.value == 2){
+                GenresScreen(viewModel = viewModel)
+            }
+
+            else if (selectedMenuPosition.value == 3) {
                 NewsChannelListScreen(newsList = newsList, viewModel = viewModel)
             }
         }

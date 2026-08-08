@@ -8,7 +8,7 @@ import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.usecase.CountryListUseCase
 import com.zenbyte.studio.domain.usecase.GetAllRadioStationsUseCase
 import com.zenbyte.studio.domain.usecase.GetChannelByCountryUseCase
-import com.zenbyte.studio.domain.usecase.LocalChannelUseCase
+import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
 import com.zenbyte.studio.domain.utils.Resource
 import com.zenbyte.studio.presentation.viewmodel.utils.Extras
 import dagger.hilt.android.lifecycle.HiltViewModel

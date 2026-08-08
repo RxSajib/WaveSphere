@@ -60,4 +60,21 @@
     <string name="something_went_wrong">משהו השתבש.</string>
     <string name="something_went_wrong_details">לא ניתן לטעון את הדף המבוקש. אנא נסה שוב.</string>
     <string name="retry">נסה שוב</string>
+
+    <string name="genre_pop">פופ</string>
+    <string name="genre_rock">רוק</string>
+    <string name="genre_hip_hop">היפ הופ</string>
+    <string name="genre_jazz">ג\'אז</string>
+    <string name="genre_classical">קלאסי</string>
+    <string name="genre_electronic">אלקטרוני</string>
+    <string name="genre_dance">דאנס</string>
+    <string name="genre_country">קאנטרי</string>
+    <string name="genre_rb">R&amp;B</string>
+    <string name="genre_reggae">רגאיי</string>
+    <string name="genre_latin">לטיני</string>
+    <string name="genre_metal">מטאל</string>
+    <string name="genre_blues">בלוז</string>
+    <string name="genre_folk">פולק</string>
+    <string name="genre_world">עולם</string>
+
 </resources>

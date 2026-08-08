@@ -60,4 +60,21 @@
     <string name="something_went_wrong">出现了一些问题。</string>
     <string name="something_went_wrong_details">无法加载您要查看的页面，请稍后重试。</string>
     <string name="retry">重试</string>
+
+    <string name="genre_pop">流行</string>
+    <string name="genre_rock">摇滚</string>
+    <string name="genre_hip_hop">嘻哈</string>
+    <string name="genre_jazz">爵士</string>
+    <string name="genre_classical">古典</string>
+    <string name="genre_electronic">电子</string>
+    <string name="genre_dance">舞曲</string>
+    <string name="genre_country">乡村</string>
+    <string name="genre_rb">R&amp;B</string>
+    <string name="genre_reggae">雷鬼</string>
+    <string name="genre_latin">拉丁</string>
+    <string name="genre_metal">重金属</string>
+    <string name="genre_blues">蓝调</string>
+    <string name="genre_folk">民谣</string>
+    <string name="genre_world">世界</string>
+
 </resources>
