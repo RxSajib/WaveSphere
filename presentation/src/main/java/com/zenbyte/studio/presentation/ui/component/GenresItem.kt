@@ -29,14 +29,14 @@ import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
 @Composable
-fun GenresItem(genres: MyGenres, onClick: (Genres) -> Unit) {
+fun GenresItem(genres: MyGenres, onClick: (MyGenres) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(10.dp))
             .background(color = Color(genres.color).copy(alpha = 0.05f))
             .debounceClickable{
-
+onClick.invoke(genres)
             }
             .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally

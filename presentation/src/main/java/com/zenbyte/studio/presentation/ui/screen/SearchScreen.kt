@@ -71,7 +71,7 @@ fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackSt
 
             }
             else if(selectedMenuPosition.value == 2){
-                GenresScreen(viewModel = viewModel)
+                GenresScreen(rootBackStack = rootBackStack, viewModel = viewModel)
             }
 
             else if (selectedMenuPosition.value == 3) {

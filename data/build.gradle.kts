@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.ksp)
     alias(libs.plugins.secrets)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 val secretsFile = rootProject.file("secrets.properties")
@@ -69,4 +70,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     implementation(project(":domain"))
+
+    //kotlin x serilization json
+    implementation(libs.kotlin.serialization.json)
 }

@@ -1,8 +1,10 @@
 package com.zenbyte.studio.presentation.ui.navigation
 
 import androidx.navigation3.runtime.NavKey
+import com.zenbyte.studio.data.local.model.Genres
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.model.MyCountry
+import com.zenbyte.studio.domain.model.MyGenres
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -29,7 +31,8 @@ sealed class AppDestination : NavKey {
 
     @Serializable
     data class Dest(val firstDestName : String,
-                    val countryName: String? = null) : AppDestination()
+                    val countryName: String? = null,
+        val genres: MyGenres?= null) : AppDestination()
 
     {
 
@@ -54,5 +57,8 @@ sealed class AppDestination : NavKey {
 
         @Serializable
         data object Premium : AppDestination()
+
+        @Serializable
+        data class ChannelByGenres(val genres: MyGenres) : AppDestination()
     }
 }

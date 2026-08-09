@@ -12,6 +12,7 @@ object GenresData {
     fun getGenres(context: Context): List<MyGenres> {
         return GenresEnum.entries.map { genre ->
             MyGenres(
+                titleEnglish = genre.name,
                 title = Extras.getGenresName(genre, context),
                 icon = Extras.getGenreIcon(genre),
                 color = Extras.getGenreBackgroundColor(genre).toArgb(),

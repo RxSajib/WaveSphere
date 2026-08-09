@@ -10,6 +10,7 @@ import com.zenbyte.studio.presentation.viewmodel.state.ApiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +27,10 @@ class GetChannelByCountryViewModel @Inject constructor(
     val channelList = channelListMutableStateFlow.asStateFlow()
 
     var currentPlayingChannel = mediaPlayControllerUseCase.playerController.currentChannel
+
+
+
+
 
 
     fun getChannelByCountry(countryName: String) {

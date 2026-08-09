@@ -15,8 +15,11 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.zenbyte.studio.data.local.model.Genres
+import com.zenbyte.studio.domain.model.MyGenres
 import com.zenbyte.studio.presentation.ui.screen.AboutScreen
 import com.zenbyte.studio.presentation.ui.screen.ChannelByCountryScreen
+import com.zenbyte.studio.presentation.ui.screen.ChannelByGenresScreen
 import com.zenbyte.studio.presentation.ui.screen.PlayerViewScreen
 import com.zenbyte.studio.presentation.ui.screen.PopularStationsScreen
 import com.zenbyte.studio.presentation.ui.screen.PremiumScreen
@@ -38,6 +41,7 @@ fun DestNavigation(
                     AppDestination.Dest.ChannelByCountry::class,
                     AppDestination.Dest.ChannelByCountry.serializer()
                 )
+                subclass(AppDestination.Dest.ChannelByGenres::class, AppDestination.Dest.ChannelByGenres.serializer())
                 subclass(
                     AppDestination.Dest.PlayerView::class,
                     AppDestination.Dest.PlayerView.serializer()
@@ -64,8 +68,11 @@ fun DestNavigation(
 
 
     val firstDest = when {
+
         startDest.firstDestName == "ChannelByCountry" ->
             AppDestination.Dest.ChannelByCountry(startDest.countryName ?: "Unknown")
+
+        startDest.firstDestName == "ChannelByGenres" -> AppDestination.Dest.ChannelByGenres(startDest.genres?: MyGenres())
 
         startDest.firstDestName == AppDestination.Dest.AboutUs::class.simpleName -> AppDestination.Dest.AboutUs
         startDest.firstDestName == AppDestination.Dest.Premium::class.simpleName -> AppDestination.Dest.Premium
@@ -120,6 +127,9 @@ fun DestNavigation(
                 }
                 entry<AppDestination.Dest.PopularStations> {
                     PopularStationsScreen(rootBackStack = rootBackStack)
+                }
+                entry<AppDestination.Dest.ChannelByGenres> {
+                    ChannelByGenresScreen(rootBackStack = rootBackStack, genres = it.genres)
                 }
             },
 
