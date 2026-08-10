@@ -15,7 +15,6 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
-import com.zenbyte.studio.data.local.model.Genres
 import com.zenbyte.studio.domain.model.MyGenres
 import com.zenbyte.studio.presentation.ui.screen.AboutScreen
 import com.zenbyte.studio.presentation.ui.screen.ChannelByCountryScreen
@@ -129,7 +128,7 @@ fun DestNavigation(
                     PopularStationsScreen(rootBackStack = rootBackStack)
                 }
                 entry<AppDestination.Dest.ChannelByGenres> {
-                    ChannelByGenresScreen(rootBackStack = rootBackStack, genres = it.genres)
+                    ChannelByGenresScreen(rootBackStack = rootBackStack, backStack = backStack, genres = it.genres)
                 }
             },
 

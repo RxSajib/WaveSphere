@@ -35,6 +35,7 @@ import com.zenbyte.studio.presentation.ui.component.NowPlayingComponent
 import com.zenbyte.studio.presentation.ui.navigation.AppDestination
 import java.util.Locale
 import androidx.compose.ui.platform.LocalLocale
+import com.zenbyte.studio.presentation.ui.component.CategoryList
 
 private const val TAG = "HomeScreen"
 @Composable
@@ -100,12 +101,12 @@ fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey
                 showSeeAll = false
             )
             HeightGap(height = 15.dp)
-           /* CategoryList(
+            CategoryList(
                 onClickCountry = {},
                 onClickLanguages = {},
                 onClickGenres = {},
                 onClickNews = {}
-            )*/
+            )
             HeightGap(height = 20.dp)
             MySectionHeader(
                 title = stringResource(R.string.popular_stations),

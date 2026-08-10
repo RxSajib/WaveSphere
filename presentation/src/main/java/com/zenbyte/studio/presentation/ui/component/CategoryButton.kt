@@ -39,7 +39,7 @@ import com.zenbyte.studio.presentation.ui.theme.countryColor
 import com.zenbyte.studio.presentation.ui.theme.genresColor
 import com.zenbyte.studio.presentation.ui.theme.languagesColor
 import com.zenbyte.studio.presentation.ui.theme.newsColor
-/*
+
 
 @Composable
 fun CategoryButton(
@@ -56,7 +56,7 @@ fun CategoryButton(
                 .fillMaxWidth()
                 .aspectRatio(1f)
                 .clip(shape = RoundedCornerShape(10.dp))
-                .background(color = color.copy(alpha = 0.1f))
+                .background(color = color.copy(alpha = 0.07f))
                 .clickable{
                     onClickCategory.invoke(categoryTitle)
                 }, contentAlignment = Alignment.Center
@@ -65,7 +65,7 @@ fun CategoryButton(
                 painter = icon,
                 contentDescription = null,
                 modifier = Modifier
-                    .fillMaxWidth(.6f)
+                    .fillMaxWidth(.5f)
                     .aspectRatio(1f),
                 colorFilter = ColorFilter.tint(color = color)
             )
@@ -102,7 +102,7 @@ fun CategoryList(
                 onClickCountry.invoke(category)
             })
 
-        WidthGap(10.dp)
+        WidthGap(20.dp)
         CategoryButton(
             modifier = Modifier.weight(1f),
             color = languagesColor,
@@ -111,7 +111,7 @@ fun CategoryList(
             onClickCategory = { category ->
                 onClickLanguages.invoke(category)
             })
-        WidthGap(10.dp)
+        WidthGap(20.dp)
         CategoryButton(
             modifier = Modifier.weight(1f),
             color = genresColor,
@@ -120,7 +120,7 @@ fun CategoryList(
             onClickCategory = { category ->
                 onClickGenres.invoke(category)
             })
-        WidthGap(10.dp)
+        WidthGap(20.dp)
         CategoryButton(
             modifier = Modifier.weight(1f),
             color = newsColor,
@@ -145,4 +145,4 @@ fun CategoryButtonPreview() {
             MyCustomStationShimmerItem()
         }
     }
-}*/
+}

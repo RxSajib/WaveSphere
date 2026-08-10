@@ -1,6 +1,5 @@
 package com.zenbyte.studio.presentation.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,7 +23,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import coil3.compose.LocalPlatformContext
-import com.zenbyte.studio.data.local.model.Genres
 import com.zenbyte.studio.domain.model.MyGenres
 import com.zenbyte.studio.presentation.ui.component.MyCustomAppBar
 import com.zenbyte.studio.presentation.ui.component.MyCustomStation
@@ -32,13 +30,17 @@ import com.zenbyte.studio.presentation.ui.component.MyCustomStationShimmerItem
 import com.zenbyte.studio.presentation.ui.component.ServerError
 import com.zenbyte.studio.presentation.ui.navigation.AppDestination
 import com.zenbyte.studio.presentation.viewmodel.channelByGenres.ChannelByGenresViewModel
-import com.zenbyte.studio.presentation.viewmodel.state.ApiState
 
 private const val TAG = "ChannelByGenresScreen"
-@Composable
-fun ChannelByGenresScreen(rootBackStack: NavBackStack<NavKey>, genres: MyGenres) {
 
-    val viewModel : ChannelByGenresViewModel = hiltViewModel()
+@Composable
+fun ChannelByGenresScreen(
+    rootBackStack: NavBackStack<NavKey>,
+    backStack: NavBackStack<NavKey>,
+    genres: MyGenres
+) {
+
+    val viewModel: ChannelByGenresViewModel = hiltViewModel()
     val channelListState by viewModel.channelList.collectAsStateWithLifecycle()
     val contextCoil = LocalPlatformContext.current
     val currentPlayingChannel by viewModel.currentPlayingChannel.collectAsStateWithLifecycle()
@@ -47,9 +49,11 @@ fun ChannelByGenresScreen(rootBackStack: NavBackStack<NavKey>, genres: MyGenres)
         viewModel.inputTag(tagName = genres.titleEnglish)
     }
 
-    Surface(modifier = Modifier
-        .fillMaxSize()
-        .background(color = MaterialTheme.colorScheme.surface)) {
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.surface)
+    ) {
         Scaffold(
             topBar = {
                 MyCustomAppBar(
@@ -58,15 +62,14 @@ fun ChannelByGenresScreen(rootBackStack: NavBackStack<NavKey>, genres: MyGenres)
                     rootBackStack.removeLastOrNull()
                 }
             }
-        ) {innerPadding ->
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding), contentAlignment = Alignment.Center){
+        ) { innerPadding ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding), contentAlignment = Alignment.Center
+            ) {
 
-
-
-
-                if(channelListState.isSuccess){
+                if (channelListState.isSuccess) {
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(3),
                         modifier = Modifier.fillMaxSize(),
@@ -74,28 +77,34 @@ fun ChannelByGenresScreen(rootBackStack: NavBackStack<NavKey>, genres: MyGenres)
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                         contentPadding = PaddingValues(16.dp)
                     ) {
-                        items(channelListState.data?: emptyList()) { channelData ->
+                        items(channelListState.data ?: emptyList()) { channelData ->
                             MyCustomStation(
                                 isSelected = currentPlayingChannel?.stationuuid == channelData.stationuuid,
                                 context = contextCoil, myChannel = channelData,
-                                onClick = {myChannel ->
-
+                                onClick = { myChannel ->
+                                    backStack.add(
+                                        AppDestination.Dest.PlayerView(
+                                            channel = myChannel,
+                                            channelList = channelListState.data ?: emptyList()
+                                        )
+                                    )
                                 }
                             )
                         }
                     }
-                }
-                else if(channelListState.isLoading){
-                    LazyVerticalGrid(modifier = Modifier.fillMaxSize(), columns = GridCells.Fixed(3),
+                } else if (channelListState.isLoading) {
+                    LazyVerticalGrid(
+                        modifier = Modifier.fillMaxSize(), columns = GridCells.Fixed(3),
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        contentPadding = PaddingValues(16.dp)) {
-                        items(30){
+                        contentPadding = PaddingValues(16.dp)
+                    ) {
+                        items(30) {
                             MyCustomStationShimmerItem()
                         }
                     }
-                }else {
-                    ServerError{
+                } else {
+                    ServerError {
 
                     }
                 }
