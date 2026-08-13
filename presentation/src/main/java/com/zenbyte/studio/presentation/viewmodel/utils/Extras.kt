@@ -19,6 +19,7 @@ import com.zenbyte.studio.presentation.ui.theme.Reggae
 import com.zenbyte.studio.presentation.ui.theme.RnB
 import com.zenbyte.studio.presentation.ui.theme.Rock
 import com.zenbyte.studio.presentation.ui.theme.World
+import com.zenbyte.studio.presentation.viewmodel.utils.enum.ChannelLanguages
 import com.zenbyte.studio.presentation.viewmodel.utils.enum.GenresEnum
 
 object Extras {
@@ -49,23 +50,53 @@ object Extras {
         }
     }
 
-    fun getGenreColor(genre: GenresEnum): String {
-        return when (genre) {
-            GenresEnum.Pop -> "#FF4081"
-            GenresEnum.Rock -> "#F44336"
-            GenresEnum.HipHop -> "#9C27B0"
-            GenresEnum.Jazz -> "#673AB7"
-            GenresEnum.Classical -> "#3F51B5"
-            GenresEnum.Electronic -> "#2196F3"
-            GenresEnum.Dance -> "#03A9F4"
-            GenresEnum.Country -> "#00BCD4"
-            GenresEnum.RB -> "#009688"
-            GenresEnum.Reggane -> "#4CAF50"
-            GenresEnum.Latin -> "#8BC34A"
-            GenresEnum.Metal -> "#CDDC39"
-            GenresEnum.Blues -> "#FFEB3B"
-            GenresEnum.Folk -> "#FFC107"
-            GenresEnum.World -> "#FF9800"
+    fun getLanguagesName(languages: ChannelLanguages, context: Context): String {
+        return when (languages) {
+            ChannelLanguages.English -> context.getString(R.string.language_english)
+            ChannelLanguages.Chinese -> context.getString(R.string.language_chinese)
+            ChannelLanguages.Hindi -> context.getString(R.string.language_hindi)
+            ChannelLanguages.Spanish -> context.getString(R.string.language_spanish)
+            ChannelLanguages.French -> context.getString(R.string.language_french)
+            ChannelLanguages.Arabic -> context.getString(R.string.language_arabic)
+            ChannelLanguages.Bengali -> context.getString(R.string.language_bengali)
+            ChannelLanguages.Portuguese -> context.getString(R.string.language_portuguese)
+            ChannelLanguages.Russian -> context.getString(R.string.language_russian)
+            ChannelLanguages.Japanese -> context.getString(R.string.language_japanese)
+            ChannelLanguages.German -> context.getString(R.string.language_german)
+            ChannelLanguages.Korean -> context.getString(R.string.language_korean)
+            ChannelLanguages.Italian -> context.getString(R.string.language_italian)
+            ChannelLanguages.Turkish -> context.getString(R.string.language_turkish)
+            ChannelLanguages.Vietnamese -> context.getString(R.string.language_vietnamese)
+            ChannelLanguages.Indonesian -> context.getString(R.string.language_indonesian)
+            ChannelLanguages.Urdu -> context.getString(R.string.language_urdu)
+            ChannelLanguages.Persian -> context.getString(R.string.language_persian)
+            ChannelLanguages.Thai -> context.getString(R.string.language_thai)
+            ChannelLanguages.Dutch -> context.getString(R.string.language_dutch)
+        }
+    }
+
+    fun getLanguagesColor(languages: ChannelLanguages) : Color{
+        return when(languages){
+            ChannelLanguages.English -> HipHop
+            ChannelLanguages.Chinese -> Reggae
+            ChannelLanguages.Hindi -> World
+            ChannelLanguages.Spanish -> Folk
+            ChannelLanguages.French -> Blues
+            ChannelLanguages.Arabic -> Metal
+            ChannelLanguages.Bengali -> Latin
+            ChannelLanguages.Portuguese -> Reggae
+            ChannelLanguages.Russian -> RnB
+            ChannelLanguages.Japanese -> Country
+            ChannelLanguages.German -> Dance
+            ChannelLanguages.Korean -> Electronic
+            ChannelLanguages.Italian -> Classical
+            ChannelLanguages.Turkish -> Jazz
+            ChannelLanguages.Vietnamese -> HipHop
+            ChannelLanguages.Indonesian -> Rock
+            ChannelLanguages.Urdu -> Pop
+            ChannelLanguages.Persian -> HipHop
+            ChannelLanguages.Thai -> Country
+            ChannelLanguages.Dutch -> Electronic
         }
     }
 
@@ -108,6 +139,8 @@ object Extras {
             GenresEnum.World -> World
         }
     }
+
+
 
 
 }

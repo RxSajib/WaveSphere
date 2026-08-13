@@ -43,8 +43,8 @@ fun SampleDes() {
                 rememberViewModelStoreNavEntryDecorator()
             ),
             entryProvider = entryProvider {
-                entry<AppDestination.Dest.AllCountry> {country ->
-                //    CountriesScreen(rootBackStack = rootBackStack, viewModel = view)
+                entry<AppDestination.Dest.AllCountry> {
+                 //   CountriesScreen(rootBackStack = rootBackStack, viewModel = s)
                 }
                 entry<AppDestination.Dest.ChannelByCountry> {countryName ->
                //     ChannelByCountryScreen(backStack = rootBackStack, countryName)

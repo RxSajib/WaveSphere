@@ -36,8 +36,7 @@ fun CountryItem(context: PlatformContext, country: MyCountry?, onClickCountry: (
             .fillMaxWidth()
             .debounceClickable{
                 onClickCountry.invoke(country!!)
-            }
-            .padding(10.dp),
+            }.padding(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
 

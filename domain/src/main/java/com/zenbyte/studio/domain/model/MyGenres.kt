@@ -1,8 +1,8 @@
-package com.zenbyte.studio.domain.model
+ package com.zenbyte.studio.domain.model
+ import kotlinx.serialization.Serializable
 
-import kotlinx.serialization.Serializable
 
-@Serializable
+ @Serializable
 data class MyGenres(
     val title : String = "",
     val titleEnglish : String ="",

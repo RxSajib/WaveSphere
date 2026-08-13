@@ -17,8 +17,10 @@ import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
 import com.zenbyte.studio.domain.model.MyGenres
 import com.zenbyte.studio.presentation.ui.screen.AboutScreen
+import com.zenbyte.studio.presentation.ui.screen.AllCountryScreen
 import com.zenbyte.studio.presentation.ui.screen.ChannelByCountryScreen
 import com.zenbyte.studio.presentation.ui.screen.ChannelByGenresScreen
+import com.zenbyte.studio.presentation.ui.screen.LanguagesListScreen
 import com.zenbyte.studio.presentation.ui.screen.PlayerViewScreen
 import com.zenbyte.studio.presentation.ui.screen.PopularStationsScreen
 import com.zenbyte.studio.presentation.ui.screen.PremiumScreen
@@ -40,7 +42,10 @@ fun DestNavigation(
                     AppDestination.Dest.ChannelByCountry::class,
                     AppDestination.Dest.ChannelByCountry.serializer()
                 )
-                subclass(AppDestination.Dest.ChannelByGenres::class, AppDestination.Dest.ChannelByGenres.serializer())
+                subclass(
+                    AppDestination.Dest.ChannelByGenres::class,
+                    AppDestination.Dest.ChannelByGenres.serializer()
+                )
                 subclass(
                     AppDestination.Dest.PlayerView::class,
                     AppDestination.Dest.PlayerView.serializer()
@@ -61,6 +66,14 @@ fun DestNavigation(
                     AppDestination.Dest.PopularStations::class,
                     AppDestination.Dest.PopularStations.serializer()
                 )
+                subclass(
+                    AppDestination.Dest.Languages::class,
+                    AppDestination.Dest.Languages.serializer()
+                )
+                subclass(
+                    AppDestination.Dest.MyCountryList::class,
+                    AppDestination.Dest.MyCountryList.serializer()
+                )
             }
         }
     }
@@ -68,31 +81,34 @@ fun DestNavigation(
 
     val firstDest = when {
 
-        startDest.firstDestName == "ChannelByCountry" ->
+        startDest.firstDestName == AppDestination.Dest.ChannelByCountry::class.simpleName ->
             AppDestination.Dest.ChannelByCountry(startDest.countryName ?: "Unknown")
 
-        startDest.firstDestName == "ChannelByGenres" -> AppDestination.Dest.ChannelByGenres(startDest.genres?: MyGenres())
+        startDest.firstDestName == AppDestination.Dest.ChannelByGenres::class.simpleName -> AppDestination.Dest.ChannelByGenres(
+            startDest.genres ?: MyGenres()
+        )
 
         startDest.firstDestName == AppDestination.Dest.AboutUs::class.simpleName -> AppDestination.Dest.AboutUs
         startDest.firstDestName == AppDestination.Dest.Premium::class.simpleName -> AppDestination.Dest.Premium
         startDest.firstDestName == AppDestination.Dest.TrendingStations::class.simpleName -> AppDestination.Dest.TrendingStations
         startDest.firstDestName == AppDestination.Dest.PopularStations::class.simpleName -> AppDestination.Dest.PopularStations
-        /*  startDest.firstDestName == AppDestination.Dest.Premium::class.simpleName -> AppDestination.Dest.Premium
-         startDest.firstDestName == AppDestination.Dest.UploadStories::class.simpleName -> AppDestination.Dest.UploadStories
-         startDest.firstDestName == AppDestination.Dest.SubscriptionHistory::class.simpleName -> AppDestination.Dest.SubscriptionHistory
-         startDest.firstDestName == AppDestination.Dest.StoryTypeWiseBook::class.simpleName -> AppDestination.Dest.StoryTypeWiseBook(
-             typeName = ""
-         )
+        startDest.firstDestName == AppDestination.Dest.Languages::class.simpleName -> AppDestination.Dest.Languages
+        startDest.firstDestName == AppDestination.Dest.MyCountryList::class.simpleName -> AppDestination.Dest.MyCountryList
+        /*  startDest.firstDestName == AppDestination.Dest.UploadStories::class.simpleName -> AppDestination.Dest.UploadStories
+          startDest.firstDestName == AppDestination.Dest.SubscriptionHistory::class.simpleName -> AppDestination.Dest.SubscriptionHistory
+          startDest.firstDestName == AppDestination.Dest.StoryTypeWiseBook::class.simpleName -> AppDestination.Dest.StoryTypeWiseBook(
+              typeName = ""
+          )
 
-         startDest.firstDestName == AppDestination.Dest.SearchStoryResult::class.simpleName -> AppDestination.Dest.SearchStoryResult
-         startDest.firstDestName == AppDestination.Dest.PublishedPendingStory::class.simpleName -> AppDestination.Dest.PublishedPendingStory
-         startDest.firstDestName == AppDestination.Dest.AllReleaseStory::class.simpleName -> AppDestination.Dest.AllReleaseStory
-         startDest.firstDestName == AppDestination.Dest.NewReleaseStory::class.simpleName -> AppDestination.Dest.NewReleaseStory
-         startDest.firstDestName == AppDestination.Dest.MostPopular::class.simpleName -> AppDestination.Dest.MostPopular
-         startDest.firstDestName == AppDestination.Dest.ChangeLanguage::class.simpleName -> AppDestination.Dest.ChangeLanguage
-         startDest.firstDestName == AppDestination.Dest.StoryDetails::class.simpleName -> AppDestination.Dest.StoryDetails
-         startDest.firstDestName == AppDestination.Dest.PublishedStory::class.simpleName -> AppDestination.Dest.PublishedStory
- */
+          startDest.firstDestName == AppDestination.Dest.SearchStoryResult::class.simpleName -> AppDestination.Dest.SearchStoryResult
+          startDest.firstDestName == AppDestination.Dest.PublishedPendingStory::class.simpleName -> AppDestination.Dest.PublishedPendingStory
+          startDest.firstDestName == AppDestination.Dest.AllReleaseStory::class.simpleName -> AppDestination.Dest.AllReleaseStory
+          startDest.firstDestName == AppDestination.Dest.NewReleaseStory::class.simpleName -> AppDestination.Dest.NewReleaseStory
+          startDest.firstDestName == AppDestination.Dest.MostPopular::class.simpleName -> AppDestination.Dest.MostPopular
+          startDest.firstDestName == AppDestination.Dest.ChangeLanguage::class.simpleName -> AppDestination.Dest.ChangeLanguage
+          startDest.firstDestName == AppDestination.Dest.StoryDetails::class.simpleName -> AppDestination.Dest.StoryDetails
+          startDest.firstDestName == AppDestination.Dest.PublishedStory::class.simpleName -> AppDestination.Dest.PublishedStory
+        */
         else -> throw Exception("Invalid destination")
     }
 
@@ -128,7 +144,17 @@ fun DestNavigation(
                     PopularStationsScreen(rootBackStack = rootBackStack)
                 }
                 entry<AppDestination.Dest.ChannelByGenres> {
-                    ChannelByGenresScreen(rootBackStack = rootBackStack, backStack = backStack, genres = it.genres)
+                    ChannelByGenresScreen(
+                        rootBackStack = rootBackStack,
+                        backStack = backStack,
+                        genres = it.genres
+                    )
+                }
+                entry<AppDestination.Dest.Languages> {
+                    LanguagesListScreen(rootBackStack = rootBackStack)
+                }
+                entry<AppDestination.Dest.MyCountryList> {
+                    AllCountryScreen(rootBackStack = rootBackStack)
                 }
             },
 

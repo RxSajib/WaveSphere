@@ -102,8 +102,16 @@ fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey
             )
             HeightGap(height = 15.dp)
             CategoryList(
-                onClickCountry = {},
-                onClickLanguages = {},
+                onClickCountry = {
+                    rootBackStack.add(
+                        AppDestination.Dest(firstDestName = AppDestination.Dest.MyCountryList::class.simpleName.orEmpty())
+                    )
+                },
+                onClickLanguages = {
+                    rootBackStack.add(
+                        AppDestination.Dest(firstDestName = AppDestination.Dest.Languages::class.simpleName.orEmpty())
+                    )
+                },
                 onClickGenres = {},
                 onClickNews = {}
             )

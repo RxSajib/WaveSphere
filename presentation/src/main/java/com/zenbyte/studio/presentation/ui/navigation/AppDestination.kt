@@ -37,6 +37,9 @@ sealed class AppDestination : NavKey {
     {
 
         @Serializable
+        data object Languages : AppDestination()
+
+        @Serializable
         data object TrendingStations : AppDestination()
 
         @Serializable
@@ -45,6 +48,9 @@ sealed class AppDestination : NavKey {
 
         @Serializable
         data object AllCountry : AppDestination()
+
+        @Serializable
+        data object MyCountryList : AppDestination()
 
         @Serializable
         data class ChannelByCountry(val name: String) : AppDestination()

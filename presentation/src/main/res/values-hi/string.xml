@@ -78,4 +78,25 @@
     <string name="genre_folk">लोक</string>
     <string name="genre_world">विश्व</string>
 
+    <string name="language_english">अंग्रेज़ी</string>
+    <string name="language_chinese">चीनी</string>
+    <string name="language_hindi">हिन्दी</string>
+    <string name="language_spanish">स्पेनिश</string>
+    <string name="language_french">फ्रांसीसी</string>
+    <string name="language_arabic">अरबी</string>
+    <string name="language_bengali">बंगाली</string>
+    <string name="language_portuguese">पुर्तगाली</string>
+    <string name="language_russian">रूसी</string>
+    <string name="language_japanese">जापानी</string>
+    <string name="language_german">जर्मन</string>
+    <string name="language_korean">कोरियाई</string>
+    <string name="language_italian">इतालवी</string>
+    <string name="language_turkish">तुर्की</string>
+    <string name="language_vietnamese">वियतनामी</string>
+    <string name="language_indonesian">इंडोनेशियाई</string>
+    <string name="language_urdu">उर्दू</string>
+    <string name="language_persian">फारसी</string>
+    <string name="language_thai">थाई</string>
+    <string name="language_dutch">डच</string>
+
 </resources>

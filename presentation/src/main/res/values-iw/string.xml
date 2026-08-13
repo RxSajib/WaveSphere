@@ -77,4 +77,25 @@
     <string name="genre_folk">פולק</string>
     <string name="genre_world">עולם</string>
 
+    <string name="language_english">אנגלית</string>
+    <string name="language_chinese">סינית</string>
+    <string name="language_hindi">הינדי</string>
+    <string name="language_spanish">ספרדית</string>
+    <string name="language_french">צרפתית</string>
+    <string name="language_arabic">ערבית</string>
+    <string name="language_bengali">בנגלית</string>
+    <string name="language_portuguese">פורטוגזית</string>
+    <string name="language_russian">רוסית</string>
+    <string name="language_japanese">יפנית</string>
+    <string name="language_german">גרמנית</string>
+    <string name="language_korean">קוריאנית</string>
+    <string name="language_italian">איטלקית</string>
+    <string name="language_turkish">טורקית</string>
+    <string name="language_vietnamese">וייטנאמית</string>
+    <string name="language_indonesian">אינדונזית</string>
+    <string name="language_urdu">אורדו</string>
+    <string name="language_persian">פרסית</string>
+    <string name="language_thai">תאילנדית</string>
+    <string name="language_dutch">הולנדית</string>
+
 </resources>

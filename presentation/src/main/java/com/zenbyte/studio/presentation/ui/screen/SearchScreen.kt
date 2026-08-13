@@ -31,7 +31,7 @@ fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackSt
     val selectedMenuPosition = viewModel.selectedMenuPosition.collectAsStateWithLifecycle()
     val newsList = viewModel.newsList.collectAsStateWithLifecycle()
 
-  Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()) {
         HeightGap(height = 10.dp)
         MyCustomInputFiled(
             placeHolderText = stringResource(R.string.search_input_hilt),
@@ -49,7 +49,7 @@ fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackSt
         ) {}
 
         HeightGap(height = 20.dp)
-      MyCustomMenuGroup(
+        MyCustomMenuGroup(
             viewModel = viewModel,
             modifier = Modifier.padding(horizontal = 16.dp),
             onClickCountries = {},
@@ -67,14 +67,10 @@ fun SearchScreen(activeBackStack: NavBackStack<NavKey>, rootBackStack: NavBackSt
                 )
         ) {
             if (selectedMenuPosition.value == 1) {
-                    CountriesScreen(rootBackStack = rootBackStack, viewModel = viewModel)
-
-            }
-            else if(selectedMenuPosition.value == 2){
+                CountriesScreen(rootBackStack = rootBackStack, viewModel = viewModel)
+            } else if (selectedMenuPosition.value == 2) {
                 GenresScreen(rootBackStack = rootBackStack, viewModel = viewModel)
-            }
-
-            else if (selectedMenuPosition.value == 3) {
+            } else if (selectedMenuPosition.value == 3) {
                 NewsChannelListScreen(newsList = newsList, viewModel = viewModel)
             }
         }
