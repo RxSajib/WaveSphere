@@ -112,7 +112,11 @@ fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey
                         AppDestination.Dest(firstDestName = AppDestination.Dest.Languages::class.simpleName.orEmpty())
                     )
                 },
-                onClickGenres = {},
+                onClickGenres = {
+                    rootBackStack.add(
+                        AppDestination.Dest(firstDestName = AppDestination.Dest.Genres::class.simpleName.orEmpty())
+                    )
+                },
                 onClickNews = {}
             )
             HeightGap(height = 20.dp)
