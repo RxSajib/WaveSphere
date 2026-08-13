@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,11 +28,14 @@ import coil3.PlatformContext
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
+import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.buttonColor
+import com.zenbyte.studio.presentation.ui.theme.playIconColor
+import com.zenbyte.studio.presentation.viewmodel.home.HomeViewModel
 
 @Composable
-fun NowPlayingComponent(context: PlatformContext) {
+fun NowPlayingComponent(context: PlatformContext, channel: MyChannel, viewModel: HomeViewModel) {
     Column(
         modifier = Modifier
             .clip(shape = RoundedCornerShape(10.dp))
@@ -63,7 +67,7 @@ fun NowPlayingComponent(context: PlatformContext) {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(
                 model = ImageRequest.Builder(context)
-                    .data("https://www.shutterstock.com/image-vector/radio-channel-logo-vector-template-260nw-2121122948.jpg")
+                    .data(channel.favicon)
                     .size(500).build(),
                 contentDescription = null,
                 error = painterResource(R.drawable.applogowhite),
@@ -77,7 +81,7 @@ fun NowPlayingComponent(context: PlatformContext) {
             WidthGap(width = 10.dp)
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
                 Text(
-                    text = "FOORTI 88.0 FM",
+                    text = channel.name,
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary
@@ -87,7 +91,7 @@ fun NowPlayingComponent(context: PlatformContext) {
                 )
 
                 Text(
-                    text = "Dhaka Bangladesh",
+                    text = channel.tags,
                     style = MaterialTheme.typography.titleSmall.copy(
                         fontWeight = FontWeight.W600,
                         color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
@@ -95,10 +99,29 @@ fun NowPlayingComponent(context: PlatformContext) {
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
+
+                PremiumAudioWaveform(
+                    amplitudes = listOf(
+                        0.15f, 0.35f, 0.65f, 0.45f,
+                        0.85f, 0.55f, 0.30f, 0.75f,
+                        0.95f, 0.60f, 0.40f, 0.80f,
+                        0.25f, 0.50f, 0.90f, 0.70f,
+                        0.35f, 0.65f, 0.45f, 0.85f,
+                        0.55f, 0.30f, 0.75f, 0.95f,
+                        0.40f, 0.60f, 0.80f, 0.50f
+                    ),
+                    isPlaying = viewModel.isMusicPlaying,
+                    gradientColors = listOf(buttonColor, playIconColor),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(5.dp)
+                )
             }
 
             WidthGap(width = 5.dp)
-            MyCustomPlayButton()
+            MyCustomPlayButton(isPlaying = viewModel.isMusicPlaying){
+                viewModel.playPushController()
+            }
         }
     }
 }
@@ -107,5 +130,5 @@ fun NowPlayingComponent(context: PlatformContext) {
 @Preview
 fun NowPlayingComponentPreview(modifier: Modifier = Modifier) {
     val context = LocalPlatformContext.current
-    NowPlayingComponent(context)
+  //  NowPlayingComponent(context, channel)
 }

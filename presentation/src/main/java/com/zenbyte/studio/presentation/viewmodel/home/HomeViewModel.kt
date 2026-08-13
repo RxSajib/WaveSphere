@@ -2,12 +2,16 @@ package com.zenbyte.studio.presentation.viewmodel.home
 
 import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.usecase.CountryListUseCase
 import com.zenbyte.studio.domain.usecase.GetAllRadioStationsUseCase
 import com.zenbyte.studio.domain.usecase.GetChannelByCountryUseCase
+import com.zenbyte.studio.domain.usecase.MediaPlayControllerUseCase
 import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
 import com.zenbyte.studio.domain.utils.Resource
 import com.zenbyte.studio.presentation.viewmodel.utils.Extras
@@ -27,6 +31,7 @@ class HomeViewModel @Inject constructor(
     val getAllRadioStationsUseCase: GetAllRadioStationsUseCase,
     val localChannelUseCase: LocalChannelUseCase,
     val countryListUseCase: CountryListUseCase,
+    val mediaPlayControllerUseCase: MediaPlayControllerUseCase
 ) : ViewModel() {
 
 
@@ -40,11 +45,42 @@ class HomeViewModel @Inject constructor(
         it.sortedBy { it.name }.take(5)
     }
 
+    private val currentPayingChannelMutableStateFlow = MutableStateFlow<MyChannel?>(null)
+    val currentPlayingChannel = currentPayingChannelMutableStateFlow.asStateFlow()
+    var isMusicPlaying by mutableStateOf(false)
+
     init {
        // getChannelByCountry()
    //     getAllChannel()
             //   getAllLocalChannel()
         getChannelByCountryCode()
+        getCurrentPlayingChannelInfo()
+        isMusicPlaying()
+    }
+
+    fun playPushController(){
+        if(isMusicPlaying){
+            mediaPlayControllerUseCase.playerController.pause()
+        }else {
+            mediaPlayControllerUseCase.playerController.singlePlay()
+        }
+    }
+
+    private fun isMusicPlaying(){
+        viewModelScope.launch {
+            mediaPlayControllerUseCase.playerController.isPlaying.collect{isPlaying ->
+                isMusicPlaying = isPlaying
+            }
+        }
+    }
+
+    private fun getCurrentPlayingChannelInfo(){
+        viewModelScope.launch {
+            mediaPlayControllerUseCase.playerController.currentChannel.collect {myChannel ->
+                currentPayingChannelMutableStateFlow.emit(myChannel)
+            }
+        }
+
     }
 
     private fun getChannelByCountryCode(){

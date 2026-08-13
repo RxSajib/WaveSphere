@@ -12,6 +12,10 @@ class MediaPlayControllerUseCase @Inject constructor(
         playerController.play(myChannel, index)
     }
 
+    fun singlePlay(){
+        playerController.singlePlay()
+    }
+
     fun nextPlayBack(){
         playerController.next()
     }

@@ -14,18 +14,15 @@ import com.zenbyte.studio.presentation.ui.theme.playButtonColor
 import com.zenbyte.studio.presentation.ui.theme.playIconColor
 
 @Composable
-fun MyCustomPlayButton(modifier: Modifier = Modifier) {
-    FloatingActionButton(onClick = {}, shape = CircleShape, containerColor = playButtonColor, elevation = FloatingActionButtonDefaults.elevation(1.dp)) {
+fun MyCustomPlayButton(isPlaying : Boolean = false, onClick: () -> Unit) {
+    FloatingActionButton(onClick = {
+        onClick.invoke()
+    }, shape = CircleShape, containerColor = playButtonColor, elevation = FloatingActionButtonDefaults.elevation(1.dp)) {
         Icon(
-            painter = painterResource(R.drawable.system_solid_26_play_hover_play),
+            painter =if(isPlaying) painterResource(R.drawable.pause) else painterResource(R.drawable.system_solid_26_play_hover_play),
             contentDescription = null,
             tint = playIconColor
         )
     }
 }
 
-@Composable
-@Preview
-fun MyCustomPlayButtonPreview(modifier: Modifier = Modifier) {
-    MyCustomPlayButton()
-}

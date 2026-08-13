@@ -7,6 +7,8 @@ interface PlayerController {
 
     fun play(channels: List<MyChannel>, startIndex: Int)
 
+    fun singlePlay()
+
     fun pause()
 
     fun stop()
