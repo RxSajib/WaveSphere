@@ -19,6 +19,7 @@ import com.zenbyte.studio.domain.model.MyGenres
 import com.zenbyte.studio.presentation.ui.screen.AboutScreen
 import com.zenbyte.studio.presentation.ui.screen.AllCountryScreen
 import com.zenbyte.studio.presentation.ui.screen.AllGenresScreen
+import com.zenbyte.studio.presentation.ui.screen.AllNewsScreen
 import com.zenbyte.studio.presentation.ui.screen.ChannelByCountryScreen
 import com.zenbyte.studio.presentation.ui.screen.ChannelByGenresScreen
 import com.zenbyte.studio.presentation.ui.screen.LanguagesListScreen
@@ -79,6 +80,10 @@ fun DestNavigation(
                     AppDestination.Dest.Genres::class,
                     AppDestination.Dest.Genres.serializer()
                 )
+                subclass(
+                    AppDestination.Dest.News::class,
+                    AppDestination.Dest.News.serializer()
+                )
             }
         }
     }
@@ -94,6 +99,7 @@ fun DestNavigation(
         )
 
         startDest.firstDestName == AppDestination.Dest.AboutUs::class.simpleName -> AppDestination.Dest.AboutUs
+        startDest.firstDestName == AppDestination.Dest.News::class.simpleName -> AppDestination.Dest.News
         startDest.firstDestName == AppDestination.Dest.Premium::class.simpleName -> AppDestination.Dest.Premium
         startDest.firstDestName == AppDestination.Dest.TrendingStations::class.simpleName -> AppDestination.Dest.TrendingStations
         startDest.firstDestName == AppDestination.Dest.PopularStations::class.simpleName -> AppDestination.Dest.PopularStations
@@ -149,6 +155,9 @@ fun DestNavigation(
                 }
                 entry<AppDestination.Dest.Genres> {
                     AllGenresScreen(rootBackStack = rootBackStack)
+                }
+                entry<AppDestination.Dest.News> {
+                    AllNewsScreen(rootBackStack = rootBackStack)
                 }
             },
 

@@ -56,6 +56,9 @@ sealed class AppDestination : NavKey {
         data object Genres : AppDestination()
 
         @Serializable
+        data object News : AppDestination()
+
+        @Serializable
         data class ChannelByCountry(val name: String) : AppDestination()
 
         @Serializable

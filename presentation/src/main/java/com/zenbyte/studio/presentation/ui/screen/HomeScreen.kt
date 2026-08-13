@@ -117,7 +117,9 @@ fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey
                         AppDestination.Dest(firstDestName = AppDestination.Dest.Genres::class.simpleName.orEmpty())
                     )
                 },
-                onClickNews = {}
+                onClickNews = { rootBackStack.add(
+                    AppDestination.Dest(firstDestName = AppDestination.Dest.News::class.simpleName.orEmpty())
+                )}
             )
             HeightGap(height = 20.dp)
             MySectionHeader(
