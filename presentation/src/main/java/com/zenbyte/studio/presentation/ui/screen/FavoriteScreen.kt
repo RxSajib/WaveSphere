@@ -76,7 +76,10 @@ fun FavoriteScreen(modifier: Modifier = Modifier) {
                         ChannelItem(
                             context = contextCoil,
                             myChannel = myChannel,
-                            modifier = Modifier
+                            modifier = Modifier,
+                            isChannelFavorite = true,
+                            onClickFavorite = {},
+                            onMediaController = {}
                         )
                     }
 

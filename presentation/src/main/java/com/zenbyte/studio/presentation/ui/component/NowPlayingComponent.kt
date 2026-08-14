@@ -5,12 +5,14 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -78,7 +80,7 @@ fun NowPlayingComponent(context: PlatformContext, channel: MyChannel, viewModel:
                     .clip(shape = RoundedCornerShape(15.dp)),
                 contentScale = ContentScale.Crop
             )
-            WidthGap(width = 10.dp)
+            WidthGap(width = 15.dp)
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
                 Text(
                     text = channel.name,
@@ -90,16 +92,50 @@ fun NowPlayingComponent(context: PlatformContext, channel: MyChannel, viewModel:
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Text(
-                    text = channel.tags,
-                    style = MaterialTheme.typography.titleSmall.copy(
-                        fontWeight = FontWeight.W600,
-                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
-                    ),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                Row(modifier = Modifier.fillMaxWidth()) {
 
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            painter = painterResource(R.drawable.icon_vote),
+                            contentDescription = null,
+                            modifier = Modifier.size(15.dp)
+                        )
+                        WidthGap(width = 3.dp)
+                        Text(
+                            text = channel.votes.toString(),
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                fontWeight = FontWeight.W600,
+                                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
+                            ),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+
+                    WidthGap(width = 7.dp)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            painter = painterResource(R.drawable.world_svgrepo_com),
+                            contentDescription = null,
+                            modifier = Modifier.size(15.dp)
+                        )
+                        WidthGap(width = 3.dp)
+                        Text(
+                            text = channel.country,
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                fontWeight = FontWeight.W600,
+                                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
+                            ),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+
+                }
+
+
+
+                HeightGap(height = 15.dp)
                 PremiumAudioWaveform(
                     amplitudes = listOf(
                         0.15f, 0.35f, 0.65f, 0.45f,
@@ -114,12 +150,14 @@ fun NowPlayingComponent(context: PlatformContext, channel: MyChannel, viewModel:
                     gradientColors = listOf(buttonColor, playIconColor),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(5.dp)
+                        .height(5.dp),
+                    maxBarHeight = 20.dp,
+                    barWidth = 1.dp
                 )
             }
 
             WidthGap(width = 5.dp)
-            MyCustomPlayButton(isPlaying = viewModel.isMusicPlaying){
+            MyCustomPlayButton(isPlaying = viewModel.isMusicPlaying) {
                 viewModel.playPushController()
             }
         }
@@ -130,5 +168,5 @@ fun NowPlayingComponent(context: PlatformContext, channel: MyChannel, viewModel:
 @Preview
 fun NowPlayingComponentPreview(modifier: Modifier = Modifier) {
     val context = LocalPlatformContext.current
-  //  NowPlayingComponent(context, channel)
+    //  NowPlayingComponent(context, channel)
 }

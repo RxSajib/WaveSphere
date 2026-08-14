@@ -20,19 +20,24 @@ import com.zenbyte.studio.presentation.viewmodel.state.ApiState
 fun NewsChannelListScreen(newsList: State<ApiState<List<MyChannel>>>, viewModel: SearchViewModel) {
     val context = LocalPlatformContext.current
 
-    if(newsList.value.isSuccess){
+    if (newsList.value.isSuccess) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             newsList.value.data?.let { myChannels ->
-                items(myChannels){channel ->
-                    ChannelItem(modifier = Modifier.padding(horizontal = 10.dp), context = context, myChannel = channel)
+                items(myChannels) { channel ->
+                    ChannelItem(
+                        modifier = Modifier.padding(horizontal = 10.dp),
+                        context = context,
+                        myChannel = channel,
+                        isChannelFavorite = false,
+                        onClickFavorite = {},
+                        onMediaController = {})
                 }
             }
 
         }
-    }
-    else if(newsList.value.isLoading){
+    } else if (newsList.value.isLoading) {
         CountryShimmer()
-    }else {
+    } else {
         // error message
         ServerError {
             viewModel.getNewsList(countryCode = "in")

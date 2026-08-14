@@ -19,21 +19,29 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import coil3.compose.LocalPlatformContext
+import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.component.ChannelItem
 import com.zenbyte.studio.presentation.ui.component.CountryShimmer
 import com.zenbyte.studio.presentation.ui.component.MyCustomAppBar
 import com.zenbyte.studio.presentation.ui.component.ServerError
 import com.zenbyte.studio.presentation.viewmodel.news.NewsChannelViewModel
+import kotlinx.coroutines.flow.update
 
 @Composable
 fun AllNewsScreen(rootBackStack: NavBackStack<NavKey>) {
 
-    val viewModel : NewsChannelViewModel = hiltViewModel()
+    val viewModel: NewsChannelViewModel = hiltViewModel()
     val newsList by viewModel.newsList.collectAsStateWithLifecycle()
     val context = LocalPlatformContext.current
+    val saveChannel by viewModel.saveChannel.collectAsStateWithLifecycle(MyChannel())
 
-    Surface(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.surface)) {
+
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.surface)
+    ) {
         Scaffold(
             topBar = {
                 MyCustomAppBar(title = stringResource(R.string.news)) {
@@ -41,23 +49,32 @@ fun AllNewsScreen(rootBackStack: NavBackStack<NavKey>) {
                 }
             }
         ) { innerPadding ->
-            Box(modifier = Modifier.fillMaxSize().padding(innerPadding)){
-                if(newsList.isSuccess){
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)) {
+                if (newsList.isSuccess) {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         newsList.data?.let { myChannels ->
-                            items(myChannels){channel ->
-                                ChannelItem(modifier = Modifier.padding(horizontal = 10.dp), context = context, myChannel = channel)
+                            items(myChannels) { channel ->
+                                viewModel.channelIDMutableStateFlow.update { channel.stationuuid }
+                                ChannelItem(
+                                    modifier = Modifier.padding(horizontal = 10.dp),
+                                    context = context,
+                                    myChannel = channel,
+                                    isChannelFavorite = saveChannel == channel,
+                                    onClickFavorite = {},
+                                    onMediaController = {}
+                                )
                             }
                         }
 
                     }
-                }
-                else if(newsList.isLoading){
+                } else if (newsList.isLoading) {
                     CountryShimmer()
-                }else {
+                } else {
                     // error message
                     ServerError {
-                      //  viewModel.getNewsList(countryCode = "in")
+                        //  viewModel.getNewsList(countryCode = "in")
                     }
                 }
             }

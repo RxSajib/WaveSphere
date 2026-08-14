@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,9 +36,19 @@ import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 
 import androidx.compose.runtime.remember
 import com.zenbyte.studio.presentation.R
+import com.zenbyte.studio.presentation.ui.theme.buttonColor
+import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
+import kotlinx.coroutines.Job
 
 @Composable
-fun ChannelItem(modifier: Modifier, context: PlatformContext, myChannel: MyChannel) {
+fun ChannelItem(
+    isChannelFavorite: Boolean = false,
+    modifier: Modifier,
+    context: PlatformContext,
+    myChannel: MyChannel,
+    onMediaController: (MyChannel) -> Unit,
+    onClickFavorite: (MyChannel) -> Unit
+) {
     val randomColor = remember(myChannel.stationuuid) {
         Color(
             red = (150..230).random(),
@@ -126,21 +137,34 @@ fun ChannelItem(modifier: Modifier, context: PlatformContext, myChannel: MyChann
             )
         }
 
-        IconButton(onClick = {}) {
+        IconButton(onClick = {
+            onClickFavorite.invoke(myChannel)
+        }) {
             Icon(
-                painter = painterResource(R.drawable.icon_favorite_heart_hover_pinch),
-                contentDescription = null
+                painter = if (!isChannelFavorite) painterResource(R.drawable.icon_favorite_heart_hover_pinch)
+                else painterResource(R.drawable.icon_heart_selected),
+                contentDescription = null,
+                tint = if(isChannelFavorite) buttonColor else Color.Unspecified
             )
         }
 
 
-        IconButton(
-
-            onClick = {},
-
-            ) {
+        Box(
+            modifier = Modifier
+                .clip(shape = CircleShape)
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                    shape = CircleShape
+                )
+                .debounceClickable {
+                    onMediaController.invoke(myChannel)
+                }
+                .padding(5.dp),
+            contentAlignment = Alignment.Center
+        ) {
             Icon(
-                painter = painterResource(R.drawable.icon_play_circle_svgrepo_com),
+                painter = painterResource(R.drawable.ic_play),
                 contentDescription = null
             )
         }

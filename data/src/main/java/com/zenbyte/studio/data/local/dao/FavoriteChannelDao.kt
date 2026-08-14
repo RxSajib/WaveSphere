@@ -20,7 +20,7 @@ interface FavoriteChannelDao{
     suspend fun deleteChannel(stationuuid: String)
 
     @Query("SELECT * FROM FavoriteChannelDB WHERE stationuuid = :stationuuid")
-    fun getChannel(stationuuid: String) : Flow<MyFavoriteChannel>
+    fun getChannel(stationuuid: String) : Flow<MyFavoriteChannel?>
 
 
     @Query("SELECT EXISTS (SELECT 1 FROM FavoriteChannelDB WHERE stationuuid = :stationuuid)")

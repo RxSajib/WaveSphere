@@ -25,9 +25,9 @@ class FavoriteChannelRepoImpl @Inject constructor(val favoriteChannelDao: Favori
         favoriteChannelDao.saveChannel(channel = myChannel.toEntity())
     }
 
-    override suspend fun getChannel(channelID: String): Flow<MyChannel> {
+    override suspend fun getChannel(channelID: String): Flow<MyChannel?> {
        return favoriteChannelDao.getChannel(stationuuid =channelID).map {
-           it.toDomain()
+           it?.toDomain()
        }
     }
 
