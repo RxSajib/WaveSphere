@@ -37,7 +37,7 @@ import com.zenbyte.studio.presentation.ui.theme.playIconColor
 import com.zenbyte.studio.presentation.viewmodel.home.HomeViewModel
 
 @Composable
-fun NowPlayingComponent(context: PlatformContext, channel: MyChannel, viewModel: HomeViewModel) {
+fun NowPlayingComponent(isBuffering : Boolean  = false, context: PlatformContext, channel: MyChannel, viewModel: HomeViewModel) {
     Column(
         modifier = Modifier
             .clip(shape = RoundedCornerShape(10.dp))
@@ -83,7 +83,7 @@ fun NowPlayingComponent(context: PlatformContext, channel: MyChannel, viewModel:
             WidthGap(width = 15.dp)
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
                 Text(
-                    text = channel.name,
+                    text = channel.name.trim(),
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary
@@ -102,7 +102,7 @@ fun NowPlayingComponent(context: PlatformContext, channel: MyChannel, viewModel:
                         )
                         WidthGap(width = 3.dp)
                         Text(
-                            text = channel.votes.toString(),
+                            text = channel.votes.toString().trim(),
                             style = MaterialTheme.typography.titleSmall.copy(
                                 fontWeight = FontWeight.W600,
                                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
@@ -121,7 +121,7 @@ fun NowPlayingComponent(context: PlatformContext, channel: MyChannel, viewModel:
                         )
                         WidthGap(width = 3.dp)
                         Text(
-                            text = channel.country,
+                            text = channel.country.trim(),
                             style = MaterialTheme.typography.titleSmall.copy(
                                 fontWeight = FontWeight.W600,
                                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
@@ -157,7 +157,7 @@ fun NowPlayingComponent(context: PlatformContext, channel: MyChannel, viewModel:
             }
 
             WidthGap(width = 5.dp)
-            MyCustomPlayButton(isPlaying = viewModel.isMusicPlaying) {
+            MyCustomPlayButton(isPlaying = viewModel.isMusicPlaying, isBuffering = isBuffering) {
                 viewModel.playPushController()
             }
         }

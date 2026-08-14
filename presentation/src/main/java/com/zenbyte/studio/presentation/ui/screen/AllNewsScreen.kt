@@ -34,7 +34,6 @@ fun AllNewsScreen(rootBackStack: NavBackStack<NavKey>) {
     val viewModel: NewsChannelViewModel = hiltViewModel()
     val newsList by viewModel.newsList.collectAsStateWithLifecycle()
     val context = LocalPlatformContext.current
-    val saveChannel by viewModel.saveChannel.collectAsStateWithLifecycle(MyChannel())
 
 
     Surface(
@@ -56,13 +55,15 @@ fun AllNewsScreen(rootBackStack: NavBackStack<NavKey>) {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         newsList.data?.let { myChannels ->
                             items(myChannels) { channel ->
-                                viewModel.channelIDMutableStateFlow.update { channel.stationuuid }
                                 ChannelItem(
                                     modifier = Modifier.padding(horizontal = 10.dp),
                                     context = context,
                                     myChannel = channel,
-                                    isChannelFavorite = saveChannel == channel,
-                                    onClickFavorite = {},
+                                    isChannelFavorite =
+                                        viewModel.getSaveChannel(channelID = channel.stationuuid).collectAsStateWithLifecycle(false).value,
+                                    onClickFavorite = {myChannel ->
+                                        viewModel.saveChannel(myChannel = myChannel)
+                                    },
                                     onMediaController = {}
                                 )
                             }

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.usecase.GetAllFavoriteChannelUseCase
 import com.zenbyte.studio.domain.usecase.GetSingleSaveChannel
+import com.zenbyte.studio.domain.usecase.IsChannelSavedUseCase
 import com.zenbyte.studio.domain.usecase.RemoveSaveChannelUseCase
 import com.zenbyte.studio.domain.usecase.SaveChannelUseCase
 import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
@@ -18,6 +19,7 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
@@ -28,20 +30,30 @@ class NewsChannelViewModel @Inject constructor(
     val getAllFavoriteChannelUseCase: GetAllFavoriteChannelUseCase,
     val getSingleSaveChannel: GetSingleSaveChannel,
     val saveChannelUseCase: SaveChannelUseCase,
-    val removeSaveChannelUseCase: RemoveSaveChannelUseCase
+    val removeSaveChannelUseCase: RemoveSaveChannelUseCase,
+    val isChannelSavedUseCase: IsChannelSavedUseCase
 ) : ViewModel() {
 
     private val newsListMutableStateFlow = MutableStateFlow< ApiState<List<MyChannel>>>(ApiState(isLoading = true))
     val newsList = newsListMutableStateFlow.asStateFlow()
-    var channelIDMutableStateFlow = MutableStateFlow<String>("")
 
     init {
         getNewsListByCountry()
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val saveChannel = channelIDMutableStateFlow.flatMapLatest {
-        getSingleSaveChannel.getSingleChannel(channelID = it)
+    fun getSaveChannel(channelID: String) =
+        isChannelSavedUseCase.isChannelSaved(stationuuid = channelID)
+
+    fun saveChannel(myChannel: MyChannel){
+        viewModelScope.launch {
+            if(!isChannelSavedUseCase.isChannelSaved(myChannel.stationuuid).first()){
+                saveChannelUseCase.saveChannel(myChannel = myChannel)
+            }else {
+                removeSaveChannelUseCase.removeSaveChannel(channelID = myChannel.stationuuid)
+            }
+
+        }
     }
 
     private fun getNewsListByCountry(){

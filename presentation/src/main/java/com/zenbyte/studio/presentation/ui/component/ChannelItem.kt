@@ -1,5 +1,6 @@
 package com.zenbyte.studio.presentation.ui.component
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -42,13 +44,16 @@ import kotlinx.coroutines.Job
 
 @Composable
 fun ChannelItem(
+    isPlaying : Boolean = false,
     isChannelFavorite: Boolean = false,
     modifier: Modifier,
     context: PlatformContext,
     myChannel: MyChannel,
+    isBuffering: Boolean = false,
     onMediaController: (MyChannel) -> Unit,
     onClickFavorite: (MyChannel) -> Unit
 ) {
+
     val randomColor = remember(myChannel.stationuuid) {
         Color(
             red = (150..230).random(),
@@ -113,7 +118,7 @@ fun ChannelItem(
         Column(modifier = Modifier.weight(1f)) {
 
             Text(
-                text = myChannel.name,
+                text = myChannel.name.trim(),
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -125,7 +130,7 @@ fun ChannelItem(
             HeightGap(height = 2.dp)
 
             Text(
-                text = myChannel.tags,
+                text = myChannel.tags.trim(),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.fillMaxWidth(),
@@ -163,10 +168,21 @@ fun ChannelItem(
                 .padding(5.dp),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_play),
-                contentDescription = null
-            )
+            if(isBuffering){
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .padding(5.dp)
+                        .size(15.dp),
+                    trackColor = MaterialTheme.colorScheme.primary,
+                    strokeWidth = 2.dp
+                )
+            }else {
+                Icon(
+                    painter = if(isPlaying) painterResource(R.drawable.pause) else painterResource(R.drawable.ic_play),
+                    contentDescription = null
+                )
+            }
+
         }
 
 

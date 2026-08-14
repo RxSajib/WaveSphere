@@ -76,10 +76,18 @@ fun FavoriteScreen(modifier: Modifier = Modifier) {
                         ChannelItem(
                             context = contextCoil,
                             myChannel = myChannel,
+                            isBuffering = viewModel.isBufferingChannel(myChannel = myChannel).collectAsStateWithLifecycle(false).value,
+                            isPlaying = viewModel.isPlaying(myChannel = myChannel).collectAsStateWithLifecycle(false).value,
                             modifier = Modifier,
                             isChannelFavorite = true,
                             onClickFavorite = {},
-                            onMediaController = {}
+                            onMediaController = {myChannel ->
+                                viewModel.mediaPlayController(
+                                    myChannel = myChannel,
+                                    channels = favoriteChannelList.value,
+                                    index = favoriteChannelList.value.indexOf(myChannel)
+                                )
+                            }
                         )
                     }
 

@@ -53,7 +53,6 @@ fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey
     val trendingChannel = viewModel.tranChannel.collectAsStateWithLifecycle(emptyList())
     val popularShort = viewModel.popularStation.collectAsStateWithLifecycle(emptyList())
     val currentPlayingChannel by viewModel.currentPlayingChannel.collectAsStateWithLifecycle()
-    val scope = rememberCoroutineScope()
 
 
     LazyColumn(
@@ -67,7 +66,14 @@ fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey
             HomeHeader()
             HeightGap(height = 20.dp)
             currentPlayingChannel?.let { channel ->
-                NowPlayingComponent(context = context, channel = channel, viewModel = viewModel)
+                NowPlayingComponent(
+                    context = context,
+                    channel = channel,
+                    viewModel = viewModel,
+                    isBuffering = viewModel.mediaPlayControllerUseCase.playerController.isLoading.collectAsStateWithLifecycle(
+                        false
+                    ).value
+                )
             }
 
             HeightGap(height = 15.dp)
@@ -153,14 +159,21 @@ fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey
             ChannelItem(
                 context = context,
                 myChannel = channel,
+                isPlaying = viewModel.isPlaying(myChannel = channel).collectAsStateWithLifecycle(false).value,
                 modifier = Modifier,
+                isBuffering = viewModel.isBufferingChannel(myChannel = channel).collectAsStateWithLifecycle(false).value,
                 isChannelFavorite =
-                    viewModel.getSaveChannel(channelID = channel.stationuuid).collectAsStateWithLifecycle(false).value,
+                    viewModel.getSaveChannel(channelID = channel.stationuuid)
+                        .collectAsStateWithLifecycle(false).value,
                 onClickFavorite = { myChannel ->
                     viewModel.saveChannel(myChannel = myChannel)
                 },
                 onMediaController = { myChannel ->
-
+                    viewModel.mediaPlayController(
+                        myChannel = myChannel,
+                        channels = popularShort.value,
+                        index = popularShort.value.indexOf(channel)
+                    )
                 })
         }
 

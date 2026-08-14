@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.style.TextDecoration.Companion.combine
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -27,13 +28,21 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.microseconds
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val TAG = "HomeViewModel"
 
@@ -68,7 +77,6 @@ class HomeViewModel @Inject constructor(
     var isMusicPlaying by mutableStateOf(false)
 
 
-
     init {
         // getChannelByCountry()
         //     getAllChannel()
@@ -78,22 +86,73 @@ class HomeViewModel @Inject constructor(
         isMusicPlaying()
     }
 
-    fun saveChannel(myChannel: MyChannel){
+    fun mediaPlayController(myChannel: MyChannel, channels: List<MyChannel>, index: Int) {
         viewModelScope.launch {
-            if(!isChannelSavedUseCase.isChannelSaved(myChannel.stationuuid).first()){
+            mediaPlayControllerUseCase.playerController.isLoading.first().let {
+                if (myChannel.stationuuid == currentPlayingChannel.value?.stationuuid) {
+                    mediaPlayControllerUseCase.playerController.pause()
+                } else { mediaPlayControllerUseCase.playAudio(myChannel = channels, index = index)
+
+                }
+            }
+        }
+
+    }
+
+    fun saveChannel(myChannel: MyChannel) {
+        viewModelScope.launch {
+            if (!isChannelSavedUseCase.isChannelSaved(myChannel.stationuuid).first()) {
                 saveChannelUseCase.saveChannel(myChannel = myChannel)
-            }else {
+            } else {
                 removeSaveChannelUseCase.removeSaveChannel(channelID = myChannel.stationuuid)
             }
 
         }
     }
 
+
+    fun isBufferingChannel(myChannel: MyChannel): StateFlow<Boolean> {
+
+        return flow {
+            mediaPlayControllerUseCase.playerController.isLoading.collect { isPlaying ->
+                if (myChannel.stationuuid == currentPlayingChannel.value?.stationuuid) {
+                    emit(isPlaying)
+                    return@collect
+                } else {
+                    emit(false)
+                    return@collect
+                }
+            }
+
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(500.milliseconds),
+            initialValue = false
+        )
+    }
+
+    fun isPlaying(myChannel: MyChannel) : StateFlow<Boolean>{
+        return flow {
+            mediaPlayControllerUseCase.playerController.isPlaying.collect { isPlaying ->
+                if(myChannel.stationuuid == currentPlayingChannel.value?.stationuuid){
+                    emit(isPlaying)
+                    return@collect
+                }else{
+                    emit(false)
+                    return@collect
+                }
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(500.milliseconds),
+            initialValue = false
+        )
+    }
+
+
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getSaveChannel(channelID: String) =
         isChannelSavedUseCase.isChannelSaved(stationuuid = channelID)
-
-
 
 
     fun playPushController() {

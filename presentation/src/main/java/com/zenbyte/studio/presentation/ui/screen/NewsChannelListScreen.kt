@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.LocalPlatformContext
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.presentation.ui.component.ChannelItem
@@ -27,10 +28,21 @@ fun NewsChannelListScreen(newsList: State<ApiState<List<MyChannel>>>, viewModel:
                     ChannelItem(
                         modifier = Modifier.padding(horizontal = 10.dp),
                         context = context,
+                        isBuffering = viewModel.isBufferingChannel(myChannel = channel).collectAsStateWithLifecycle(false).value,
+                        isPlaying = viewModel.isPlaying(myChannel = channel).collectAsStateWithLifecycle(false).value,
+
                         myChannel = channel,
-                        isChannelFavorite = false,
-                        onClickFavorite = {},
-                        onMediaController = {})
+                        isChannelFavorite =  viewModel.getSaveChannel(channelID = channel.stationuuid).collectAsStateWithLifecycle(false).value,
+                        onClickFavorite = {myChannel ->
+                            viewModel.saveChannel(myChannel = myChannel)
+                        },
+                        onMediaController = {myChannel ->
+                            viewModel.mediaPlayController(
+                                myChannel = myChannel,
+                                channels = newsList.value.data?.toList()?: emptyList(),
+                                index = newsList.value.data?.toList()?.indexOf(channel)?: -1
+                            )
+                        })
                 }
             }
 

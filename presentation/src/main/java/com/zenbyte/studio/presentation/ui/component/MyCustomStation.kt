@@ -111,7 +111,7 @@ fun MyCustomStation(
 
         HeightGap(height = 10.dp)
         Text(
-            text = myChannel.name,
+            text = myChannel.name.trim(),
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleSmall.copy(
@@ -124,7 +124,7 @@ fun MyCustomStation(
         )
 
         Text(
-            text = myChannel.tags,
+            text = myChannel.tags.trim(),
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleSmall.copy(
