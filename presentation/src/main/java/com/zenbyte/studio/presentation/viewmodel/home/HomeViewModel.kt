@@ -88,12 +88,36 @@ class HomeViewModel @Inject constructor(
 
     fun mediaPlayController(myChannel: MyChannel, channels: List<MyChannel>, index: Int) {
         viewModelScope.launch {
-            mediaPlayControllerUseCase.playerController.isLoading.first().let {
-                if (myChannel.stationuuid == currentPlayingChannel.value?.stationuuid) {
-                    mediaPlayControllerUseCase.playerController.pause()
-                } else { mediaPlayControllerUseCase.playAudio(myChannel = channels, index = index)
+            mediaPlayControllerUseCase.playerController.isPlaying.first().let { isPlaying ->
+                if (isPlaying) {
+                    if(currentPlayingChannel.value == null){
+                        mediaPlayControllerUseCase.playAudio( myChannel = channels, index = index)
+                    }else {
+                        if(myChannel.stationuuid == currentPlayingChannel.value?.stationuuid){
+                            mediaPlayControllerUseCase.playerController.pause()
+                        }else {
+                            mediaPlayControllerUseCase.playAudio( myChannel = channels, index = index)
+                        }
+                    }
+
+                }else {
+                    if(currentPlayingChannel.value == null){
+                        mediaPlayControllerUseCase.playAudio( myChannel = channels, index = index)
+                    }else {
+                        if(myChannel.stationuuid == currentPlayingChannel.value?.stationuuid){
+                            mediaPlayControllerUseCase.playerController.singlePlay()
+                        }else {
+                            mediaPlayControllerUseCase.playAudio( myChannel = channels, index = index)
+                        }
+                    }
 
                 }
+               /* if (myChannel.stationuuid == currentPlayingChannel.value?.stationuuid) {
+                    mediaPlayControllerUseCase.playerController.pause()
+                } else {
+                    mediaPlayControllerUseCase.playAudio(myChannel = channels, index = index)
+
+                }*/
             }
         }
 
@@ -131,13 +155,13 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    fun isPlaying(myChannel: MyChannel) : StateFlow<Boolean>{
+    fun isPlaying(myChannel: MyChannel): StateFlow<Boolean> {
         return flow {
             mediaPlayControllerUseCase.playerController.isPlaying.collect { isPlaying ->
-                if(myChannel.stationuuid == currentPlayingChannel.value?.stationuuid){
+                if (myChannel.stationuuid == currentPlayingChannel.value?.stationuuid) {
                     emit(isPlaying)
                     return@collect
-                }else{
+                } else {
                     emit(false)
                     return@collect
                 }

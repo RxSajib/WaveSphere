@@ -1,6 +1,7 @@
 package com.zenbyte.studio.presentation.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -72,8 +73,8 @@ fun NowPlayingComponent(isBuffering : Boolean  = false, context: PlatformContext
                     .data(channel.favicon)
                     .size(500).build(),
                 contentDescription = null,
-                error = painterResource(R.drawable.applogowhite),
-                placeholder = painterResource(R.drawable.applogowhite),
+                error = painterResource(R.drawable.applogo),
+                placeholder = painterResource(R.drawable.applogo),
                 modifier = Modifier
                     .size(80.dp)
                     .aspectRatio(1f)
@@ -88,6 +89,7 @@ fun NowPlayingComponent(isBuffering : Boolean  = false, context: PlatformContext
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary
                     ),
+                    modifier = Modifier.fillMaxWidth().basicMarquee(),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )

@@ -44,7 +44,7 @@ import kotlinx.coroutines.Job
 
 @Composable
 fun ChannelItem(
-    isPlaying : Boolean = false,
+    isPlaying: Boolean = false,
     isChannelFavorite: Boolean = false,
     modifier: Modifier,
     context: PlatformContext,
@@ -102,13 +102,18 @@ fun ChannelItem(
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.applogo),
-                    error = painterResource(R.drawable.applogowhite),
+                    error = painterResource(R.drawable.applogo),
                     contentDescription = null,
                     contentScale = ContentScale.Fit
                 )
+
+                if (isPlaying) {
+                    MusicPlayingIndicator(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                    )
+                }
             }
-
-
         }
 
 
@@ -149,7 +154,7 @@ fun ChannelItem(
                 painter = if (!isChannelFavorite) painterResource(R.drawable.icon_favorite_heart_hover_pinch)
                 else painterResource(R.drawable.icon_heart_selected),
                 contentDescription = null,
-                tint = if(isChannelFavorite) buttonColor else Color.Unspecified
+                tint = if (isChannelFavorite) buttonColor else MaterialTheme.colorScheme.primary
             )
         }
 
@@ -168,7 +173,7 @@ fun ChannelItem(
                 .padding(5.dp),
             contentAlignment = Alignment.Center
         ) {
-            if(isBuffering){
+            if (isBuffering) {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .padding(5.dp)
@@ -176,9 +181,11 @@ fun ChannelItem(
                     trackColor = MaterialTheme.colorScheme.primary,
                     strokeWidth = 2.dp
                 )
-            }else {
+            } else {
                 Icon(
-                    painter = if(isPlaying) painterResource(R.drawable.pause) else painterResource(R.drawable.ic_play),
+                    painter = if (isPlaying) painterResource(R.drawable.pause) else painterResource(
+                        R.drawable.ic_play
+                    ),
                     contentDescription = null
                 )
             }

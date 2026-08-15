@@ -1,6 +1,5 @@
 package com.zenbyte.studio.presentation.viewmodel.favorite
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -98,16 +97,41 @@ class FavoriteChannelViewModel @Inject constructor(
 
     fun mediaPlayController(myChannel: MyChannel, channels: List<MyChannel>, index: Int) {
         viewModelScope.launch {
-            mediaPlayControllerUseCase.playerController.isLoading.first().let {
-                if (myChannel.stationuuid == currentPlayingChannel.value?.stationuuid) {
-                    mediaPlayControllerUseCase.playerController.pause()
-                } else { mediaPlayControllerUseCase.playAudio(myChannel = channels, index = index)
+            mediaPlayControllerUseCase.playerController.isPlaying.first().let { isPlaying ->
+                if (isPlaying) {
+                    if(currentPlayingChannel.value == null){
+                        mediaPlayControllerUseCase.playAudio( myChannel = channels, index = index)
+                    }else {
+                        if(myChannel.stationuuid == currentPlayingChannel.value?.stationuuid){
+                            mediaPlayControllerUseCase.playerController.pause()
+                        }else {
+                            mediaPlayControllerUseCase.playAudio( myChannel = channels, index = index)
+                        }
+                    }
+
+                }else {
+                    if(currentPlayingChannel.value == null){
+                        mediaPlayControllerUseCase.playAudio( myChannel = channels, index = index)
+                    }else {
+                        if(myChannel.stationuuid == currentPlayingChannel.value?.stationuuid){
+                            mediaPlayControllerUseCase.playerController.singlePlay()
+                        }else {
+                            mediaPlayControllerUseCase.playAudio( myChannel = channels, index = index)
+                        }
+                    }
 
                 }
+                /* if (myChannel.stationuuid == currentPlayingChannel.value?.stationuuid) {
+                     mediaPlayControllerUseCase.playerController.pause()
+                 } else {
+                     mediaPlayControllerUseCase.playAudio(myChannel = channels, index = index)
+
+                 }*/
             }
         }
 
     }
+
 
     fun isPlaying(myChannel: MyChannel) : StateFlow<Boolean>{
         return flow {

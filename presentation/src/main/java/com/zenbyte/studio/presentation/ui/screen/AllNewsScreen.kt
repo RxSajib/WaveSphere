@@ -58,13 +58,21 @@ fun AllNewsScreen(rootBackStack: NavBackStack<NavKey>) {
                                 ChannelItem(
                                     modifier = Modifier.padding(horizontal = 10.dp),
                                     context = context,
+                                    isBuffering = viewModel.isBufferingChannel(myChannel = channel).collectAsStateWithLifecycle(false).value,
+                                    isPlaying = viewModel.isPlaying(myChannel = channel).collectAsStateWithLifecycle(false).value,
                                     myChannel = channel,
                                     isChannelFavorite =
                                         viewModel.getSaveChannel(channelID = channel.stationuuid).collectAsStateWithLifecycle(false).value,
                                     onClickFavorite = {myChannel ->
                                         viewModel.saveChannel(myChannel = myChannel)
                                     },
-                                    onMediaController = {}
+                                    onMediaController = {myChannel ->
+                                        viewModel.mediaPlayController(
+                                            myChannel = myChannel,
+                                            channels =  newsList.data?: emptyList(),
+                                            index =  newsList.data?.indexOf(channel)?: -1
+                                        )
+                                    }
                                 )
                             }
                         }
