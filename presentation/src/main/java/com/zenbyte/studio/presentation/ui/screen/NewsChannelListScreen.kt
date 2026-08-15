@@ -1,0 +1,59 @@
+package com.zenbyte.studio.presentation.ui.screen
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil3.compose.LocalPlatformContext
+import com.zenbyte.studio.domain.model.MyChannel
+import com.zenbyte.studio.presentation.ui.component.ChannelItem
+import com.zenbyte.studio.presentation.ui.component.CountryShimmer
+import com.zenbyte.studio.presentation.ui.component.ServerError
+import com.zenbyte.studio.presentation.viewmodel.search.SearchViewModel
+import com.zenbyte.studio.presentation.viewmodel.state.ApiState
+
+@Composable
+fun NewsChannelListScreen(newsList: State<ApiState<List<MyChannel>>>, viewModel: SearchViewModel) {
+    val context = LocalPlatformContext.current
+
+    if (newsList.value.isSuccess) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            newsList.value.data?.let { myChannels ->
+                items(myChannels) { channel ->
+                    ChannelItem(
+                        modifier = Modifier.padding(horizontal = 10.dp),
+                        context = context,
+                        isBuffering = viewModel.isBufferingChannel(myChannel = channel).collectAsStateWithLifecycle(false).value,
+                        isPlaying = viewModel.isPlaying(myChannel = channel).collectAsStateWithLifecycle(false).value,
+
+                        myChannel = channel,
+                        isChannelFavorite =  viewModel.getSaveChannel(channelID = channel.stationuuid).collectAsStateWithLifecycle(false).value,
+                        onClickFavorite = {myChannel ->
+                            viewModel.saveChannel(myChannel = myChannel)
+                        },
+                        onMediaController = {myChannel ->
+                            viewModel.mediaPlayController(
+                                myChannel = myChannel,
+                                channels = newsList.value.data?.toList()?: emptyList(),
+                                index = newsList.value.data?.toList()?.indexOf(channel)?: -1
+                            )
+                        })
+                }
+            }
+
+        }
+    } else if (newsList.value.isLoading) {
+        CountryShimmer()
+    } else {
+        // error message
+        ServerError {
+            viewModel.getNewsList(countryCode = "in")
+        }
+    }
+
+}

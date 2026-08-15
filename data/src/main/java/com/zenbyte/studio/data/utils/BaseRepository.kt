@@ -9,11 +9,13 @@ import java.io.IOException
 abstract class BaseRepository {
     suspend fun <T, R> safeApiCall(
         apiCall: suspend () -> T,
-        mapper: (T) -> R
+        mapper: (T) -> R,
+        saveToLocal: (suspend (T) -> Unit)? = null
     ): Resource<R> {
         return withContext(Dispatchers.IO) {
             try {
                 val response = apiCall.invoke()
+                saveToLocal?.invoke(response)
                 Resource.Success(mapper(response))
             } catch (throwable: Throwable) {
                 when (throwable) {

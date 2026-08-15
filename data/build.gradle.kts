@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.ksp)
     alias(libs.plugins.secrets)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 val secretsFile = rootProject.file("secrets.properties")
@@ -13,11 +14,7 @@ val secrets = Properties().apply {
 
 android {
     namespace = "com.zenbyte.studio.data"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 24
@@ -43,6 +40,10 @@ android {
 
 }
 
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
@@ -60,10 +61,16 @@ dependencies {
     // hilt android
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    ksp(libs.kotlin.metadata.jvm)
 
     // paging3 dependency
     implementation(libs.androidx.paging.common)
-
+    // room android
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 
     implementation(project(":domain"))
+
+    //kotlin x serilization json
+    implementation(libs.kotlin.serialization.json)
 }
