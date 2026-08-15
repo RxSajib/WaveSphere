@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,7 +63,7 @@ fun FavoriteScreen(modifier: Modifier = Modifier) {
                             SwipeAction(
                                 customization = ActionCustomization(
                                     icon = Icons.Default.Delete,
-                                    iconColor = Color.Black,
+                                    iconColor = MaterialTheme.colorScheme.primary,
                                     containerColor = Color.Transparent
                                 ),
                                 onAction = { viewModel.removeChannel(channelID = myChannel.stationuuid) }

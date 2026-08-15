@@ -1,21 +1,26 @@
 package com.zenbyte.studio.presentation.ui.component
 
+import android.graphics.Color
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.presentation.R
+import com.zenbyte.studio.presentation.ui.theme.buttonColor
 import com.zenbyte.studio.presentation.viewmodel.utils.rememberDebouncedClick
 
 @Composable
@@ -52,7 +57,24 @@ fun SettingItem(
         )
         WidthGap(width = 10.dp)
         if (showToggle) {
-            Switch(checked = setToggleButton, onCheckedChange = {
+            Switch( modifier = Modifier.scale(0.8f), colors = SwitchColors(
+                checkedThumbColor = androidx.compose.ui.graphics.Color.White,
+                checkedTrackColor = buttonColor,
+                checkedBorderColor = buttonColor,
+                checkedIconColor = androidx.compose.ui.graphics.Color.Unspecified,
+                uncheckedThumbColor = androidx.compose.ui.graphics.Color.White,
+                uncheckedTrackColor = androidx.compose.ui.graphics.Color.Gray,
+                uncheckedBorderColor = androidx.compose.ui.graphics.Color.Unspecified,
+                uncheckedIconColor = androidx.compose.ui.graphics.Color.Unspecified,
+                disabledCheckedThumbColor = androidx.compose.ui.graphics.Color.Unspecified,
+                disabledCheckedTrackColor = androidx.compose.ui.graphics.Color.Unspecified,
+                disabledCheckedBorderColor =androidx.compose.ui.graphics.Color.Unspecified,
+                disabledCheckedIconColor = androidx.compose.ui.graphics.Color.Unspecified,
+                disabledUncheckedThumbColor = androidx.compose.ui.graphics.Color.Unspecified,
+                disabledUncheckedTrackColor = androidx.compose.ui.graphics.Color.Unspecified,
+                disabledUncheckedBorderColor = androidx.compose.ui.graphics.Color.Unspecified,
+                disabledUncheckedIconColor = androidx.compose.ui.graphics.Color.Unspecified
+            ), checked = setToggleButton, onCheckedChange = {
                 onToggleChanged?.invoke(it)
             })
         } else {
