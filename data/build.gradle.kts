@@ -73,4 +73,7 @@ dependencies {
 
     //kotlin x serilization json
     implementation(libs.kotlin.serialization.json)
+
+    // datastore android dependency
+    implementation("androidx.datastore:datastore-preferences:1.2.1")
 }

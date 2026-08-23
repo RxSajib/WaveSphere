@@ -9,6 +9,7 @@ import com.zenbyte.studio.domain.usecase.IsChannelSavedUseCase
 import com.zenbyte.studio.domain.usecase.MediaPlayControllerUseCase
 import com.zenbyte.studio.domain.usecase.RemoveSaveChannelUseCase
 import com.zenbyte.studio.domain.usecase.SaveChannelUseCase
+import com.zenbyte.studio.domain.usecase.local.DataStoreUseCase
 import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
