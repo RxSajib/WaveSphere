@@ -12,4 +12,8 @@ class LocalChannelUseCase @Inject constructor(val localChannelRepo: LocalChannel
     suspend fun getChannelByCountryCode(countryCode : String) = localChannelRepo.getChannelByCountryCode(countryCode = countryCode)
 
     suspend fun getChannelByTags(tags : String, country : String) = localChannelRepo.getChannelByTags(tags = tags, country = country)
+
+    fun getChannelLengthByLanguages(languages : String) = localChannelRepo.getChannelLengthByLanguages(languages = languages)
+
+    fun getChannelsByLanguages(languages : String) = localChannelRepo.getChannelByLanguages(languages = languages)
 }

@@ -32,7 +32,8 @@ sealed class AppDestination : NavKey {
     @Serializable
     data class Dest(val firstDestName : String,
                     val countryName: String? = null,
-        val genres: MyGenres?= null) : AppDestination()
+        val genres: MyGenres?= null,
+        val languages: com.zenbyte.studio.data.local.model.Languages?= null) : AppDestination()
 
     {
 
@@ -72,5 +73,8 @@ sealed class AppDestination : NavKey {
 
         @Serializable
         data class ChannelByGenres(val genres: MyGenres) : AppDestination()
+
+        @Serializable
+        data class ChannelByLanguages(val languages: com.zenbyte.studio.data.local.model.Languages) : AppDestination()
     }
 }

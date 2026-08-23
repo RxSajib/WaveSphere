@@ -1,4 +1,4 @@
-package com.zenbyte.studio.presentation.viewmodel.popularStations
+package com.zenbyte.studio.presentation.viewmodel.channelByLanguages
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,40 +8,40 @@ import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.usecase.MediaPlayControllerUseCase
 import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
-import com.zenbyte.studio.presentation.viewmodel.state.ApiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import kotlin.collections.sortedBy
 import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
-class PopularStationsViewModel @Inject constructor(
-    val localChannelUseCase: LocalChannelUseCase,
-    val mediaPlayControllerUseCase: MediaPlayControllerUseCase
-) : ViewModel(){
+class ChannelByLanguagesViewModel @Inject constructor(
+    private val localChannelUseCase: LocalChannelUseCase,
+    private val mediaPlayControllerUseCase: MediaPlayControllerUseCase
+) : ViewModel() {
 
-    var channelMutableStateFlow = MutableStateFlow<ApiState<List<MyChannel>>>(ApiState())
+    private val _languagesNameMutableStateFlow = MutableStateFlow<String>("")
+    val languagesName = _languagesNameMutableStateFlow.asStateFlow()
 
-    val sortedChannels = channelMutableStateFlow.map { state ->
-        state.copy(data = state.data?.sortedBy { it.name })
-    }
 
     private val currentPayingChannelMutableStateFlow = MutableStateFlow<MyChannel?>(null)
     val currentPlayingChannel = currentPayingChannelMutableStateFlow.asStateFlow()
     var isMusicPlaying by mutableStateOf(false)
 
+    fun setLanguagesName(languagesName: String) {
+        _languagesNameMutableStateFlow.update { languagesName }
+    }
+
     init {
-        getChannelFromLocal()
-        isMusicPlaying()
         getCurrentPlayingChannelInfo()
     }
 
@@ -52,24 +52,6 @@ class PopularStationsViewModel @Inject constructor(
             }
         }
 
-    }
-
-    private fun isMusicPlaying() {
-        viewModelScope.launch {
-            mediaPlayControllerUseCase.playerController.isPlaying.collect { isPlaying ->
-                isMusicPlaying = isPlaying
-            }
-        }
-    }
-
-    private fun getChannelFromLocal(){
-        viewModelScope.launch {
-            channelMutableStateFlow.emit(ApiState( isSuccess = false, isLoading = true))
-
-            localChannelUseCase.getLocalChannelList().collect { channelList ->
-                channelMutableStateFlow.emit(ApiState(data = channelList, isSuccess = true, isLoading = false))
-            }
-        }
     }
 
     fun isPlaying(myChannel: MyChannel): StateFlow<Boolean> {
@@ -89,4 +71,16 @@ class PopularStationsViewModel @Inject constructor(
             initialValue = false
         )
     }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val channelList = languagesName
+        .flatMapLatest { language ->
+            localChannelUseCase.getChannelsByLanguages(language)
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
 }

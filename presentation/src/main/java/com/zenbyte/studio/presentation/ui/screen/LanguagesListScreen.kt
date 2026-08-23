@@ -23,10 +23,11 @@ import androidx.navigation3.runtime.NavKey
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.component.LanguagesByChannelItem
 import com.zenbyte.studio.presentation.ui.component.MyCustomAppBar
+import com.zenbyte.studio.presentation.ui.navigation.AppDestination
 import com.zenbyte.studio.presentation.viewmodel.languagesByChannel.LanguagesByChannelViewModel
 
 @Composable
-fun LanguagesListScreen(rootBackStack: NavBackStack<NavKey>) {
+fun LanguagesListScreen(rootBackStack: NavBackStack<NavKey>, backStack: NavBackStack<NavKey>) {
 
     val viewModel: LanguagesByChannelViewModel = hiltViewModel()
     val languagesList by viewModel.languagesListByChannel.collectAsStateWithLifecycle()
@@ -54,7 +55,7 @@ fun LanguagesListScreen(rootBackStack: NavBackStack<NavKey>) {
             ) {
                 items(languagesList) { languages ->
                     LanguagesByChannelItem(languages) { selectedLan ->
-
+                        backStack.add(AppDestination.Dest.ChannelByLanguages(languages = selectedLan))
                     }
                 }
             }

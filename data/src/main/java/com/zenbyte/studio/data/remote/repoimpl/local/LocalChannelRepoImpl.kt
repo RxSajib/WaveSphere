@@ -35,4 +35,14 @@ class LocalChannelRepoImpl @Inject constructor(val dao: MyChannelDao) : LocalCha
             it.map { info -> info.toMyChannel() }
         }
     }
+
+    override fun getChannelLengthByLanguages(languages: String): Flow<Int> {
+        return dao.getLengthChannelByLanguages(languages = languages)
+    }
+
+    override fun getChannelByLanguages(languages: String): Flow<List<MyChannel>> {
+        return dao.getChannelsByLanguages(languages = languages).map {
+            it.map { info -> info.toMyChannel() }
+        }
+    }
 }

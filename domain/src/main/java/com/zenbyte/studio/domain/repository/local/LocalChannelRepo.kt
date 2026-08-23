@@ -12,4 +12,8 @@ interface LocalChannelRepo {
     suspend fun getChannelByCountryCode(countryCode : String) : Flow<List<MyChannel>>
 
     suspend fun getChannelByTags(tags : String, country : String) : Flow<List<MyChannel>>
+
+    fun getChannelLengthByLanguages(languages : String) : Flow<Int>
+
+    fun getChannelByLanguages(languages : String) : Flow<List<MyChannel>>
 }
