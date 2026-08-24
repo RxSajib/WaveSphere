@@ -24,6 +24,7 @@ import com.zenbyte.studio.presentation.ui.component.PremiumStatusCard
 import com.zenbyte.studio.presentation.ui.data.AppConstant
 import com.zenbyte.studio.presentation.viewmodel.player.PlayerViewModel
 import com.zenbyte.studio.presentation.ui.navigation.AppDestination
+import com.zenbyte.studio.presentation.viewmodel.utils.Extras.getAppVersion
 import dev.b3nedikt.app_locale.AppLocale
 
 @Composable
@@ -87,6 +88,7 @@ fun PlayerScreen(rootBackStack: NavBackStack<NavKey>) {
                     )
                 )
             },
+            appVersionCode = context.getAppVersion(),
             onClickRecording = {}
         )
         HeightGap(height = 10.dp)

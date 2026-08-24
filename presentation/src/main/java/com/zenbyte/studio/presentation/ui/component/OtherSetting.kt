@@ -19,6 +19,7 @@ import com.zenbyte.studio.presentation.R
 
 @Composable
 fun OtherSetting(
+    appVersionCode : String = "",
     modifier: Modifier = Modifier,
     selectedLanguages : String = "",
     onClickAbout: () -> Unit,
@@ -83,11 +84,12 @@ fun OtherSetting(
         }
 
         SettingItem(
+            appVersionCode = appVersionCode,
             title = stringResource(R.string.about),
             icon = painterResource(R.drawable.about_svgrepo_com),
             showToggle = false,
             isPremium = false,
-            showArrow = true
+            showArrow = false
         ) {
             onClickAbout.invoke()
         }

@@ -1,8 +1,11 @@
 package com.zenbyte.studio.presentation.viewmodel.utils
 
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.telephony.TelephonyManager
 import androidx.compose.ui.graphics.Color
+import com.zenbyte.studio.presentation.BuildConfig
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.Blues
 import com.zenbyte.studio.presentation.ui.theme.Classical
@@ -23,6 +26,23 @@ import com.zenbyte.studio.presentation.viewmodel.utils.enum.ChannelLanguages
 import com.zenbyte.studio.presentation.viewmodel.utils.enum.GenresEnum
 
 object Extras {
+
+    fun Context.getAppVersion() : String {
+        return try {
+            val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                packageManager.getPackageInfo(
+                    packageName,
+                    PackageManager.PackageInfoFlags.of(0)
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                packageManager.getPackageInfo(packageName, 0)
+            }
+            packageInfo.versionName ?: "1.0.0"
+        } catch (e: Exception) {
+            "1.0.0"
+        }
+    }
 
     fun getSimCountry(context: Context): String {
         val telephonyManager =
