@@ -8,9 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.usecase.MediaPlayControllerUseCase
 import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
+import com.zenbyte.studio.presentation.viewmodel.state.ApiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +20,7 @@ import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -73,14 +76,19 @@ class ChannelByLanguagesViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val channelList = languagesName
-        .flatMapLatest { language ->
-            localChannelUseCase.getChannelsByLanguages(language)
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = emptyList()
-        )
+    val channelList: StateFlow<ApiState<List<MyChannel>>> =
+        languagesName
+            .flatMapLatest { language ->
+                localChannelUseCase.getChannelsByLanguages(language).map {
+                    ApiState(data = it, isLoading = false, isSuccess = true)
+                }
+            }
+
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = ApiState(isLoading = true, isSuccess = false)
+            )
+
 
 }

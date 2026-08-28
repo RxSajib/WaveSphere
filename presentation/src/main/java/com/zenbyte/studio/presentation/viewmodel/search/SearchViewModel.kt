@@ -22,6 +22,7 @@ import com.zenbyte.studio.domain.utils.Resource
 import com.zenbyte.studio.presentation.viewmodel.state.ApiState
 import com.zenbyte.studio.presentation.viewmodel.utils.AppConst.NEWS_TAG
 import com.zenbyte.studio.presentation.viewmodel.utils.Extras
+import com.zenbyte.studio.presentation.viewmodel.utils.Extras.getSimCountry
 import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 import com.zenbyte.studio.presentation.viewmodel.utils.localDataSources.GenresData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -136,7 +137,7 @@ class SearchViewModel @Inject constructor(
 
     private fun getNewsListByCountry(){
         viewModelScope.launch {
-            localChannelUseCase.getChannelByTags(tags = NEWS_TAG, country = Extras.getSimCountry(context = context))
+            localChannelUseCase.getChannelByTags(tags = NEWS_TAG, country = context.getSimCountry())
                 .collect { channels ->
                     newsListMutableStateFlow.emit(ApiState(data = channels, isLoading = false, isSuccess = true))
                 }

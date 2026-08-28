@@ -44,29 +44,29 @@ object Extras {
         }
     }
 
-    fun getSimCountry(context: Context): String {
+    fun Context.getSimCountry(): String {
         val telephonyManager =
-            context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+            getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         return telephonyManager.simCountryIso
     }
 
-    fun getGenresName(genre: GenresEnum, context: Context): String {
+    fun Context.getGenresName(genre: GenresEnum): String {
         return when (genre) {
-            GenresEnum.Pop -> context.getString(R.string.genre_pop)
-            GenresEnum.Rock -> context.getString(R.string.genre_rock)
-            GenresEnum.HipHop -> context.getString(R.string.genre_hip_hop)
-            GenresEnum.Jazz -> context.getString(R.string.genre_jazz)
-            GenresEnum.Classical -> context.getString(R.string.genre_classical)
-            GenresEnum.Electronic -> context.getString(R.string.genre_electronic)
-            GenresEnum.Dance -> context.getString(R.string.genre_dance)
-            GenresEnum.Country -> context.getString(R.string.genre_country)
-            GenresEnum.RB -> context.getString(R.string.genre_rb)
-            GenresEnum.Reggane -> context.getString(R.string.genre_reggae)
-            GenresEnum.Latin -> context.getString(R.string.genre_latin)
-            GenresEnum.Metal -> context.getString(R.string.genre_metal)
-            GenresEnum.Blues -> context.getString(R.string.genre_blues)
-            GenresEnum.Folk -> context.getString(R.string.genre_folk)
-            GenresEnum.World -> context.getString(R.string.genre_world)
+            GenresEnum.Pop -> getString(R.string.genre_pop)
+            GenresEnum.Rock -> getString(R.string.genre_rock)
+            GenresEnum.HipHop -> getString(R.string.genre_hip_hop)
+            GenresEnum.Jazz -> getString(R.string.genre_jazz)
+            GenresEnum.Classical -> getString(R.string.genre_classical)
+            GenresEnum.Electronic -> getString(R.string.genre_electronic)
+            GenresEnum.Dance -> getString(R.string.genre_dance)
+            GenresEnum.Country -> getString(R.string.genre_country)
+            GenresEnum.RB -> getString(R.string.genre_rb)
+            GenresEnum.Reggane -> getString(R.string.genre_reggae)
+            GenresEnum.Latin -> getString(R.string.genre_latin)
+            GenresEnum.Metal -> getString(R.string.genre_metal)
+            GenresEnum.Blues -> getString(R.string.genre_blues)
+            GenresEnum.Folk -> getString(R.string.genre_folk)
+            GenresEnum.World -> getString(R.string.genre_world)
         }
     }
 

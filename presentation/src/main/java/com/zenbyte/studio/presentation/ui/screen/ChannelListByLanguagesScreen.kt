@@ -1,6 +1,5 @@
 package com.zenbyte.studio.presentation.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -23,13 +23,14 @@ import coil3.compose.LocalPlatformContext
 import com.zenbyte.studio.data.local.model.Languages
 import com.zenbyte.studio.presentation.ui.component.MyCustomAppBar
 import com.zenbyte.studio.presentation.ui.component.MyCustomStation
+import com.zenbyte.studio.presentation.ui.component.MyCustomStationShimmerItem
 import com.zenbyte.studio.presentation.viewmodel.channelByLanguages.ChannelByLanguagesViewModel
 
 @Composable
 fun ChannelListByLanguagesScreen(languages: Languages) {
 
-    val viewModel : ChannelByLanguagesViewModel = hiltViewModel()
-    val channelsData = viewModel.channelList.collectAsStateWithLifecycle()
+    val viewModel: ChannelByLanguagesViewModel = hiltViewModel()
+    val channelListState by viewModel.channelList.collectAsStateWithLifecycle()
     val contextCoil = LocalPlatformContext.current
 
     LaunchedEffect(Unit) {
@@ -48,29 +49,47 @@ fun ChannelListByLanguagesScreen(languages: Languages) {
                 ) {
                     // back press
                 }
-            }
-        ) { innerPadding ->
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)){
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(3),
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    contentPadding = PaddingValues(16.dp)
-                ) {
-                    items(channelsData.value) { channelData ->
-                        MyCustomStation(
-                            isPlaying = viewModel.isPlaying(myChannel = channelData).collectAsStateWithLifecycle(false).value,
-                            context = contextCoil, myChannel = channelData,
-                            onClick = {myChannel ->
-                                /* backStack.add(
-                                     AppDestination.Dest.PlayerView(channel = myChannel, channelList = channelListState.data?: emptyList())
-                                 )*/
-                            }
-                        )
+            }) { innerPadding ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+
+                if (channelListState.isSuccess) {
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(3),
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        contentPadding = PaddingValues(16.dp)
+                    ) {
+                        items(channelListState.data ?: emptyList()) { channelData ->
+                            MyCustomStation(
+                                isPlaying = viewModel.isPlaying(myChannel = channelData)
+                                    .collectAsStateWithLifecycle(false).value,
+                                context = contextCoil,
+                                myChannel = channelData,
+                                onClick = { myChannel ->
+                                    /* backStack.add(
+                                         AppDestination.Dest.PlayerView(channel = myChannel, channelList = channelListState.data?: emptyList())
+                                     )*/
+                                })
+                        }
                     }
+                } else if (channelListState.isLoading) {
+                    LazyVerticalGrid(
+                        modifier = Modifier.fillMaxSize(), columns = GridCells.Fixed(3),
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        contentPadding = PaddingValues(16.dp)
+                    ) {
+                        items(30) {
+                            MyCustomStationShimmerItem()
+                        }
+                    }
+                }else {
+                    // server error try to refresh
                 }
             }
         }

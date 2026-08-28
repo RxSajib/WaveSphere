@@ -23,6 +23,7 @@ import com.zenbyte.studio.domain.usecase.SaveChannelUseCase
 import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
 import com.zenbyte.studio.domain.utils.Resource
 import com.zenbyte.studio.presentation.viewmodel.utils.Extras
+import com.zenbyte.studio.presentation.viewmodel.utils.Extras.getSimCountry
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -207,7 +208,7 @@ class HomeViewModel @Inject constructor(
     private fun getChannelByCountryCode() {
         viewModelScope.launch {
             localChannelUseCase.getChannelByCountryCode(
-                Extras.getSimCountry(context = myContext).ifEmpty { "USA" })
+                myContext.getSimCountry().ifEmpty { "USA" })
                 .collect { channelList ->
                     channelMutableStateFlow.emit(channelList)
                 }
@@ -258,7 +259,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
 
             val response = getChannelByCountryUseCase.getChannelByCountry(
-                Extras.getSimCountry(context = myContext).ifEmpty { "IR" })
+                myContext.getSimCountry().ifEmpty { "IR" })
             when (response) {
                 is Resource.Success -> {
                     channelMutableStateFlow.emit(response.data ?: emptyList())

@@ -1,5 +1,6 @@
 package com.zenbyte.studio.presentation.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -44,7 +45,6 @@ fun ChannelByGenresScreen(
     val channelListState by viewModel.channelList.collectAsStateWithLifecycle()
     val contextCoil = LocalPlatformContext.current
     val currentPlayingChannel by viewModel.currentPlayingChannel.collectAsStateWithLifecycle()
-
     LaunchedEffect(Unit) {
         viewModel.inputTag(tagName = genres.titleEnglish)
     }

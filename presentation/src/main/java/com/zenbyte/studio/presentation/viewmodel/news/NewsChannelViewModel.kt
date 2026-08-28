@@ -18,6 +18,7 @@ import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
 import com.zenbyte.studio.presentation.viewmodel.state.ApiState
 import com.zenbyte.studio.presentation.viewmodel.utils.AppConst.NEWS_TAG
 import com.zenbyte.studio.presentation.viewmodel.utils.Extras
+import com.zenbyte.studio.presentation.viewmodel.utils.Extras.getSimCountry
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import jakarta.inject.Inject
@@ -169,7 +170,7 @@ class NewsChannelViewModel @Inject constructor(
 
     private fun getNewsListByCountry(){
         viewModelScope.launch {
-            localChannelUseCase.getChannelByTags(tags = NEWS_TAG, country = Extras.getSimCountry(context = context))
+            localChannelUseCase.getChannelByTags(tags = NEWS_TAG, country = context.getSimCountry())
                 .collect { channels ->
                     newsListMutableStateFlow.emit(ApiState(data = channels, isLoading = false, isSuccess = true))
                 }

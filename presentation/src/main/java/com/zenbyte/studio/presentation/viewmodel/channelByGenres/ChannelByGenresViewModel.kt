@@ -15,6 +15,7 @@ import com.zenbyte.studio.domain.result.Resource
 import com.zenbyte.studio.domain.usecase.MediaPlayControllerUseCase
 import com.zenbyte.studio.presentation.viewmodel.state.ApiState
 import com.zenbyte.studio.presentation.viewmodel.utils.Extras
+import com.zenbyte.studio.presentation.viewmodel.utils.Extras.getSimCountry
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import jakarta.inject.Inject
@@ -88,7 +89,7 @@ class ChannelByGenresViewModel @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     val channelList = tagsNameMutableStateFlow.filter { it.isNotEmpty() }.distinctUntilChanged().flatMapLatest { tagName ->
-        localChannelRepo.getChannelByTags(tags = tagName, country = Extras.getSimCountry(context = context))
+        localChannelRepo.getChannelByTags(tags = tagName, country = context.getSimCountry())
     }.map { channelList ->
         ApiState(data = channelList, isSuccess = true, isLoading = false)
     }.stateIn(
