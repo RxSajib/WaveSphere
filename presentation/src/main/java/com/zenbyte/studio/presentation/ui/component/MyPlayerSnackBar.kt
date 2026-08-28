@@ -39,15 +39,18 @@ import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 import com.zenbyte.studio.presentation.ui.theme.buttonColor
+import com.zenbyte.studio.presentation.viewmodel.playerSnackBar.PlayerSnackBarViewModel
 import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 import kotlin.Boolean
 
 @Composable
 fun MyPlayerSnackBar(
+    modifier: Modifier,
     myChannel: MyChannel,
     context: Context,
     isBuffering: Boolean = false,
     isPlaying: Boolean = false,
+    viewModel: PlayerSnackBarViewModel
 ) {
     val randomColor = remember(myChannel.stationuuid) {
         Color(
@@ -57,7 +60,7 @@ fun MyPlayerSnackBar(
         )
     }
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()   .clip(shape = RoundedCornerShape(10.dp))
             .background(color = buttonColor.copy(alpha = 0.15f))
             .padding(10.dp),
@@ -132,7 +135,7 @@ fun MyPlayerSnackBar(
                     shape = CircleShape
                 )
                 .debounceClickable {
-                    // onMediaController.invoke(myChannel)
+                    viewModel.playPushController()
                 }
                 .padding(5.dp),
             contentAlignment = Alignment.Center
@@ -147,7 +150,7 @@ fun MyPlayerSnackBar(
                 )
             } else {
                 Icon(
-                    painter = if (isPlaying) painterResource(R.drawable.pause) else painterResource(
+                    painter = if (viewModel.isMusicPlaying) painterResource(R.drawable.pause) else painterResource(
                         R.drawable.ic_play
                     ),
                     contentDescription = null
@@ -155,34 +158,5 @@ fun MyPlayerSnackBar(
             }
 
         }
-    }
-}
-
-@Preview
-@Composable
-private fun MyPlayerSnackBarPreview() {
-
-    val channel = MyChannel(
-        stationuuid = "abc123",
-        name = "Radio Bangladesh",
-        codec = "MP3",
-        country = "Bangladesh",
-        url = "https://example.com/radio",
-        urlResolved = "https://example.com/radio",
-        favicon = "",
-        language = "Bengali",
-        votes = 125,
-        tags = "bangla, music, news",
-        lastcheckok = 1,
-        sslError = 0
-    )
-
-    MaterialTheme {
-        MyPlayerSnackBar(
-            myChannel = channel,
-            context = LocalContext.current,
-            isBuffering = false,
-            isPlaying = true
-        )
     }
 }

@@ -1,9 +1,11 @@
 package com.zenbyte.studio.presentation.ui.navigation
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -23,9 +25,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.serialization.json.Json
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
@@ -35,8 +40,10 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.component.MyCustomAppBar
+import com.zenbyte.studio.presentation.ui.component.MyPlayerSnackBar
 import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.presentation.ui.screen.FavoriteScreen
 import com.zenbyte.studio.presentation.ui.screen.HomeScreen
@@ -44,12 +51,17 @@ import com.zenbyte.studio.presentation.ui.screen.PlayerScreen
 import com.zenbyte.studio.presentation.ui.screen.SearchScreen
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 import com.zenbyte.studio.presentation.ui.theme.buttonColor
+import com.zenbyte.studio.presentation.viewmodel.playerSnackBar.PlayerSnackBarViewModel
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 
 
 @Composable
 fun BottomAppBarNavigation(rootBackStack: NavBackStack<NavKey>) {
+
+    val viewModel : PlayerSnackBarViewModel = hiltViewModel()
+    val currentPlayingChannel by viewModel.currentPlayingChannel.collectAsStateWithLifecycle()
+
     val appConfig = SavedStateConfiguration {
         this.serializersModule = SerializersModule {
             this.polymorphic(NavKey::class) {
@@ -267,27 +279,44 @@ fun BottomAppBarNavigation(rootBackStack: NavBackStack<NavKey>) {
         }
 
     }) { innerPadding ->
-        NavDisplay(
-            modifier = Modifier.padding(innerPadding),
-            backStack = activeBackStack,
-            entryDecorators = listOf(
-                rememberSaveableStateHolderNavEntryDecorator(),
-                rememberViewModelStoreNavEntryDecorator()
-            ),
-            entryProvider = entryProvider {
-                entry<AppDestination.BottomAppBar.Home> {
-                    HomeScreen( rootBackStack = rootBackStack)
-                }
-                entry<AppDestination.BottomAppBar.Search> {
-                    SearchScreen(activeBackStack = activeBackStack, rootBackStack = rootBackStack)
-                }
 
-                entry<AppDestination.BottomAppBar.Favorite> {
-                    FavoriteScreen()
-                }
-                entry<AppDestination.BottomAppBar.Player> {
-                    PlayerScreen(rootBackStack = rootBackStack)
-                }
-            })
+        Column(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+            NavDisplay(
+                modifier = Modifier.fillMaxWidth().weight(1f),
+                backStack = activeBackStack,
+                entryDecorators = listOf(
+                    rememberSaveableStateHolderNavEntryDecorator(),
+                    rememberViewModelStoreNavEntryDecorator()
+                ),
+                entryProvider = entryProvider {
+                    entry<AppDestination.BottomAppBar.Home> {
+                        HomeScreen( rootBackStack = rootBackStack)
+                    }
+                    entry<AppDestination.BottomAppBar.Search> {
+                        SearchScreen(activeBackStack = activeBackStack, rootBackStack = rootBackStack)
+                    }
+
+                    entry<AppDestination.BottomAppBar.Favorite> {
+                        FavoriteScreen()
+                    }
+                    entry<AppDestination.BottomAppBar.Player> {
+                        PlayerScreen(rootBackStack = rootBackStack)
+                    }
+                })
+
+            currentPlayingChannel?.let { myChannel ->
+                MyPlayerSnackBar(
+                    modifier = Modifier.padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
+                    myChannel = myChannel,
+                    viewModel = viewModel,
+                    context = LocalContext.current,
+                    isBuffering = viewModel.mediaPlayControllerUseCase.playerController.isLoading.collectAsStateWithLifecycle(
+                        false
+                    ).value,
+                )
+            }
+
+        }
+
     }
 }
