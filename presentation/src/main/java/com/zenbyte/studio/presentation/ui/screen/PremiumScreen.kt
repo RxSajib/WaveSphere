@@ -51,7 +51,7 @@ fun PremiumScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize().background(color = MaterialTheme.colorScheme.surface)
-                .padding(innerPadding)
+                .padding(top = innerPadding.calculateTopPadding())
                 .verticalScroll(state = rememberScrollState())
                 .background(color = MaterialTheme.colorScheme.surface)
         ) {

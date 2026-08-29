@@ -127,7 +127,7 @@ fun PlayerViewScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(top = innerPadding.calculateTopPadding())
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

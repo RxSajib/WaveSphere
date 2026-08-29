@@ -30,7 +30,7 @@ fun AboutScreen(rootBackStack : NavBackStack<NavKey>) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(top = innerPadding.calculateTopPadding())
                 .verticalScroll(state = rememberScrollState())
                 .padding(16.dp)
         ) {

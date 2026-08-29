@@ -4,9 +4,20 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
@@ -16,7 +27,9 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
 import com.zenbyte.studio.data.local.model.Languages
+import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.model.MyGenres
+import com.zenbyte.studio.presentation.ui.component.MyPlayerSnackBar
 import com.zenbyte.studio.presentation.ui.screen.AboutScreen
 import com.zenbyte.studio.presentation.ui.screen.AllCountryScreen
 import com.zenbyte.studio.presentation.ui.screen.AllGenresScreen
@@ -29,6 +42,7 @@ import com.zenbyte.studio.presentation.ui.screen.PlayerViewScreen
 import com.zenbyte.studio.presentation.ui.screen.PopularStationsScreen
 import com.zenbyte.studio.presentation.ui.screen.PremiumScreen
 import com.zenbyte.studio.presentation.ui.screen.TrendingStationsScreen
+import com.zenbyte.studio.presentation.viewmodel.playerSnackBar.PlayerSnackBarViewModel
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 
@@ -38,6 +52,8 @@ fun DestNavigation(
     rootBackStack: NavBackStack<NavKey>,
 ) {
 
+    val viewModel: PlayerSnackBarViewModel = hiltViewModel()
+    val currentPlayingChannel by viewModel.currentPlayingChannel.collectAsStateWithLifecycle()
 
     val appConfig = SavedStateConfiguration {
         serializersModule = SerializersModule {
@@ -118,73 +134,98 @@ fun DestNavigation(
 
     val backStack = rememberNavBackStack(appConfig, firstDest)
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        NavDisplay(
-            backStack = backStack,
-            onBack = { backStack.removeLastOrNull() },
-            entryDecorators = listOf(
-                rememberSaveableStateHolderNavEntryDecorator(),
-                rememberViewModelStoreNavEntryDecorator()
-            ),
-            entryProvider = entryProvider {
+    Scaffold { innerPadding ->
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = innerPadding.calculateBottomPadding())) {
 
-                entry<AppDestination.Dest.ChannelByCountry> {
-                    ChannelByCountryScreen(backStack, it.name)
-                }
-                entry<AppDestination.Dest.PlayerView> { channelData ->
-                    PlayerViewScreen(channelData = channelData, rootBackStack = rootBackStack)
-                }
-                entry<AppDestination.Dest.AboutUs> {
-                    AboutScreen(rootBackStack = rootBackStack)
-                }
-                entry<AppDestination.Dest.Premium> {
-                    PremiumScreen()
-                }
-                entry<AppDestination.Dest.TrendingStations> {
-                    TrendingStationsScreen(rootBackStack = rootBackStack)
-                }
-                entry<AppDestination.Dest.PopularStations> {
-                    PopularStationsScreen(rootBackStack = rootBackStack)
-                }
-                entry<AppDestination.Dest.ChannelByGenres> {
-                    ChannelByGenresScreen(
-                        rootBackStack = rootBackStack,
-                        backStack = backStack,
-                        genres = it.genres
-                    )
-                }
-                entry<AppDestination.Dest.Languages> {
-                    LanguagesListScreen(rootBackStack = rootBackStack, backStack = backStack)
-                }
-                entry<AppDestination.Dest.MyCountryList> {
-                    AllCountryScreen(rootBackStack = rootBackStack)
-                }
-                entry<AppDestination.Dest.Genres> {
-                    AllGenresScreen(rootBackStack = rootBackStack)
-                }
-                entry<AppDestination.Dest.News> {
-                    AllNewsScreen(rootBackStack = rootBackStack)
-                }
-                entry<AppDestination.Dest.ChannelByLanguages> { languages ->
-                    ChannelListByLanguagesScreen(languages = languages.languages)
-                }
-            },
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)) {
+                NavDisplay(
+                    backStack = backStack,
+                    onBack = { backStack.removeLastOrNull() },
+                    entryDecorators = listOf(
+                        rememberSaveableStateHolderNavEntryDecorator(),
+                        rememberViewModelStoreNavEntryDecorator()
+                    ),
+                    entryProvider = entryProvider {
 
-            transitionSpec = {
-                slideInHorizontally(initialOffsetX = { it }) togetherWith
-                        slideOutHorizontally(targetOffsetX = { -it })
-            },
-            popTransitionSpec = {
-                slideInHorizontally(initialOffsetX = { -it }) togetherWith
-                        slideOutHorizontally(targetOffsetX = { it })
-            },
-            predictivePopTransitionSpec = {
-                slideInHorizontally(initialOffsetX = { -it }) togetherWith
-                        slideOutHorizontally(targetOffsetX = { it })
-            },
-        )
+                        entry<AppDestination.Dest.ChannelByCountry> {
+                            ChannelByCountryScreen(backStack, it.name)
+                        }
+                        entry<AppDestination.Dest.PlayerView> { channelData ->
+                            PlayerViewScreen(
+                                channelData = channelData,
+                                rootBackStack = rootBackStack
+                            )
+                        }
+                        entry<AppDestination.Dest.AboutUs> {
+                            AboutScreen(rootBackStack = rootBackStack)
+                        }
+                        entry<AppDestination.Dest.Premium> {
+                            PremiumScreen()
+                        }
+                        entry<AppDestination.Dest.TrendingStations> {
+                            TrendingStationsScreen(rootBackStack = rootBackStack)
+                        }
+                        entry<AppDestination.Dest.PopularStations> {
+                            PopularStationsScreen(rootBackStack = rootBackStack)
+                        }
+                        entry<AppDestination.Dest.ChannelByGenres> {
+                            ChannelByGenresScreen(
+                                rootBackStack = rootBackStack,
+                                backStack = backStack,
+                                genres = it.genres
+                            )
+                        }
+                        entry<AppDestination.Dest.Languages> {
+                            LanguagesListScreen(
+                                rootBackStack = rootBackStack,
+                                backStack = backStack
+                            )
+                        }
+                        entry<AppDestination.Dest.MyCountryList> {
+                            AllCountryScreen(rootBackStack = rootBackStack)
+                        }
+                        entry<AppDestination.Dest.Genres> {
+                            AllGenresScreen(rootBackStack = rootBackStack)
+                        }
+                        entry<AppDestination.Dest.News> {
+                            AllNewsScreen(rootBackStack = rootBackStack)
+                        }
+                        entry<AppDestination.Dest.ChannelByLanguages> { languages ->
+                            ChannelListByLanguagesScreen(languages = languages.languages)
+                        }
+                    },
 
+                    transitionSpec = {
+                        slideInHorizontally(initialOffsetX = { it }) togetherWith
+                                slideOutHorizontally(targetOffsetX = { -it })
+                    },
+                    popTransitionSpec = {
+                        slideInHorizontally(initialOffsetX = { -it }) togetherWith
+                                slideOutHorizontally(targetOffsetX = { it })
+                    },
+                    predictivePopTransitionSpec = {
+                        slideInHorizontally(initialOffsetX = { -it }) togetherWith
+                                slideOutHorizontally(targetOffsetX = { it })
+                    },
+                )
+            }
+
+            currentPlayingChannel?.let { myChannel ->
+                MyPlayerSnackBar(
+                    modifier = Modifier.padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
+                    myChannel = myChannel,
+                    viewModel = viewModel,
+                    context = LocalContext.current,
+                    isBuffering = viewModel.mediaPlayControllerUseCase.playerController.isLoading.collectAsStateWithLifecycle(
+                        false
+                    ).value,
+                )
+            }
+        }
     }
-
 
 }

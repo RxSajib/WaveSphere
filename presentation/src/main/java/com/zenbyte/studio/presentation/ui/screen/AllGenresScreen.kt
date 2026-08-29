@@ -40,7 +40,7 @@ fun AllGenresScreen(rootBackStack: NavBackStack<NavKey>) {
             }
         ) { innerPadding ->
             LazyVerticalGrid(
-                modifier = Modifier.fillMaxSize().padding(innerPadding),
+                modifier = Modifier.fillMaxSize().padding(top = innerPadding.calculateTopPadding()),
                 columns = GridCells.Fixed(3),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
