@@ -21,8 +21,10 @@ import com.zenbyte.studio.presentation.ui.component.GeneralSetting
 import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.presentation.ui.component.OtherSetting
 import com.zenbyte.studio.presentation.ui.component.PremiumStatusCard
+import com.zenbyte.studio.presentation.ui.data.AppConstant
 import com.zenbyte.studio.presentation.viewmodel.player.PlayerViewModel
 import com.zenbyte.studio.presentation.ui.navigation.AppDestination
+import com.zenbyte.studio.presentation.viewmodel.utils.Extras.getAppVersion
 import dev.b3nedikt.app_locale.AppLocale
 
 @Composable
@@ -34,6 +36,7 @@ fun PlayerScreen(rootBackStack: NavBackStack<NavKey>) {
     val darkModeToggle by viewModel.darkModeToggle.collectAsStateWithLifecycle()
     val dataSaverToggle by viewModel.dataSaverToggle.collectAsStateWithLifecycle()
     val languagesList by viewModel.appLanguages.collectAsStateWithLifecycle()
+
 
     Column(
         modifier = Modifier
@@ -54,7 +57,7 @@ fun PlayerScreen(rootBackStack: NavBackStack<NavKey>) {
                 viewModel.onDataSaverToggle(checked)
             },
             onDarkModeChanged = { checked ->
-                viewModel.onDarkModeToggle(checked)
+                viewModel.onDarkModeToggle(value = checked, key = AppConstant.ENABLE_DARK_MODE)
             },
             onClickPremium = {
                 rootBackStack.add(
@@ -85,6 +88,7 @@ fun PlayerScreen(rootBackStack: NavBackStack<NavKey>) {
                     )
                 )
             },
+            appVersionCode = context.getAppVersion(),
             onClickRecording = {}
         )
         HeightGap(height = 10.dp)
@@ -95,6 +99,6 @@ fun PlayerScreen(rootBackStack: NavBackStack<NavKey>) {
         ChooseLanguagesSheet(viewModel = viewModel, selectedLanguages = {
             viewModel.showLanguagesSheet = false
             activity?.recreate()
-        }, onDismissRequest = {viewModel.showLanguagesSheet = false})
+        }, onDismissRequest = { viewModel.showLanguagesSheet = false })
     }
 }

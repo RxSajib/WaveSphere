@@ -12,49 +12,51 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation3.runtime.NavBackStack
-import androidx.navigation3.runtime.NavKey
 import coil3.compose.LocalPlatformContext
+import com.zenbyte.studio.data.local.model.Languages
 import com.zenbyte.studio.presentation.ui.component.MyCustomAppBar
 import com.zenbyte.studio.presentation.ui.component.MyCustomStation
 import com.zenbyte.studio.presentation.ui.component.MyCustomStationShimmerItem
-import com.zenbyte.studio.presentation.ui.component.ServerError
-import com.zenbyte.studio.presentation.viewmodel.state.ApiState
-import com.zenbyte.studio.presentation.viewmodel.trendingStations.TrendingStationsViewModel
+import com.zenbyte.studio.presentation.viewmodel.channelByLanguages.ChannelByLanguagesViewModel
 
 @Composable
-fun TrendingStationsScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey>) {
+fun ChannelListByLanguagesScreen(languages: Languages) {
 
-    val viewModel : TrendingStationsViewModel = hiltViewModel()
-    val trendingChannelList by viewModel.trendingChannelList.collectAsStateWithLifecycle(ApiState())
+    val viewModel: ChannelByLanguagesViewModel = hiltViewModel()
+    val channelListState by viewModel.channelList.collectAsStateWithLifecycle()
     val contextCoil = LocalPlatformContext.current
 
-    Surface(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.surface)) {
+    LaunchedEffect(Unit) {
+        viewModel.setLanguagesName(languagesName = languages.titleEnglish)
+    }
 
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.surface)
+    ) {
         Scaffold(
             topBar = {
                 MyCustomAppBar(
-                    title = stringResource(com.zenbyte.studio.presentation.R.string.trending_stations)
+                    title = languages.title
                 ) {
-                    rootBackStack.removeLastOrNull()
+                    // back press
                 }
-            }
-        ) { innerPadding ->
+            }) { innerPadding ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
 
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding), contentAlignment = Alignment.Center){
-
-                if(trendingChannelList.isSuccess){
+                if (channelListState.isSuccess) {
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(3),
                         modifier = Modifier.fillMaxSize(),
@@ -62,36 +64,34 @@ fun TrendingStationsScreen(modifier: Modifier = Modifier, rootBackStack: NavBack
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                         contentPadding = PaddingValues(16.dp)
                     ) {
-                        items(trendingChannelList.data?: emptyList()) { channelData ->
+                        items(channelListState.data ?: emptyList()) { channelData ->
                             MyCustomStation(
-                                isPlaying = viewModel.isPlaying(myChannel = channelData).collectAsStateWithLifecycle(false).value,
-                                context = contextCoil, myChannel = channelData,
-                                onClick = {myChannel ->
+                                isPlaying = viewModel.isPlaying(myChannel = channelData)
+                                    .collectAsStateWithLifecycle(false).value,
+                                context = contextCoil,
+                                myChannel = channelData,
+                                onClick = { myChannel ->
                                     /* backStack.add(
                                          AppDestination.Dest.PlayerView(channel = myChannel, channelList = channelListState.data?: emptyList())
                                      )*/
-                                }
-                            )
+                                })
                         }
                     }
-                }
-                else if(trendingChannelList.isLoading){
-                    LazyVerticalGrid(modifier = Modifier.fillMaxSize(), columns = GridCells.Fixed(3),
+                } else if (channelListState.isLoading) {
+                    LazyVerticalGrid(
+                        modifier = Modifier.fillMaxSize(), columns = GridCells.Fixed(3),
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        contentPadding = PaddingValues(16.dp)) {
-                        items(30){
+                        contentPadding = PaddingValues(16.dp)
+                    ) {
+                        items(30) {
                             MyCustomStationShimmerItem()
                         }
                     }
                 }else {
-                    ServerError{
-
-                    }
+                    // server error try to refresh
                 }
-
             }
         }
-
     }
 }

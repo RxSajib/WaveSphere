@@ -3,6 +3,8 @@ package com.zenbyte.studio.presentation.ui.component
 import android.graphics.Color
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -15,16 +17,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
 import com.zenbyte.studio.presentation.R
+import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 import com.zenbyte.studio.presentation.ui.theme.buttonColor
 import com.zenbyte.studio.presentation.viewmodel.utils.rememberDebouncedClick
 
 @Composable
 fun SettingItem(
+    appVersionCode : String = "",
     selectedLanguages : String = "",
     title: String,
     icon: Painter,
@@ -96,6 +104,37 @@ fun SettingItem(
             }) {
                 Icon(painterResource(R.drawable.icon_arrow_next), contentDescription = null)
             }
+        }
+        if(appVersionCode.isNotBlank()){
+            Row(
+                verticalAlignment = Alignment.Bottom
+            ) {
+                Text(
+                    text = "V",
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.W500,
+                        fontSize = adjustedFontSize(8f)
+                    ),
+                    modifier = Modifier.padding(bottom = 2.dp)
+                        .alignByBaseline()
+                )
+
+                Text(
+                    text = appVersionCode,
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        fontWeight = FontWeight.W500,
+                        color = MaterialTheme.colorScheme.primary,
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .alignByBaseline()
+                        .padding(end = 16.dp)
+                )
+            }
+
+
         }
 
         if(enableChangeLanguage){

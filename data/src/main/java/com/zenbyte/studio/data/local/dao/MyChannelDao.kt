@@ -40,4 +40,9 @@ interface MyChannelDao {
     """)
     fun getChannelByTags(tags : String, country : String) : Flow<List<MyChannelEntity>>
 
+    @Query("SELECT COUNT(*) FROM channel_db WHERE language like :languages")
+    fun getLengthChannelByLanguages(languages : String) : Flow<Int>
+
+    @Query("SELECT * FROM channel_db WHERE language like :languages")
+    fun getChannelsByLanguages(languages : String) : Flow<List<MyChannelEntity>>
 }

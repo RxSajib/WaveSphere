@@ -3,8 +3,11 @@ package com.zenbyte.studio.presentation.ui.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -38,14 +41,16 @@ fun LanguagesByChannelItem(languages: Languages, onClick : (Languages) -> Unit) 
         Box(
             modifier = Modifier
                 .clip(shape = CircleShape)
+
                 .background(color = Color(languages.color).copy(alpha = 0.08f))
-                .padding(10.dp), contentAlignment = Alignment.Center,
+                .padding(10.dp).wrapContentSize()  .size(36.dp), contentAlignment = Alignment.Center,
         ) {
             Text(
                 text = languages.title.take(2).uppercase(),
                 style = MaterialTheme.typography.titleSmall.copy(
                     color = Color(languages.color).copy(alpha = 0.5f)
-                )
+                ),
+                modifier = Modifier
             )
         }
         HeightGap(height = 10.dp)

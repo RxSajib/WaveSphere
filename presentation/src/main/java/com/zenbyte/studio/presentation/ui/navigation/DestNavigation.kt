@@ -15,6 +15,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.zenbyte.studio.data.local.model.Languages
 import com.zenbyte.studio.domain.model.MyGenres
 import com.zenbyte.studio.presentation.ui.screen.AboutScreen
 import com.zenbyte.studio.presentation.ui.screen.AllCountryScreen
@@ -22,6 +23,7 @@ import com.zenbyte.studio.presentation.ui.screen.AllGenresScreen
 import com.zenbyte.studio.presentation.ui.screen.AllNewsScreen
 import com.zenbyte.studio.presentation.ui.screen.ChannelByCountryScreen
 import com.zenbyte.studio.presentation.ui.screen.ChannelByGenresScreen
+import com.zenbyte.studio.presentation.ui.screen.ChannelListByLanguagesScreen
 import com.zenbyte.studio.presentation.ui.screen.LanguagesListScreen
 import com.zenbyte.studio.presentation.ui.screen.PlayerViewScreen
 import com.zenbyte.studio.presentation.ui.screen.PopularStationsScreen
@@ -83,6 +85,10 @@ fun DestNavigation(
                 subclass(
                     AppDestination.Dest.News::class,
                     AppDestination.Dest.News.serializer()
+                )
+                subclass(
+                    AppDestination.Dest.ChannelByLanguages::class,
+                    AppDestination.Dest.ChannelByLanguages.serializer()
                 )
             }
         }
@@ -148,7 +154,7 @@ fun DestNavigation(
                     )
                 }
                 entry<AppDestination.Dest.Languages> {
-                    LanguagesListScreen(rootBackStack = rootBackStack)
+                    LanguagesListScreen(rootBackStack = rootBackStack, backStack = backStack)
                 }
                 entry<AppDestination.Dest.MyCountryList> {
                     AllCountryScreen(rootBackStack = rootBackStack)
@@ -158,6 +164,9 @@ fun DestNavigation(
                 }
                 entry<AppDestination.Dest.News> {
                     AllNewsScreen(rootBackStack = rootBackStack)
+                }
+                entry<AppDestination.Dest.ChannelByLanguages> { languages ->
+                    ChannelListByLanguagesScreen(languages = languages.languages)
                 }
             },
 

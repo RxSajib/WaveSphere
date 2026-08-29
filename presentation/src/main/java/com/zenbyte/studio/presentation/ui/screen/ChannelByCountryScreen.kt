@@ -73,7 +73,7 @@ fun ChannelByCountryScreen(
                 ) {
                     items(channelListState.data?: emptyList()) { channelData ->
                         MyCustomStation(
-                            isSelected = currentPlayingChannel?.stationuuid == channelData.stationuuid,
+                            isPlaying = viewModel.isPlaying(myChannel = channelData).collectAsStateWithLifecycle(false).value,
                             context = contextCoil, myChannel = channelData,
                             onClick = {myChannel ->
                                 backStack.add(

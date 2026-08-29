@@ -36,7 +36,7 @@ import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
 @Composable
 fun MyCustomStation(
-    isSelected: Boolean = false,
+    isPlaying : Boolean = false,
     context: PlatformContext,
     myChannel: MyChannel,
     onClick: (MyChannel) -> Unit
@@ -65,8 +65,8 @@ fun MyCustomStation(
                     .aspectRatio(1f)
                     .clip(RoundedCornerShape(10.dp))
                     .border(
-                        width = if (isSelected) 3.dp else 1.dp,
-                        color = if (isSelected) genresColor else MaterialTheme.colorScheme.primary.copy(
+                        width = if (isPlaying) 3.dp else 1.dp,
+                        color = if (isPlaying) genresColor else MaterialTheme.colorScheme.primary.copy(
                             alpha = 0.2f
                         ),
                         shape = RoundedCornerShape(10.dp)
@@ -101,7 +101,7 @@ fun MyCustomStation(
                 }
 
             }
-            if (isSelected) {
+            if (isPlaying) {
 
                 MusicPlayingIndicator(modifier = Modifier.align(Alignment.TopEnd).padding(10.dp))
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -57,8 +58,8 @@ fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey
 
     LazyColumn(
         modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp)
+            .fillMaxSize(),
+        contentPadding = PaddingValues(16.dp)
 
     ) {
 
@@ -101,6 +102,7 @@ fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey
                 items(trendingChannel.value) { channel ->
                     Box(modifier = Modifier.width(itemWidth)) {
                         MyCustomStation(
+                            isPlaying = viewModel.isPlaying(myChannel = channel).collectAsStateWithLifecycle(false).value,
                             context = context, myChannel = channel,
                             onClick = { myChannel ->
                                 // mediaPlayerViewModel.playMusic(myChannel = myChannel)

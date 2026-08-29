@@ -62,7 +62,7 @@ fun PopularStationsScreen(rootBackStack: NavBackStack<NavKey>) {
                     ) {
                         items(channelListState.data?: emptyList()) { channelData ->
                             MyCustomStation(
-                                isSelected = false, //currentPlayingChannel?.stationuuid == channelData.stationuuid,
+                                isPlaying = viewModel.isPlaying(myChannel = channelData).collectAsStateWithLifecycle(false).value,
                                 context = contextCoil, myChannel = channelData,
                                 onClick = {myChannel ->
                                    /* backStack.add(
