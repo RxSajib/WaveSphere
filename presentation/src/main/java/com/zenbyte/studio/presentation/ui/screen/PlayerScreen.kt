@@ -77,7 +77,11 @@ fun PlayerScreen(rootBackStack: NavBackStack<NavKey>) {
                     )
                 )
             },
-            onClickHelpAndSupport = {},
+            onClickHelpAndSupport = {
+                rootBackStack.add(
+                    AppDestination.Dest(AppDestination.Dest.HelpAndSupport::class.simpleName?: "")
+                )
+            },
             onClickLanguage = {
                 viewModel.showLanguagesSheet = true
             },

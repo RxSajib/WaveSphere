@@ -1,5 +1,6 @@
 package com.zenbyte.studio.presentation.ui.navigation
 
+import android.util.Log
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
@@ -37,6 +38,7 @@ import com.zenbyte.studio.presentation.ui.screen.AllNewsScreen
 import com.zenbyte.studio.presentation.ui.screen.ChannelByCountryScreen
 import com.zenbyte.studio.presentation.ui.screen.ChannelByGenresScreen
 import com.zenbyte.studio.presentation.ui.screen.ChannelListByLanguagesScreen
+import com.zenbyte.studio.presentation.ui.screen.HelpAndSupportScreen
 import com.zenbyte.studio.presentation.ui.screen.LanguagesListScreen
 import com.zenbyte.studio.presentation.ui.screen.PlayerViewScreen
 import com.zenbyte.studio.presentation.ui.screen.PopularStationsScreen
@@ -106,6 +108,10 @@ fun DestNavigation(
                     AppDestination.Dest.ChannelByLanguages::class,
                     AppDestination.Dest.ChannelByLanguages.serializer()
                 )
+                subclass(
+                    AppDestination.Dest.HelpAndSupport::class,
+                    AppDestination.Dest.HelpAndSupport.serializer()
+                )
             }
         }
     }
@@ -119,7 +125,7 @@ fun DestNavigation(
         startDest.firstDestName == AppDestination.Dest.ChannelByGenres::class.simpleName -> AppDestination.Dest.ChannelByGenres(
             startDest.genres ?: MyGenres()
         )
-
+        startDest.firstDestName == AppDestination.Dest.HelpAndSupport::class.simpleName -> AppDestination.Dest.HelpAndSupport
         startDest.firstDestName == AppDestination.Dest.AboutUs::class.simpleName -> AppDestination.Dest.AboutUs
         startDest.firstDestName == AppDestination.Dest.News::class.simpleName -> AppDestination.Dest.News
         startDest.firstDestName == AppDestination.Dest.Premium::class.simpleName -> AppDestination.Dest.Premium
@@ -133,6 +139,8 @@ fun DestNavigation(
 
 
     val backStack = rememberNavBackStack(appConfig, firstDest)
+    Log.d("TAGGG", "DestNavigation: ${backStack.lastOrNull()}")
+    val currentDest = backStack.lastOrNull()
 
     Scaffold { innerPadding ->
         Column(modifier = Modifier
@@ -197,6 +205,9 @@ fun DestNavigation(
                         entry<AppDestination.Dest.ChannelByLanguages> { languages ->
                             ChannelListByLanguagesScreen(languages = languages.languages)
                         }
+                        entry<AppDestination.Dest.HelpAndSupport> {
+                            HelpAndSupportScreen()
+                        }
                     },
 
                     transitionSpec = {
@@ -214,16 +225,20 @@ fun DestNavigation(
                 )
             }
 
-            currentPlayingChannel?.let { myChannel ->
-                MyPlayerSnackBar(
-                    modifier = Modifier.padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
-                    myChannel = myChannel,
-                    viewModel = viewModel,
-                    context = LocalContext.current,
-                    isBuffering = viewModel.mediaPlayControllerUseCase.playerController.isLoading.collectAsStateWithLifecycle(
-                        false
-                    ).value,
-                )
+                currentPlayingChannel?.let { myChannel ->
+                    val shouldShowSnackBar = currentDest != AppDestination.Dest.Premium &&
+                            currentDest !is AppDestination.Dest.PlayerView
+                    if (shouldShowSnackBar) {
+                    MyPlayerSnackBar(
+                        modifier = Modifier.padding(start = 5.dp, end = 5.dp, bottom = 10.dp),
+                        myChannel = myChannel,
+                        viewModel = viewModel,
+                        context = LocalContext.current,
+                        isBuffering = viewModel.mediaPlayControllerUseCase.playerController.isLoading.collectAsStateWithLifecycle(
+                            false
+                        ).value,
+                    )
+                }
             }
         }
     }

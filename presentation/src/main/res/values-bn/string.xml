@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="hi_there">ওহে!</string>
+    <string name="help_support_details">সাহায্য প্রয়োজন? আমরা আপনার জন্য এখানে আছি। উত্তর খুঁজুন অথবা আমাদের সাথে যোগাযোগ করুন।</string>
+    <string name="popular_topics">জনপ্রিয় বিষয়সমূহ</string>
+
+    <string name="still_need_help">এখনও সাহায্য প্রয়োজন?</string>
+   <!-- <string name="still_need_help_details">আপনাকে সাহায্য করার জন্য আমরা ২৪/৭ এখানে আছি</string>-->
+
+    <string name="playback_issues">প্লেব্যাক সমস্যা</string>
+    <string name="playback_issues_details">বাফারিং, প্লেব্যাক বা স্ট্রিমিং সমস্যা সমাধান করুন</string>
+    <string name="premium_and_subscriptions">প্রিমিয়াম এবং সাবস্ক্রিপশন</string>
+    <string name="premium_and_subscriptions_details">আপনার প্রিমিয়াম প্ল্যান এবং পেমেন্ট পরিচালনা করুন</string>
+    <string name="record_music">সঙ্গীত রেকর্ড করুন</string>
+    <string name="record_music_details">আপনার প্রিয় সঙ্গীত রেকর্ড এবং শেয়ার করুন</string>
+    <string name="privacy_and_security">গোপনীয়তা এবং নিরাপত্তা</string>
+    <string name="privacy_and_security_details">আপনার গোপনীয়তা এবং ডেটা সম্পর্কে জানুন</string>
+
+    <string name="need_more_help">আরও সাহায্য প্রয়োজন?</string>
+    <string name="contact_support">সাপোর্ট টিমের সাথে যোগাযোগ করুন</string>
+    <string name="contact_support_details">সাহায্য পেতে আমাদের সাপোর্ট টিমের সাথে চ্যাট করুন।</string>
+    <string name="email_us">আমাদের ইমেল করুন</string>
+    <string name="email_us_details">আমরা সাধারণত ২৪ ঘন্টার মধ্যে উত্তর দেই</string>
+    <string name="chat_now">এখনই চ্যাট করুন</string>
+    <string name="send_email">ইমেল পাঠান</string>
+
     <string name="hint_choose_languages">আপনার পছন্দের ভাষা নির্বাচন করুন। পরিবর্তন কার্যকর করতে অ্যাপটি পুনরায় চালু হবে।</string>
     <string name="see_all">সব দেখুন</string>
     <string name="home_header_subtitle">চলুন রেডিওর দুনিয়া উপভোগ করি</string>

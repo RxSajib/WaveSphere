@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="hi_there">नमस्ते!</string>
+    <string name="help_support_details">सहायता चाहिए? हम आपके लिए यहाँ हैं। उत्तर खोजें या हमसे संपर्क करें।</string>
+    <string name="popular_topics">लोकप्रिय विषय</string>
+
+    <string name="still_need_help">क्या अभी भी सहायता चाहिए?</string>
+    <string name="still_need_help_details">हम आपकी सहायता के लिए 24/7 यहाँ हैं</string>
+
+    <string name="playback_issues">प्लेबैक समस्याएं</string>
+    <string name="playback_issues_details">बफरिंग, प्लेबैक या स्ट्रीमिंग समस्याओं को ठीक करें</string>
+    <string name="premium_and_subscriptions">प्रीमियम और सदस्यताएँ</string>
+    <string name="premium_and_subscriptions_details">अपने प्रीमियम प्लान और भुगतान का प्रबंधन करें</string>
+    <string name="record_music">संगीत रिकॉर्ड करें</string>
+    <string name="record_music_details">अपने पसंदीदा संगीत को रिकॉर्ड और साझा करें</string>
+    <string name="privacy_and_security">गोपनीयता और सुरक्षा</string>
+    <string name="privacy_and_security_details">अपनी गोपनीयता और डेटा के बारे में जानें</string>
+
+    <string name="need_more_help">और सहायता चाहिए?</string>
+    <string name="contact_support">सहायता टीम से संपर्क करें</string>
+    <string name="contact_support_details">सहायता प्राप्त करने के लिए हमारी सहायता टीम के साथ चैट करें।</string>
+    <string name="email_us">हमें ईमेल करें</string>
+    <string name="email_us_details">हम आमतौर पर 24 घंटों के भीतर जवाब देते हैं</string>
+    <string name="chat_now">अभी चैट करें</string>
+    <string name="send_email">ईमेल भेजें</string>
+
     <string name="hint_choose_languages">अपनी पसंदीदा भाषाएँ चुनें। परिवर्तन लागू करने के लिए ऐप पुनः प्रारंभ होगा।</string>
     <string name="see_all">सभी देखें</string>
     <string name="home_header_subtitle">आइए रेडियो की दुनिया का आनंद लें</string>

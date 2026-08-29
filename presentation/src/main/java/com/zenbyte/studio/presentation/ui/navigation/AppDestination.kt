@@ -38,6 +38,9 @@ sealed class AppDestination : NavKey {
     {
 
         @Serializable
+        data object HelpAndSupport : AppDestination()
+
+        @Serializable
         data object Languages : AppDestination()
 
         @Serializable

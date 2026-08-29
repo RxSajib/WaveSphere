@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="hi_there">Привет!</string>
+    <string name="help_support_details">Нужна помощь? Мы здесь для вас. Найдите ответы или свяжитесь с нами.</string>
+    <string name="popular_topics">Популярные темы</string>
+
+    <string name="still_need_help">Все еще нужна помощь?</string>
+    <string name="still_need_help_details">Мы здесь 24/7, чтобы поддержать вас</string>
+
+    <string name="playback_issues">Проблемы с воспроизведением</string>
+    <string name="playback_issues_details">Устранение проблем с буферизацией, воспроизведением или потоковой передачей</string>
+    <string name="premium_and_subscriptions">Премиум и подписки</string>
+    <string name="premium_and_subscriptions_details">Управление премиум-планом и оплатой</string>
+    <string name="record_music">Запись музыки</string>
+    <string name="record_music_details">Записывайте и делитесь своей любимой музыкой</string>
+    <string name="privacy_and_security">Конфиденциальность и безопасность</string>
+    <string name="privacy_and_security_details">Узнайте о своей конфиденциальности и данных</string>
+
+    <string name="need_more_help">Нужна дополнительная помощь?</string>
+    <string name="contact_support">Связаться с поддержкой</string>
+    <string name="contact_support_details">Чат с нашей службой поддержки для получения помощи.</string>
+    <string name="email_us">Напишите нам</string>
+    <string name="email_us_details">Мы обычно отвечаем в течение 24 часов</string>
+    <string name="chat_now">Чат сейчас</string>
+    <string name="send_email">Отправить письмо</string>
     <string name="hint_choose_languages">Выберите предпочитаемые языки. Для применения изменений приложение будет перезапущено.</string>
     <string name="see_all">Показать все</string>
     <string name="home_header_subtitle">Давайте наслаждаться миром радио</string>

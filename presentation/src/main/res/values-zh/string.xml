@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="hi_there">你好！</string>
+    <string name="help_support_details">需要帮助吗？我们就在这里。查找答案或联系我们。</string>
+    <string name="popular_topics">热门话题</string>
+
+    <string name="still_need_help">还需要帮助吗？</string>
+    <string name="still_need_help_details">我们全天候为您提供支持</string>
+
+    <string name="playback_issues">播放问题</string>
+    <string name="playback_issues_details">解决缓冲、播放或串流问题</string>
+    <string name="premium_and_subscriptions">高级版与订阅</string>
+    <string name="premium_and_subscriptions_details">管理您的高级方案和付款</string>
+    <string name="record_music">录制音乐</string>
+    <string name="record_music_details">录制并分享您喜欢的音乐</string>
+    <string name="privacy_and_security">隐私与安全</string>
+    <string name="privacy_and_security_details">了解您的隐私和数据</string>
+
+    <string name="need_more_help">需要更多帮助吗？</string>
+    <string name="contact_support">联系支持</string>
+    <string name="contact_support_details">与我们的支持团队聊天以获取帮助。</string>
+    <string name="email_us">给我们发邮件</string>
+    <string name="email_us_details">我们通常在 24 小时内回复</string>
+    <string name="chat_now">立即聊天</string>
+    <string name="send_email">发送邮件</string>
     <string name="hint_choose_languages">选择您偏好的语言。应用将重新启动以应用更改。</string>
     <string name="see_all">查看全部</string>
     <string name="home_header_subtitle">一起畅享广播世界</string>

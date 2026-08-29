@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="hi_there">שלום!</string>
+    <string name="help_support_details">זקוק לעזרה? אנחנו כאן בשבילך. מצא תשובות או צור איתנו קשר.</string>
+    <string name="popular_topics">נושאים פופולריים</string>
+
+    <string name="still_need_help">עדיין זקוק לעזרה?</string>
+    <string name="still_need_help_details">אנחנו כאן בשבילך 24/7 כדי לתמוך בך</string>
+
+    <string name="playback_issues">בעיות הפעלה</string>
+    <string name="playback_issues_details">תקן בעיות טעינה, הפעלה או הזרמה</string>
+    <string name="premium_and_subscriptions">פרימיום ומנויים</string>
+    <string name="premium_and_subscriptions_details">נהל את תוכנית הפרימיום והתשלומים שלך</string>
+    <string name="record_music">הקלט מוזיקה</string>
+    <string name="record_music_details">הקלט ושתף את המוזיקה האהובה עליך</string>
+    <string name="privacy_and_security">פרטיות ואבטחה</string>
+    <string name="privacy_and_security_details">למד על הפרטיות והנתונים שלך</string>
+
+    <string name="need_more_help">זקוק לעזרה נוספת?</string>
+    <string name="contact_support">צור קשר עם התמיכה</string>
+    <string name="contact_support_details">צ\'אט עם צוות התמיכה שלנו לקבלת עזרה.</string>
+    <string name="email_us">שלח לנו אימייל</string>
+    <string name="email_us_details">בדרך כלל אנו עונים תוך 24 שעות</string>
+    <string name="chat_now">צ\'אט עכשיו</string>
+    <string name="send_email">שלח אימייל</string>
     <string name="hint_choose_languages">בחר את השפות המועדפות עליך. האפליקציה תופעל מחדש כדי להחיל את השינויים.</string>
     <string name="see_all">הצג הכול</string>
     <string name="home_header_subtitle">בואו ליהנות מעולם הרדיו</string>

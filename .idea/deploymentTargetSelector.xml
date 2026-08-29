@@ -79,9 +79,9 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="ChooseLanguagesSheetPreview">
+      <SelectionState runConfigName="run">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-08-05T15:46:05.921394900Z">
+        <DropdownSelection timestamp="2026-08-10T14:39:43.045311Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Asus\.android\avd\Pixel_4.avd" />
@@ -90,12 +90,12 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="run">
+      <SelectionState runConfigName="HelpPopularTopicGroupPreview">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-08-10T14:39:43.045311Z">
+        <DropdownSelection timestamp="2026-08-28T10:57:59.343377500Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Asus\.android\avd\Pixel_4.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=1407125531100233" />
             </handle>
           </Target>
         </DropdownSelection>

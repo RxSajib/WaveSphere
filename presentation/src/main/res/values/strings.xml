@@ -1,6 +1,30 @@
 <resources>
     <string name="app_name" translatable="false">WaveSphere</string>
 
+    <string name="hi_there">Hi there!</string>
+    <string name="help_support_details">Need help? We\'re here for you. Find answers or reach out to us.</string>
+    <string name="popular_topics">Popular Topics</string>
+
+    <string name="still_need_help">Still need help?</string>
+    <string name="still_need_help_details">We\'re here 24/7 to support you</string>
+
+    <string name="need_more_help">Need more help?</string>
+    <string name="contact_support">Contact Support</string>
+    <string name="contact_support_details">Chat with our support team to get help.</string>
+    <string name="email_us">Email Us</string>
+    <string name="email_us_details">We usually reply within 24 hours</string>
+    <string name="chat_now">Chat Now</string>
+    <string name="send_email">Send Email</string>
+
+    <string name="playback_issues">Playback Issues</string>
+    <string name="playback_issues_details">Fix buffering, playback or streaming issues</string>
+    <string name="premium_and_subscriptions">Premium &amp; Subscriptions</string>
+    <string name="premium_and_subscriptions_details">Manage your premium plan and payment</string>
+    <string name="record_music">Record Music</string>
+    <string name="record_music_details">Record and share your favorite music</string>
+    <string name="privacy_and_security">Privacy &amp; Security</string>
+    <string name="privacy_and_security_details">Learn about your privacy and data</string>
+
     <string name="hint_choose_languages">Choose your preferred languages The App will restart to apply changes</string>
     <string name="see_all">See All</string>
     <string name="home_header_subtitle">Let\'s enjoy the world of radio</string>
