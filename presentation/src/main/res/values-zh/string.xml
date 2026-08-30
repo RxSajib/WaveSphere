@@ -16,6 +16,10 @@
     <string name="record_music_details">录制并分享您喜欢的音乐</string>
     <string name="privacy_and_security">隐私与安全</string>
     <string name="privacy_and_security_details">了解您的隐私和数据</string>
+    <string name="playback_issue_details">• 检查您的互联网连接。 • 在 Wi-Fi 和移动数据之间切换。 • 确保您的连接稳定。 • 停止电台并再次播放。 • 等待几秒钟让流媒体加载。 • 尝试播放另一个广播电台。 • 检查该电台目前是否在线。 • 关闭并重新打开应用程序。 • 保持应用程序更新。 • 如果问题仍然存在，请联系支持人员。</string>
+    <string name="premium_and_subscription_issue_details">• 检查您的互联网连接。 • 确保您登录了正确的帐户。 • 在应用程序中检查您的订阅状态。 • 购买 Premium 后重启应用程序。 • 等待片刻以激活您的购买。 • 如果未显示 Premium，请使用**恢复购买**。 • 确保您使用购买时使用的同一个 Google 帐户。 • 将应用程序更新到最新版本。 • 如果付款已完成，请避免再次购买。 • 如果问题仍然存在，请联系支持人员。</string>
+    <string name="record_music_issue_details">• 电台未播放或不可用。 • 音乐一直在缓冲或停止。 • 音频延迟或中断。 • 音质差或失真。 • 电台播放时没有声音。 • 音乐意外停止。 • 显示错误的歌曲或电台信息。 • 尝试另一个电台以检查问题是否是特定电台的问题。 • 重启应用程序并重试。 • 如果问题仍然存在，请联系支持人员。</string>
+    <string name="privacy_and_security_issue_details">• 了解您的个人数据是如何处理的。 • 了解应用程序收集哪些信息。 • 了解您的数据是如何存储和保护的。 • 了解应用程序权限及其原因。 • 了解您的信息是如何使用的。 • 了解如何管理您的隐私设置。 • 查看我们的隐私政策了解更多详情。 • 您的信息绝不会出售给第三方。 • 保持应用程序更新以获取最新的安全改进。 • 如果您有隐私疑虑，请联系支持人员。</string>
 
     <string name="need_more_help">需要更多帮助吗？</string>
     <string name="contact_support">联系支持</string>

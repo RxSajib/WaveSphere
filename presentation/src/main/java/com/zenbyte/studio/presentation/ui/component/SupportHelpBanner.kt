@@ -39,7 +39,6 @@ fun SupportHelpBanner() {
                 )
                 .clip(shape = RoundedCornerShape(10.dp))
                 .background(color = buttonColor.copy(alpha = 0.1f))
-
                 .padding(7.dp)
         ) {
             Image(

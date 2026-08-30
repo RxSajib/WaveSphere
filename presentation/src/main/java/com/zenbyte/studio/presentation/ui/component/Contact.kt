@@ -28,7 +28,7 @@ import com.zenbyte.studio.presentation.ui.theme.buttonColor
 import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
 @Composable
-fun Contact(icon: Painter, title: String, details: String, actionButtonTitle: String) {
+fun Contact(icon: Painter, title: String, details: String, actionButtonTitle: String, onClickAction: () -> Unit) {
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Box(
             modifier = Modifier
@@ -74,7 +74,7 @@ fun Contact(icon: Painter, title: String, details: String, actionButtonTitle: St
                     color = buttonColor,
                     shape = RoundedCornerShape(10.dp)
                 ).clip(shape = RoundedCornerShape(10.dp)).debounceClickable {
-
+                    onClickAction.invoke()
                 }
                 .padding(start = 10.dp, end = 10.dp, bottom = 5.dp, top = 5.dp)
 
@@ -98,5 +98,5 @@ fun ContactPreview() {
         title = "Playback Issue",
         details = "Fix buffering, playback or streaming issues",
         actionButtonTitle = "Send Email"
-    )
+    ){}
 }

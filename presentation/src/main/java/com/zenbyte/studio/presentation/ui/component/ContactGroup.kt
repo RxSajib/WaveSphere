@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.presentation.R
 
 @Composable
-fun ContactGroup() {
+fun ContactGroup(onClickContact: () -> Unit, onClickEmail: () -> Unit) {
     Column(modifier = Modifier.fillMaxWidth().border(
         width = 0.5.dp,
         color = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.1f),
@@ -26,19 +26,26 @@ fun ContactGroup() {
             title = stringResource(R.string.contact_support),
             details = stringResource(R.string.contact_support_details),
             actionButtonTitle = stringResource(R.string.chat_now)
-        )
+        ){
+            onClickContact.invoke()
+        }
         HeightGap(height = 10.dp)
         Contact(
             icon = painterResource(R.drawable.icon_email),
             title = stringResource(R.string.email_us),
             details = stringResource(R.string.email_us_details),
             actionButtonTitle = stringResource(R.string.send_email)
-        )
+        ){
+            onClickEmail.invoke()
+        }
     }
 }
 
 @Composable
 @Preview
 fun ContactGroupPreview() {
-    ContactGroup()
+    ContactGroup(
+        onClickContact = {},
+        onClickEmail = {}
+    )
 }

@@ -26,25 +26,29 @@ fun HelpPopularTopicGroup() {
         SupportPopularTopic(
             icon = painterResource(R.drawable.music_svgrepo_com),
             title = stringResource(R.string.playback_issues),
-            details = stringResource(R.string.playback_issues_details)
+            details = stringResource(R.string.playback_issues_details),
+            issueDetails = stringResource(R.string.playback_issue_details)
         )
         HeightGap(height = 10.dp)
         SupportPopularTopic(
             icon = painterResource(R.drawable.icon_crown),
             title = stringResource(R.string.premium_and_subscriptions),
-            details = stringResource(R.string.premium_and_subscriptions_details)
+            details = stringResource(R.string.premium_and_subscriptions_details),
+            issueDetails = stringResource(R.string.premium_and_subscription_issue_details)
         )
         HeightGap(height = 10.dp)
         SupportPopularTopic(
             icon = painterResource(R.drawable.recording_svgrepo_com),
             title = stringResource(R.string.record_music),
-            details = stringResource(R.string.record_music_details)
+            details = stringResource(R.string.record_music_details),
+            issueDetails = stringResource(R.string.record_music_issue_details)
         )
         HeightGap(height = 10.dp)
         SupportPopularTopic(
             icon = painterResource(R.drawable.icon_privacy),
             title = stringResource(R.string.privacy_and_security),
-            details = stringResource(R.string.privacy_and_security_details)
+            details = stringResource(R.string.privacy_and_security_details),
+            issueDetails = stringResource(R.string.privacy_and_security_issue_details)
         )
         HeightGap(height = 10.dp)
     }
