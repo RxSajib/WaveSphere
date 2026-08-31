@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -26,10 +27,14 @@ import com.zenbyte.studio.presentation.ui.component.HelpSupportHeader
 import com.zenbyte.studio.presentation.ui.component.MyCustomAppBar
 import com.zenbyte.studio.presentation.ui.component.SupportHelpBanner
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.viewmodel.utils.Extras.emailIntent
+import com.zenbyte.studio.presentation.viewmodel.utils.Extras.messageWhatsApp
 import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
 @Composable
 fun HelpAndSupportScreen() {
+
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             MyCustomAppBar(
@@ -71,15 +76,21 @@ fun HelpAndSupportScreen() {
             )
             HeightGap(height = 10.dp)
             ContactGroup(
-                onClickContact = {},
-                onClickEmail = {}
+                onClickContact = {
+                    context.messageWhatsApp()
+                },
+                onClickEmail = {
+                    context.emailIntent()
+                }
             )
             HeightGap(height = 10.dp)
             Box(modifier = Modifier.fillMaxWidth().border(
                 width = 0.5.dp,
                 color = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.1f),
                 shape = RoundedCornerShape(10.dp)
-            ).clip(shape = RoundedCornerShape(10.dp)).debounceClickable{}.padding(16.dp)) {
+            ).clip(shape = RoundedCornerShape(10.dp)).debounceClickable{
+                context.messageWhatsApp()
+            }.padding(16.dp)) {
                 SupportHelpBanner()
             }
 

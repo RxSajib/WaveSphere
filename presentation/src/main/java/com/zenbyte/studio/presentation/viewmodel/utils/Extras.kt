@@ -1,9 +1,13 @@
 package com.zenbyte.studio.presentation.viewmodel.utils
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.telephony.TelephonyManager
+import android.widget.Toast
 import androidx.compose.ui.graphics.Color
 import com.zenbyte.studio.presentation.BuildConfig
 import com.zenbyte.studio.presentation.R
@@ -24,9 +28,12 @@ import com.zenbyte.studio.presentation.ui.theme.Rock
 import com.zenbyte.studio.presentation.ui.theme.World
 import com.zenbyte.studio.presentation.viewmodel.utils.enum.ChannelLanguages
 import com.zenbyte.studio.presentation.viewmodel.utils.enum.GenresEnum
+import androidx.core.net.toUri
 
 object Extras {
 
+    const val SUPPORT_EMAIL= "sajibroy206@gmail.com"
+    const val SUPPORT_NUMBER = "+8801771330378"
     fun Context.getAppVersion() : String {
         return try {
             val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -157,6 +164,35 @@ object Extras {
             GenresEnum.Blues -> Blues
             GenresEnum.Folk -> Folk
             GenresEnum.World -> World
+        }
+    }
+
+    fun Context.showToastMessage(message : String){
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    fun Context.emailIntent(){
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = "mailto:".toUri()
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(SUPPORT_EMAIL))
+            putExtra(Intent.EXTRA_SUBJECT, "Help & Support")
+            putExtra(Intent.EXTRA_TEXT, "Hi Support Team,\n\nI need help with...")
+        }
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            showToastMessage("No email app found")
+        }
+    }
+
+    fun Context.messageWhatsApp(){
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = "https://wa.me/$SUPPORT_NUMBER?text=${Uri.encode("Hi, I need help with WaveSphere Radio.")}".toUri()
+        }
+        try {
+            startActivity(intent)
+        }catch (e : Exception){
+            showToastMessage("No WhatsApp app found")
         }
     }
 
