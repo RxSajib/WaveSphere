@@ -51,7 +51,13 @@ fun PlayerScreen(rootBackStack: NavBackStack<NavKey>) {
             onClickEqualizer = {},
             onClickSleepTime = {},
             isDarkModeCheck = darkModeToggle,
-            onClickPlayBackSetting = {},
+            onClickPlayBackSetting = {
+                rootBackStack.add(
+                    AppDestination.Dest(
+                        AppDestination.Dest.PlaybackSetting::class.simpleName ?: ""
+                    )
+                )
+            },
             isDataSaverCheck = dataSaverToggle,
             isDataSaverChanged = { checked ->
                 viewModel.onDataSaverToggle(checked)

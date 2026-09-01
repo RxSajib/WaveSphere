@@ -40,6 +40,7 @@ import com.zenbyte.studio.presentation.ui.screen.ChannelByGenresScreen
 import com.zenbyte.studio.presentation.ui.screen.ChannelListByLanguagesScreen
 import com.zenbyte.studio.presentation.ui.screen.HelpAndSupportScreen
 import com.zenbyte.studio.presentation.ui.screen.LanguagesListScreen
+import com.zenbyte.studio.presentation.ui.screen.PlaybackSettingScreen
 import com.zenbyte.studio.presentation.ui.screen.PlayerViewScreen
 import com.zenbyte.studio.presentation.ui.screen.PopularStationsScreen
 import com.zenbyte.studio.presentation.ui.screen.PremiumScreen
@@ -63,6 +64,10 @@ fun DestNavigation(
                 subclass(
                     AppDestination.Dest.ChannelByCountry::class,
                     AppDestination.Dest.ChannelByCountry.serializer()
+                )
+                subclass(
+                    AppDestination.Dest.PlaybackSetting::class,
+                    AppDestination.Dest.PlaybackSetting.serializer()
                 )
                 subclass(
                     AppDestination.Dest.ChannelByGenres::class,
@@ -134,6 +139,7 @@ fun DestNavigation(
         startDest.firstDestName == AppDestination.Dest.Languages::class.simpleName -> AppDestination.Dest.Languages
         startDest.firstDestName == AppDestination.Dest.MyCountryList::class.simpleName -> AppDestination.Dest.MyCountryList
         startDest.firstDestName == AppDestination.Dest.Genres::class.simpleName -> AppDestination.Dest.Genres
+        startDest.firstDestName == AppDestination.Dest.PlaybackSetting::class.simpleName -> AppDestination.Dest.PlaybackSetting
         else -> throw Exception("Invalid destination")
     }
 
@@ -207,6 +213,9 @@ fun DestNavigation(
                         }
                         entry<AppDestination.Dest.HelpAndSupport> {
                             HelpAndSupportScreen()
+                        }
+                        entry<AppDestination.Dest.PlaybackSetting> {
+                            PlaybackSettingScreen()
                         }
                     },
 

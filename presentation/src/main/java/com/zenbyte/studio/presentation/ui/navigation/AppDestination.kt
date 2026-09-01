@@ -38,6 +38,9 @@ sealed class AppDestination : NavKey {
     {
 
         @Serializable
+        data object PlaybackSetting : AppDestination()
+
+        @Serializable
         data object HelpAndSupport : AppDestination()
 
         @Serializable
