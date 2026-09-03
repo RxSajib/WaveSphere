@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="audio_recommended">自动 (推荐)</string>
+    <string name="audio_recommended_details">自动调整音质</string>
+    <string name="high">高</string>
+    <string name="high_details">最佳音质，消耗更多流量</string>
+    <string name="medium">中</string>
+    <string name="medium_details">平衡音质和流量消耗</string>
+    <string name="low">低</string>
+    <string name="low_details">消耗更少流量</string>
+    <string name="kbps">kbps</string>
+
+    <string name="audio_quality">音频质量</string>
+    <string name="choose_streaming_quality">选择流媒体质量</string>
 
     <string name="hi_there">你好！</string>
     <string name="help_support_details">需要帮助吗？我们就在这里。查找答案或联系我们。</string>

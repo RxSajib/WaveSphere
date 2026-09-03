@@ -29,6 +29,7 @@ import com.zenbyte.studio.presentation.ui.theme.World
 import com.zenbyte.studio.presentation.viewmodel.utils.enum.ChannelLanguages
 import com.zenbyte.studio.presentation.viewmodel.utils.enum.GenresEnum
 import androidx.core.net.toUri
+import com.zenbyte.studio.presentation.viewmodel.utils.enum.AudioBitRate
 
 object Extras {
 
@@ -164,6 +165,23 @@ object Extras {
             GenresEnum.Blues -> Blues
             GenresEnum.Folk -> Folk
             GenresEnum.World -> World
+        }
+    }
+
+    fun Context.getAudioRateTitleByBitRate(bitRate: AudioBitRate) : String{
+        return when(bitRate){
+            AudioBitRate.DEFAULT ->  getString(R.string.audio_recommended)
+            AudioBitRate.HIGH ->  getString(R.string.high)
+            AudioBitRate.MEDIUM ->  getString(R.string.medium)
+            AudioBitRate.LOW ->  getString(R.string.low)
+        }
+    }
+    fun Context.getAudioRateDetailsByBitRate(bitRate: AudioBitRate) : String{
+        return when(bitRate){
+            AudioBitRate.DEFAULT ->  getString(R.string.audio_recommended_details)
+            AudioBitRate.HIGH ->  getString(R.string.high_details)
+            AudioBitRate.MEDIUM ->  getString(R.string.medium_details)
+            AudioBitRate.LOW ->  getString(R.string.low_details)
         }
     }
 

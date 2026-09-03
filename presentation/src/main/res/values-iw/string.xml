@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="audio_recommended">אוטומטי (מומלץ)</string>
+    <string name="audio_recommended_details">התאם את האיכות באופן אוטומטי</string>
+    <string name="high">גבוהה</string>
+    <string name="high_details">האיכות הטובה ביותר, צורך יותר נתונים</string>
+    <string name="medium">בינונית</string>
+    <string name="medium_details">איזון בין איכות לשימוש בנתונים</string>
+    <string name="low">נמוכה</string>
+    <string name="low_details">צורך פחות נתונים</string>
+    <string name="kbps">kbps</string>
+
+    <string name="audio_quality">איכות שמע</string>
+    <string name="choose_streaming_quality">בחר איכות סטרימינג</string>
 
     <string name="hi_there">שלום!</string>
     <string name="help_support_details">זקוק לעזרה? אנחנו כאן בשבילך. מצא תשובות או צור איתנו קשר.</string>

@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="audio_recommended">অটো (প্রস্তাবিত)</string>
+    <string name="audio_recommended_details">স্বয়ংক্রিয়ভাবে মান সমন্বয় করুন</string>
+    <string name="high">হাই (উচ্চ)</string>
+    <string name="high_details">সেরা মান, বেশি ডেটা ব্যবহার করে</string>
+    <string name="medium">মিডিয়াম (মাঝারি)</string>
+    <string name="medium_details">গুণমান এবং ডেটা ব্যবহারের ভারসাম্য বজায় রাখুন</string>
+    <string name="low">লো (নিম্ন)</string>
+    <string name="low_details">কম ডেটা খরচ করে</string>
+    <string name="kbps">kbps</string>
 
     <string name="hi_there">ওহে!</string>
     <string name="help_support_details">সাহায্য প্রয়োজন? আমরা আপনার জন্য এখানে আছি। উত্তর খুঁজুন অথবা আমাদের সাথে যোগাযোগ করুন।</string>
     <string name="popular_topics">জনপ্রিয় বিষয়সমূহ</string>
+
+    <string name="audio_quality">অডিওর মান</string>
+    <string name="choose_streaming_quality">স্ট্রিমিংয়ের মান নির্বাচন করুন</string>
 
     <string name="still_need_help">এখনও সাহায্য প্রয়োজন?</string>
     <string name="still_need_help_details">আপনাকে সাহায্য করার জন্য আমরা ২৪/৭ এখানে আছি</string>

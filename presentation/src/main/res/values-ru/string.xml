@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="audio_recommended">Авто (рекомендуется)</string>
+    <string name="audio_recommended_details">Автоматическая настройка качества</string>
+    <string name="high">Высокое</string>
+    <string name="high_details">Лучшее качество, потребляет больше данных</string>
+    <string name="medium">Среднее</string>
+    <string name="medium_details">Баланс качества и использования данных</string>
+    <string name="low">Низкое</string>
+    <string name="low_details">Потребляет меньше данных</string>
+    <string name="kbps">кбит/с</string>
+
+    <string name="audio_quality">Качество аудио</string>
+    <string name="choose_streaming_quality">Выберите качество потоковой передачи</string>
 
     <string name="hi_there">Привет!</string>
     <string name="help_support_details">Нужна помощь? Мы здесь для вас. Найдите ответы или свяжитесь с нами.</string>

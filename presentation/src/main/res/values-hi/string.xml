@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="audio_recommended">ऑटो (अनुशंसित)</string>
+    <string name="audio_recommended_details">गुणवत्ता को स्वचालित रूप से समायोजित करें</string>
+    <string name="high">उच्च</string>
+    <string name="high_details">सर्वोत्तम गुणवत्ता, अधिक डेटा का उपयोग करता है</string>
+    <string name="medium">मध्यम</string>
+    <string name="medium_details">गुणवत्ता और डेटा उपयोग को संतुलित करें</string>
+    <string name="low">निम्न</string>
+    <string name="low_details">कम डेटा की खपत करता है</string>
+    <string name="kbps">kbps</string>
+    <string name="audio_quality">ऑडियो गुणवत्ता</string>
+    <string name="choose_streaming_quality">स्ट्रीमिंग गुणवत्ता चुनें</string>
     <string name="hi_there">नमस्ते!</string>
     <string name="help_support_details">सहायता चाहिए? हम आपके लिए यहाँ हैं। उत्तर खोजें या हमसे संपर्क करें।</string>
     <string name="popular_topics">लोकप्रिय विषय</string>
