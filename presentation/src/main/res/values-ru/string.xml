@@ -13,6 +13,9 @@
     <string name="audio_quality">Качество аудио</string>
     <string name="choose_streaming_quality">Выберите качество потоковой передачи</string>
 
+    <string name="crossfade">Кроссфейд</string>
+    <string name="smooth_transition_between_songs">Плавный переход между песнями</string>
+
     <string name="hi_there">Привет!</string>
     <string name="help_support_details">Нужна помощь? Мы здесь для вас. Найдите ответы или свяжитесь с нами.</string>
     <string name="popular_topics">Популярные темы</string>

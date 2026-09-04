@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">WaveSphere</string>
-    
-    <string name="audio_quality">Audio Quality</string>
-    <string name="choose_streaming_quality">Choose streaming quality</string>
 
     <string name="hi_there">Hi there!</string>
     <string name="help_support_details">Need help? We\'re here for you. Find answers or reach out to us.</string>

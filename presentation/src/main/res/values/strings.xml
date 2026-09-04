@@ -3,7 +3,10 @@
     
     <string name="audio_quality">Audio Quality</string>
     <string name="choose_streaming_quality">Choose streaming quality</string>
-    
+
+    <string name="crossfade">Crossfade</string>
+    <string name="smooth_transition_between_songs">Smooth transition between songs</string>
+
     <string name="audio_recommended">Auto (Recommended)</string>
     <string name="audio_recommended_details">Adjust quality automatically</string>"
     <string name="high">High</string>

@@ -17,6 +17,9 @@
     <string name="audio_quality">অডিওর মান</string>
     <string name="choose_streaming_quality">স্ট্রিমিংয়ের মান নির্বাচন করুন</string>
 
+    <string name="crossfade">ক্রসফেড</string>
+    <string name="smooth_transition_between_songs">গানগুলোর মধ্যে মসৃণ রূপান্তর</string>
+
     <string name="still_need_help">এখনও সাহায্য প্রয়োজন?</string>
     <string name="still_need_help_details">আপনাকে সাহায্য করার জন্য আমরা ২৪/৭ এখানে আছি</string>
 

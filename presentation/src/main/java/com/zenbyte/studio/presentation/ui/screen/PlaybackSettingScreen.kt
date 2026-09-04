@@ -11,24 +11,39 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.component.AudioQualityGroup
+import com.zenbyte.studio.presentation.ui.component.Crossfade
+import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.presentation.ui.component.MyCustomAppBar
+import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.presentation.viewmodel.playbackSetting.PlaybackSettingViewModel
 
 @Composable
 fun PlaybackSettingScreen() {
     val context = LocalContext.current
-    val viewModel : PlaybackSettingViewModel = hiltViewModel()
-    Surface(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.surface)) {
+    val viewModel: PlaybackSettingViewModel = hiltViewModel()
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.surface)
+    ) {
         Scaffold(
             topBar = {
                 MyCustomAppBar(title = stringResource(R.string.playback_setting)) { }
             }
         ) { innerPadding ->
-            Column(modifier = Modifier.fillMaxSize().padding(top = innerPadding.calculateTopPadding())) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = innerPadding.calculateTopPadding()).padding(16.dp),
+
+            ) {
                 AudioQualityGroup(context = context)
+                HeightGap(height = 10.dp)
+                Crossfade()
             }
         }
     }

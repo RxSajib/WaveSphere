@@ -34,7 +34,7 @@ fun AudioQualityItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(5.dp), verticalAlignment = Alignment.CenterVertically
+        , verticalAlignment = Alignment.CenterVertically
     ) {
         RadioButton(
             colors = RadioButtonDefaults.colors(selectedColor = buttonColor),
@@ -79,7 +79,7 @@ fun AudioQualityItem(
         } ?: Image(
             painter = painterResource(R.drawable.applogo),
             contentDescription = null,
-            modifier = Modifier.size(30.dp),
+            modifier = Modifier.size(35.dp),
             colorFilter = ColorFilter.tint(color = buttonColor)
         )
     }

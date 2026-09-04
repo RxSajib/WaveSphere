@@ -11,6 +11,9 @@
     <string name="kbps">kbps</string>
     <string name="audio_quality">ऑडियो गुणवत्ता</string>
     <string name="choose_streaming_quality">स्ट्रीमिंग गुणवत्ता चुनें</string>
+
+    <string name="crossfade">क्रॉसफ़ेड</string>
+    <string name="smooth_transition_between_songs">गानों के बीच सहज संक्रमण</string>
     <string name="hi_there">नमस्ते!</string>
     <string name="help_support_details">सहायता चाहिए? हम आपके लिए यहाँ हैं। उत्तर खोजें या हमसे संपर्क करें।</string>
     <string name="popular_topics">लोकप्रिय विषय</string>

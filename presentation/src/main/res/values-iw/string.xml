@@ -13,6 +13,9 @@
     <string name="audio_quality">איכות שמע</string>
     <string name="choose_streaming_quality">בחר איכות סטרימינג</string>
 
+    <string name="crossfade">קרוספייד</string>
+    <string name="smooth_transition_between_songs">מעבר חלק בין שירים</string>
+
     <string name="hi_there">שלום!</string>
     <string name="help_support_details">זקוק לעזרה? אנחנו כאן בשבילך. מצא תשובות או צור איתנו קשר.</string>
     <string name="popular_topics">נושאים פופולריים</string>
