@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="live_stream_options">লাইভ স্ট্রিম অপশন</string>
+    <string name="auto_reconnect">অটো রিকানেক্ট</string>
+    <string name="automatically_reconnect_if_stream_lost">স্ট্রিম বন্ধ হয়ে গেলে স্বয়ংক্রিয়ভাবে পুনরায় সংযোগ করুন</string>
+    <string name="continue_in_background">ব্যাকগ্রাউন্ডে চালু রাখুন</string>
+    <string name="keep_playing_when_app_is_in_background">অ্যাপটি ব্যাকগ্রাউন্ডে থাকলেও গান চালানো চালিয়ে যান</string>
+    <string name="show_live_indicator">লাইভ ইন্ডিকেটর দেখান</string>
+    <string name="display_live_badge_on_live_stations">লাইভ স্টেশনগুলোতে লাইভ ব্যাজ প্রদর্শন করুন</string>
+    <string name="buffering_timeout">বাফারিং টাইমআউট</string>
+    <string name="stop_playback_if_buffering_take_too_long">বাফারিং খুব বেশি সময় নিলে প্লেব্যাক বন্ধ করুন</string>
     <string name="audio_recommended">অটো (প্রস্তাবিত)</string>
     <string name="audio_recommended_details">স্বয়ংক্রিয়ভাবে মান সমন্বয় করুন</string>
     <string name="high">হাই (উচ্চ)</string>

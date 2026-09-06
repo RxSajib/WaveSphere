@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="live_stream_options">लाइव स्ट्रीम विकल्प</string>
+    <string name="auto_reconnect">ऑटो रिकनेक्ट</string>
+    <string name="automatically_reconnect_if_stream_lost">स्ट्रीम खो जाने पर स्वचालित रूप से पुनरारंभ करें</string>
+    <string name="continue_in_background">बैकग्राउंड में जारी रखें</string>
+    <string name="keep_playing_when_app_is_in_background">ऐप बैकग्राउंड में होने पर भी बजाना जारी रखें</string>
+    <string name="show_live_indicator">लाइव संकेतक दिखाएं</string>
+    <string name="display_live_badge_on_live_stations">लाइव स्टेशनों पर लाइव बैज प्रदर्शित करें</string>
+    <string name="buffering_timeout">बफरिंग टाइमआउट</string>
+    <string name="stop_playback_if_buffering_take_too_long">यदि बफरिंग में बहुत अधिक समय लगता है तो प्लेबैक बंद करें</string>
     <string name="audio_recommended">ऑटो (अनुशंसित)</string>
     <string name="audio_recommended_details">गुणवत्ता को स्वचालित रूप से समायोजित करें</string>
     <string name="high">उच्च</string>

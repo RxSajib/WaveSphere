@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -17,6 +19,7 @@ import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.component.AudioQualityGroup
 import com.zenbyte.studio.presentation.ui.component.Crossfade
 import com.zenbyte.studio.presentation.ui.component.HeightGap
+import com.zenbyte.studio.presentation.ui.component.LiveStreamingGroup
 import com.zenbyte.studio.presentation.ui.component.MyCustomAppBar
 import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.presentation.viewmodel.playbackSetting.PlaybackSettingViewModel
@@ -38,12 +41,16 @@ fun PlaybackSettingScreen() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = innerPadding.calculateTopPadding()).padding(16.dp),
+                    .padding(top = innerPadding.calculateTopPadding())
+                    .verticalScroll(state = rememberScrollState())
+                    .padding(16.dp)
 
             ) {
                 AudioQualityGroup(context = context)
                 HeightGap(height = 10.dp)
                 Crossfade()
+                HeightGap(height = 10.dp)
+               LiveStreamingGroup()
             }
         }
     }

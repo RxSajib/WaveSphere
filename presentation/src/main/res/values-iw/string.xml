@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="live_stream_options">אפשרויות סטרימינג בשידור חי</string>
+    <string name="auto_reconnect">חיבור מחדש אוטומטי</string>
+    <string name="automatically_reconnect_if_stream_lost">חיבור מחדש אוטומטי אם השידור אבד</string>
+    <string name="continue_in_background">המשך ברקע</string>
+    <string name="keep_playing_when_app_is_in_background">המשך לנגן כשהאפליקציה ברקע</string>
+    <string name="show_live_indicator">הצג מחוון חי</string>
+    <string name="display_live_badge_on_live_stations">הצג תג LIVE בתחנות בשידור חי</string>
+    <string name="buffering_timeout">פסק זמן לטעינה</string>
+    <string name="stop_playback_if_buffering_take_too_long">הפסק את הניגון אם הטעינה נמשכת זמן רב מדי</string>
     <string name="audio_recommended">אוטומטי (מומלץ)</string>
     <string name="audio_recommended_details">התאם את האיכות באופן אוטומטי</string>
     <string name="high">גבוהה</string>

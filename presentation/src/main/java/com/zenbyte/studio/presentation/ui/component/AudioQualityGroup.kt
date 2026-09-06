@@ -28,7 +28,9 @@ fun AudioQualityGroup(context: Context) {
                 width = 0.5.dp,
                 color = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.1f),
                 shape = RoundedCornerShape(10.dp)
-            ).fillMaxWidth().padding(16.dp)
+            )
+            .fillMaxWidth()
+            .padding(16.dp)
 
     ) {
         Column(
@@ -53,11 +55,10 @@ fun AudioQualityGroup(context: Context) {
         }
         HeightGap(height = 10.dp)
 
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(context.getAudioQualityData()) { audioQuality ->
-                AudioQualityItem(audioQuality = audioQuality)
-            }
+        context.getAudioQualityData().forEach { audioQuality ->
+            AudioQualityItem(audioQuality = audioQuality)
         }
+
     }
 }
 

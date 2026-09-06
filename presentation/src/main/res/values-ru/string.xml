@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="live_stream_options">Опции прямого эфира</string>
+    <string name="auto_reconnect">Автопереподключение</string>
+    <string name="automatically_reconnect_if_stream_lost">Автоматически переподключаться при потере потока</string>
+    <string name="continue_in_background">Продолжать в фоновом режиме</string>
+    <string name="keep_playing_when_app_is_in_background">Продолжать воспроизведение, когда приложение в фоновом режиме</string>
+    <string name="show_live_indicator">Показывать индикатор прямого эфира</string>
+    <string name="display_live_badge_on_live_stations">Отображать значок LIVE на станциях прямого эфира</string>
+    <string name="buffering_timeout">Тайм-аут буферизации</string>
+    <string name="stop_playback_if_buffering_take_too_long">Остановить воспроизведение, если буферизация занимает слишком много времени</string>
     <string name="audio_recommended">Авто (рекомендуется)</string>
     <string name="audio_recommended_details">Автоматическая настройка качества</string>
     <string name="high">Высокое</string>

@@ -1,6 +1,9 @@
 package com.zenbyte.studio.presentation.viewmodel.playerView
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
@@ -34,6 +37,7 @@ class PlayerViewModel @Inject constructor(
     val mediaPlayControllerUseCase: MediaPlayControllerUseCase,
 ) : ViewModel() {
 
+    var showSleepTimerDialog by mutableStateOf(false)
 
     val currentChannel = mediaPlayControllerUseCase.playerController.currentChannel
     val isPlaying = mediaPlayControllerUseCase.playerController.isPlaying

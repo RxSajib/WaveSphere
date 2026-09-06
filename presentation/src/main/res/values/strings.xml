@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name" translatable="false">WaveSphere</string>
+    <string name="live_stream_options">Live Stream Options</string>
+    <string name="auto_reconnect">Auto Reconnect</string>
+    <string name="automatically_reconnect_if_stream_lost">Automatically reconnect if stream lost</string>
+    <string name="continue_in_background">Continue in Background</string>
+    <string name="keep_playing_when_app_is_in_background">Keep playing when app is in background</string>
+    <string name="show_live_indicator">Show Live indicator</string>
+    <string name="display_live_badge_on_live_stations">Display LIVE badge on live stations</string>
+    <string name="buffering_timeout">Buffering Timeout</string>
+    <string name="stop_playback_if_buffering_take_too_long">Stop playback if buffering takes too long</string>
     
     <string name="audio_quality">Audio Quality</string>
     <string name="choose_streaming_quality">Choose streaming quality</string>

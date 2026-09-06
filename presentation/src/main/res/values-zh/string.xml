@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="live_stream_options">直播流选项</string>
+    <string name="auto_reconnect">自动重连</string>
+    <string name="automatically_reconnect_if_stream_lost">流失后自动重新连接</string>
+    <string name="continue_in_background">在后台继续运行</string>
+    <string name="keep_playing_when_app_is_in_background">应用在后台时继续播放</string>
+    <string name="show_live_indicator">显示直播指示器</string>
+    <string name="display_live_badge_on_live_stations">在直播电台上显示 LIVE 徽章</string>
+    <string name="buffering_timeout">缓冲超时</string>
+    <string name="stop_playback_if_buffering_take_too_long">如果缓冲时间过长则停止播放</string>
     <string name="audio_recommended">自动 (推荐)</string>
     <string name="audio_recommended_details">自动调整音质</string>
     <string name="high">高</string>

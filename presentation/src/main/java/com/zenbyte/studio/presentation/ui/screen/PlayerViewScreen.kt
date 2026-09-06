@@ -34,6 +34,7 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import com.zenbyte.studio.presentation.R
+import com.zenbyte.studio.presentation.ui.bottomsheet.SleepTimerSheet
 import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.presentation.viewmodel.playerView.PlayerViewModel
@@ -197,7 +198,7 @@ fun PlayerViewScreen(
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.sleep_timer)
                 ){
-
+                    viewModel.showSleepTimerDialog = true
                 }
 
                 QuickAction(
@@ -270,6 +271,10 @@ fun PlayerViewScreen(
                 MusicController(icon = painterResource(R.drawable.next_svgrepo_com)) {
                     viewModel.nextPlayBack()
                 }
+            }
+
+            if(viewModel.showSleepTimerDialog){
+                SleepTimerSheet()
             }
         }
     }
