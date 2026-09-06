@@ -16,4 +16,8 @@ interface DataStoreRepo {
 
     fun getIntData(key : String) : Flow<Int?>
 
+    suspend fun saveFlotData(key : String, value : Float)
+
+    fun getFloatData(key : String) : Flow<Float?>
+
 }

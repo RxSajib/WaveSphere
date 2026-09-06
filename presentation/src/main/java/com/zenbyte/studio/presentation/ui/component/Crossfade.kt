@@ -24,9 +24,15 @@ import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 import com.zenbyte.studio.presentation.ui.theme.buttonColor
 import dev.vivvvek.seeker.Seeker
+import dev.vivvvek.seeker.SeekerDefaults
 
 @Composable
-fun Crossfade() {
+fun Crossfade(
+    seekerValue : Float = 0f,
+    crossFadeValue : Boolean = false,
+    onSeekerValueChanged : ((Float) -> Unit)? = null,
+    onToggleChanged : ((Boolean) -> Unit)? = null
+) {
     Column(modifier = Modifier.fillMaxWidth().border(
         width = 0.5.dp,
         color = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.1f),
@@ -72,8 +78,8 @@ fun Crossfade() {
                     disabledUncheckedTrackColor = androidx.compose.ui.graphics.Color.Unspecified,
                     disabledUncheckedBorderColor = androidx.compose.ui.graphics.Color.Unspecified,
                     disabledUncheckedIconColor = androidx.compose.ui.graphics.Color.Unspecified
-                ), checked = true, onCheckedChange = {
-                    //  onToggleChanged?.invoke(it)
+                ), checked = crossFadeValue, onCheckedChange = {
+                    onToggleChanged?.invoke(it)
                 })
         }
 
@@ -86,12 +92,22 @@ fun Crossfade() {
                     fontSize = adjustedFontSize(10f)
                 )
             )
-            Seeker(modifier = Modifier.weight(1f), value = 0.5f, onValueChange = {
+            WidthGap(width = 10.dp)
+            Seeker(
+                range = 0f..10f,
+                colors = SeekerDefaults.seekerColors(
+                    disabledTrackColor = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.5f),
+                    progressColor = buttonColor,
+                    thumbColor = buttonColor
+                ),
+                enabled = crossFadeValue,
+                modifier = Modifier.weight(1f), value = seekerValue.toFloat(), onValueChange = {
+                    onSeekerValueChanged?.invoke(it)
             })
 
             WidthGap(width = 10.dp)
             Text(
-                text = "12s",
+                text = "10s",
                 style = MaterialTheme.typography.titleSmall.copy(
                     fontWeight = FontWeight.W400,
                     color = MaterialTheme.colorScheme.primary,
@@ -100,7 +116,7 @@ fun Crossfade() {
             )
             WidthGap(width = 10.dp)
             Text(
-                text = "5s",
+                text = "${seekerValue.toInt()}s",
                 style = MaterialTheme.typography.titleSmall.copy(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary,

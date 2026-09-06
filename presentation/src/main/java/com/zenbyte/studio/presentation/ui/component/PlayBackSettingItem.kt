@@ -29,7 +29,13 @@ import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 import com.zenbyte.studio.presentation.ui.theme.buttonColor
 
 @Composable
-fun PlayBackSettingItem(icon: Painter, title: String, details: String) {
+fun PlayBackSettingItem(
+    icon: Painter,
+    title: String,
+    details: String,
+    switchValue: Boolean = true,
+    onSwitchChanged: (Boolean) -> Unit = {}
+) {
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Box(
             modifier = Modifier
@@ -88,8 +94,8 @@ fun PlayBackSettingItem(icon: Painter, title: String, details: String) {
                 disabledUncheckedTrackColor = androidx.compose.ui.graphics.Color.Unspecified,
                 disabledUncheckedBorderColor = androidx.compose.ui.graphics.Color.Unspecified,
                 disabledUncheckedIconColor = androidx.compose.ui.graphics.Color.Unspecified
-            ), checked = true, onCheckedChange = {
-                //  onToggleChanged?.invoke(it)
+            ), checked = switchValue, onCheckedChange = {
+                onSwitchChanged.invoke(it)
             })
     }
 }

@@ -17,7 +17,14 @@ import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.presentation.R
 
 @Composable
-fun LiveStreamingGroup() {
+fun LiveStreamingGroup(
+    autoReconnect: Boolean = true,
+    continueInBackground: Boolean = true,
+    showLiveIndicator: Boolean = true,
+    onReconnectChanged: (Boolean) -> Unit = {},
+    onContinueBackgroundChanged: (Boolean) -> Unit = {},
+    liveIndicatorChanged: (Boolean) -> Unit = {}
+) {
     Column(
         modifier = Modifier
             .border(
@@ -32,8 +39,7 @@ fun LiveStreamingGroup() {
         Text(
             text = stringResource(R.string.live_stream_options),
             style = MaterialTheme.typography.titleSmall.copy(
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary
             )
         )
         HeightGap(height = 16.dp)
@@ -41,26 +47,38 @@ fun LiveStreamingGroup() {
         PlayBackSettingItem(
             icon = painterResource(R.drawable.radio_waves_svgrepo_com),
             title = stringResource(R.string.auto_reconnect),
-            details = stringResource(R.string.automatically_reconnect_if_stream_lost)
-        )
+            details = stringResource(R.string.automatically_reconnect_if_stream_lost),
+            switchValue = autoReconnect,
+        ) {
+            onReconnectChanged.invoke(it)
+        }
         HeightGap(height = 10.dp)
         PlayBackSettingItem(
             icon = painterResource(R.drawable.icon_play_hover_play),
             title = stringResource(R.string.continue_in_background),
-            details = stringResource(R.string.keep_playing_when_app_is_in_background)
-        )
+            details = stringResource(R.string.keep_playing_when_app_is_in_background),
+            switchValue = continueInBackground
+        ){
+            onContinueBackgroundChanged.invoke(it)
+        }
         HeightGap(height = 10.dp)
         PlayBackSettingItem(
             icon = painterResource(R.drawable.info_circle_svgrepo_com),
             title = stringResource(R.string.show_live_indicator),
-            details = stringResource(R.string.display_live_badge_on_live_stations)
-        )
+            details = stringResource(R.string.display_live_badge_on_live_stations),
+            switchValue = showLiveIndicator
+        ){
+            liveIndicatorChanged.invoke(it)
+        }
         HeightGap(height = 10.dp)
         PlayBackSettingItem(
             icon = painterResource(R.drawable.icon_clock),
             title = stringResource(R.string.buffering_timeout),
-            details = stringResource(R.string.stop_playback_if_buffering_take_too_long)
-        )
+            details = stringResource(R.string.stop_playback_if_buffering_take_too_long),
+            switchValue = false
+        ){
+
+        }
     }
 }
 

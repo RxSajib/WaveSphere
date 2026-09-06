@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -55,6 +56,20 @@ class DataStoreRepoImpl @Inject constructor(
     override fun getIntData(key: String): Flow<Int?> {
         return context.dataStore.data.map { preferences ->
             preferences[intPreferencesKey(key)]
+        }
+    }
+
+    override suspend fun saveFlotData(key: String, value: Float) {
+        context.dataStore.edit {
+            preferences ->
+            preferences[floatPreferencesKey(key)] = value
+        }
+    }
+
+    override fun getFloatData(key: String): Flow<Float?> {
+        return context.dataStore.data.map {
+            preferences ->
+            preferences[floatPreferencesKey(key)]
         }
     }
 }
