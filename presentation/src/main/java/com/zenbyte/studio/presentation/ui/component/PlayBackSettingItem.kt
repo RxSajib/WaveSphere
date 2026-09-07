@@ -1,5 +1,6 @@
 package com.zenbyte.studio.presentation.ui.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -27,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 import com.zenbyte.studio.presentation.ui.theme.buttonColor
+import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
 @Composable
 fun PlayBackSettingItem(
@@ -34,6 +36,7 @@ fun PlayBackSettingItem(
     title: String,
     details: String,
     switchValue: Boolean = true,
+    isEnableBufferingTime: Boolean = false,
     onSwitchChanged: (Boolean) -> Unit = {}
 ) {
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -76,27 +79,61 @@ fun PlayBackSettingItem(
             )
         }
         WidthGap(width = 5.dp)
-        Switch(
-            modifier = Modifier.scale(0.8f), colors = SwitchColors(
-                checkedThumbColor = androidx.compose.ui.graphics.Color.White,
-                checkedTrackColor = buttonColor,
-                checkedBorderColor = buttonColor,
-                checkedIconColor = androidx.compose.ui.graphics.Color.Unspecified,
-                uncheckedThumbColor = androidx.compose.ui.graphics.Color.White,
-                uncheckedTrackColor = androidx.compose.ui.graphics.Color.Gray,
-                uncheckedBorderColor = androidx.compose.ui.graphics.Color.Unspecified,
-                uncheckedIconColor = androidx.compose.ui.graphics.Color.Unspecified,
-                disabledCheckedThumbColor = androidx.compose.ui.graphics.Color.Unspecified,
-                disabledCheckedTrackColor = androidx.compose.ui.graphics.Color.Unspecified,
-                disabledCheckedBorderColor = androidx.compose.ui.graphics.Color.Unspecified,
-                disabledCheckedIconColor = androidx.compose.ui.graphics.Color.Unspecified,
-                disabledUncheckedThumbColor = androidx.compose.ui.graphics.Color.Unspecified,
-                disabledUncheckedTrackColor = androidx.compose.ui.graphics.Color.Unspecified,
-                disabledUncheckedBorderColor = androidx.compose.ui.graphics.Color.Unspecified,
-                disabledUncheckedIconColor = androidx.compose.ui.graphics.Color.Unspecified
-            ), checked = switchValue, onCheckedChange = {
-                onSwitchChanged.invoke(it)
-            })
+        if (isEnableBufferingTime) {
+            Row(
+                modifier = Modifier
+                    .border(
+                        width = 0.5.dp,
+                        color = MaterialTheme.colorScheme.inverseSurface,
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                    .clip(shape = RoundedCornerShape(10.dp))
+                    .background(color = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.01f)).debounceClickable{
+
+                    }
+                    .padding(horizontal = 10.dp, vertical = 5.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "30 Seconds",
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        fontSize = adjustedFontSize(12f),
+                        fontWeight = FontWeight.W400,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                )
+
+                WidthGap(width = 5.dp)
+                Icon(
+                    painter = painterResource(R.drawable.arrow_down),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        } else {
+            Switch(
+                modifier = Modifier.scale(0.8f), colors = SwitchColors(
+                    checkedThumbColor = androidx.compose.ui.graphics.Color.White,
+                    checkedTrackColor = buttonColor,
+                    checkedBorderColor = buttonColor,
+                    checkedIconColor = androidx.compose.ui.graphics.Color.Unspecified,
+                    uncheckedThumbColor = androidx.compose.ui.graphics.Color.White,
+                    uncheckedTrackColor = androidx.compose.ui.graphics.Color.Gray,
+                    uncheckedBorderColor = androidx.compose.ui.graphics.Color.Unspecified,
+                    uncheckedIconColor = androidx.compose.ui.graphics.Color.Unspecified,
+                    disabledCheckedThumbColor = androidx.compose.ui.graphics.Color.Unspecified,
+                    disabledCheckedTrackColor = androidx.compose.ui.graphics.Color.Unspecified,
+                    disabledCheckedBorderColor = androidx.compose.ui.graphics.Color.Unspecified,
+                    disabledCheckedIconColor = androidx.compose.ui.graphics.Color.Unspecified,
+                    disabledUncheckedThumbColor = androidx.compose.ui.graphics.Color.Unspecified,
+                    disabledUncheckedTrackColor = androidx.compose.ui.graphics.Color.Unspecified,
+                    disabledUncheckedBorderColor = androidx.compose.ui.graphics.Color.Unspecified,
+                    disabledUncheckedIconColor = androidx.compose.ui.graphics.Color.Unspecified
+                ), checked = switchValue, onCheckedChange = {
+                    onSwitchChanged.invoke(it)
+                })
+        }
+
     }
 }
 

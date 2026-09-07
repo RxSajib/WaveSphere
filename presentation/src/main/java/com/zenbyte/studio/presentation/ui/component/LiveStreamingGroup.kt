@@ -75,7 +75,8 @@ fun LiveStreamingGroup(
             icon = painterResource(R.drawable.icon_clock),
             title = stringResource(R.string.buffering_timeout),
             details = stringResource(R.string.stop_playback_if_buffering_take_too_long),
-            switchValue = false
+            switchValue = false,
+            isEnableBufferingTime = true
         ){
 
         }
