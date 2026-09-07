@@ -8,6 +8,7 @@ import com.zenbyte.studio.presentation.ui.data.AppConstant.ENABLE_CONTINUE_IN_BA
 import com.zenbyte.studio.presentation.ui.data.AppConstant.ENABLE_CROSS_FADE
 import com.zenbyte.studio.presentation.ui.data.AppConstant.ENABLE_SHOW_LIVE_INDICATOR
 import com.zenbyte.studio.presentation.ui.data.AppConstant.SEEKER_VALUE
+import com.zenbyte.studio.presentation.ui.data.AppConstant.SELECTED_AUDIO_QUALITY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,6 +23,7 @@ class PlaybackSettingViewModel @Inject constructor(
     val isLiveIndicator = dataStoreUseCase.getBoolData(key = ENABLE_SHOW_LIVE_INDICATOR)
     val isCrossFade = dataStoreUseCase.getBoolData(key = ENABLE_CROSS_FADE)
     val seekerValue = dataStoreUseCase.getFlotData(key = SEEKER_VALUE)
+    val selectedAudioQuality = dataStoreUseCase.getStringData(key = SELECTED_AUDIO_QUALITY)
 
     fun saveSetting(key : String, value : Boolean){
         viewModelScope.launch {
@@ -31,6 +33,12 @@ class PlaybackSettingViewModel @Inject constructor(
     fun saveSeekerValue(key : String, value : Float){
         viewModelScope.launch {
             dataStoreUseCase.saveFlotData(key = key, value = value)
+        }
+    }
+
+    fun saveAudioQuality(value : String?){
+        viewModelScope.launch {
+            dataStoreUseCase.saveStringData(key = SELECTED_AUDIO_QUALITY, value = value ?: "DEFAULT")
         }
     }
 }

@@ -8,4 +8,5 @@ object AppConstant {
     const val ENABLE_SHOW_LIVE_INDICATOR = "enable_show_live_indicator"
     const val ENABLE_CROSS_FADE = "enable_cross_fade"
     const val SEEKER_VALUE = "seeker_value"
+    const val SELECTED_AUDIO_QUALITY = "selected_audio_quality"
 }

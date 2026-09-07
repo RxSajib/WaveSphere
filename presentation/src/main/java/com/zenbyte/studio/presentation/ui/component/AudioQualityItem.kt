@@ -28,7 +28,8 @@ import com.zenbyte.studio.presentation.ui.theme.buttonColor
 
 @Composable
 fun AudioQualityItem(
-    audioQuality: AudioQuality
+    audioQuality: AudioQuality,
+    onCheckedChange: () -> Unit = {}
 ) {
 
     Row(
@@ -40,7 +41,7 @@ fun AudioQualityItem(
             colors = RadioButtonDefaults.colors(selectedColor = buttonColor),
             selected = audioQuality.isChecked,
             onClick = {
-
+                onCheckedChange.invoke()
             })
         WidthGap(width = 10.dp)
         Column(modifier = Modifier.weight(1f)) {

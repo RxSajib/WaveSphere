@@ -21,7 +21,11 @@ import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.viewmodel.utils.localDataSources.AudioQualityData.getAudioQualityData
 
 @Composable
-fun AudioQualityGroup(context: Context) {
+fun AudioQualityGroup(
+    context: Context,
+    selectedQuality: String?,
+    onQualitySelected: (String?) -> Unit
+) {
     Column(
         modifier = Modifier
             .border(
@@ -56,7 +60,17 @@ fun AudioQualityGroup(context: Context) {
         HeightGap(height = 10.dp)
 
         context.getAudioQualityData().forEach { audioQuality ->
-            AudioQualityItem(audioQuality = audioQuality)
+            val isChecked = if (selectedQuality == "DEFAULT" || selectedQuality == null) {
+                audioQuality.audioRate == null
+            } else {
+                audioQuality.audioRate == selectedQuality
+            }
+            
+            AudioQualityItem(
+                audioQuality = audioQuality.copy(isChecked = isChecked)
+            ) {
+                onQualitySelected(audioQuality.audioRate)
+            }
         }
 
     }

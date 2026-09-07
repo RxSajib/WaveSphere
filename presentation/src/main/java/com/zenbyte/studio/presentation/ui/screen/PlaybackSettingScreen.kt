@@ -44,6 +44,7 @@ fun PlaybackSettingScreen() {
     val isLiveIndicator by viewModel.isLiveIndicator.collectAsStateWithLifecycle(false)
     val isCrossFade by viewModel.isCrossFade.collectAsStateWithLifecycle(false)
     val seekerValue by viewModel.seekerValue.collectAsStateWithLifecycle(0f)
+    val selectedAudioQuality by viewModel.selectedAudioQuality.collectAsStateWithLifecycle(null)
 
     Surface(
         modifier = Modifier
@@ -63,7 +64,13 @@ fun PlaybackSettingScreen() {
                     .padding(16.dp)
 
             ) {
-                AudioQualityGroup(context = context)
+                AudioQualityGroup(
+                    context = context,
+                    selectedQuality = selectedAudioQuality,
+                    onQualitySelected = {
+                        viewModel.saveAudioQuality(it)
+                    }
+                )
                 HeightGap(height = 10.dp)
                 Crossfade(
                     crossFadeValue = isCrossFade,
