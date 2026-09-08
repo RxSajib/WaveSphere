@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.PlatformContext
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
@@ -39,6 +41,8 @@ import com.zenbyte.studio.presentation.viewmodel.home.HomeViewModel
 
 @Composable
 fun NowPlayingComponent(isBuffering : Boolean  = false, context: PlatformContext, channel: MyChannel, viewModel: HomeViewModel) {
+
+    val isShowLiveIndicator by viewModel.isShowLiveIndicator.collectAsStateWithLifecycle(false)
     Column(
         modifier = Modifier
             .clip(shape = RoundedCornerShape(10.dp))
@@ -64,7 +68,9 @@ fun NowPlayingComponent(isBuffering : Boolean  = false, context: PlatformContext
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            LiveTag()
+            if(isShowLiveIndicator) {
+                LiveTag()
+            }
         }
         HeightGap(height = 15.dp)
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {

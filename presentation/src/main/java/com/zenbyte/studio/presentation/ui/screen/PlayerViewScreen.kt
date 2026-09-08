@@ -67,7 +67,7 @@ fun PlayerViewScreen(
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val isPlayingChannel by viewModel.isPlayingChannel.collectAsStateWithLifecycle(false)
     val isChannelSaved by viewModel.isChannelSaved.collectAsStateWithLifecycle(false)
-
+    val isShowLiveIndicator by viewModel.isShowLiveIndicator.collectAsStateWithLifecycle(false)
 
     // Sync UI with the selected channel, then follow service updates (Next/Prev)
     val currentChannel = currentChannelByPlayer ?: channelData.channel
@@ -175,7 +175,9 @@ fun PlayerViewScreen(
                 overflow = TextOverflow.Ellipsis
             )
             HeightGap(height = 15.dp)
-            LiveTag()
+            if(isShowLiveIndicator){
+                LiveTag()
+            }
             if (isLoading) {
                 androidx.compose.material3.CircularProgressIndicator(
                     modifier = Modifier.padding(16.dp),
