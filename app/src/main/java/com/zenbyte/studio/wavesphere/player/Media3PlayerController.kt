@@ -41,11 +41,9 @@ class Media3PlayerController @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     override val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
-    private lateinit var mediaController: MediaController
+    private var mediaController: MediaController? = null
     private var channelList: List<MyChannel> = emptyList()
-
-
-
+    private var isConnecting = false
 
     override fun play(
         channels: List<MyChannel>,
@@ -71,15 +69,18 @@ class Media3PlayerController @Inject constructor(
                     .build()
             }
 
-            if (::mediaController.isInitialized) {
+            mediaController?.let { controller ->
                 MyCustomLogger.logMessageInfo(tag = TAG, message = "play() for channels: size=${mediaItems.size}, startIndex=$startIndex")
-                mediaController.setMediaItems(mediaItems, startIndex, 0L)
-                mediaController.prepare()
-                mediaController.play()
+                controller.setMediaItems(mediaItems, startIndex, 0L)
+                controller.prepare()
+                controller.play()
 
                 _currentChannel.value = channels.getOrNull(startIndex)
-            } else {
-                MyCustomLogger.logMessageInfo(tag = TAG, message = "mediaController not initialized yet")
+            } ?: run {
+                MyCustomLogger.logMessageInfo(tag = TAG, message = "mediaController not initialized yet, connecting...")
+                connect {
+                    play(channels, startIndex)
+                }
             }
         } catch (e: Exception) {
             MyCustomLogger.logMessageInfo(tag = TAG, message = "Error in play(): ${e.message}")
@@ -87,8 +88,10 @@ class Media3PlayerController @Inject constructor(
     }
 
     override fun singlePlay() {
-        mediaController.prepare()
-        mediaController.play()
+        mediaController?.let {
+            it.prepare()
+            it.play()
+        } ?: connect { singlePlay() }
     }
 
     override fun pause() {
@@ -96,20 +99,25 @@ class Media3PlayerController @Inject constructor(
     }
 
     override fun stop() {
-        if (::mediaController.isInitialized) {
-            MyCustomLogger.logMessageInfo(tag = TAG, message = "stop() called")
-            mediaController.stop()
-        }
+        mediaController?.stop()
     }
 
     override fun next() {
-        if (::mediaController.isInitialized) {
-            MyCustomLogger.logMessageInfo(tag = TAG, message = "next() called")
-            mediaController.seekToNextMediaItem()
-        }
+        mediaController?.seekToNextMediaItem()
     }
 
     init {
+        connect()
+    }
+
+    private fun connect(onConnected: (() -> Unit)? = null) {
+        if (mediaController != null) {
+            onConnected?.invoke()
+            return
+        }
+        if (isConnecting) return
+        isConnecting = true
+
         val sessionToken = SessionToken(
             context,
             ComponentName(context, PlayerService::class.java)
@@ -119,8 +127,10 @@ class Media3PlayerController @Inject constructor(
 
         controllerFuture.addListener({
             try {
-                mediaController = controllerFuture.get()
-                mediaController.addListener(object : Player.Listener {
+                val controller = controllerFuture.get()
+                mediaController = controller
+                isConnecting = false
+                controller.addListener(object : Player.Listener {
                     override fun onIsPlayingChanged(isPlaying: Boolean) {
                         MyCustomLogger.logMessageInfo(tag = TAG, message = "onIsPlayingChanged: $isPlaying")
                         _isPlaying.value = isPlaying
@@ -154,8 +164,8 @@ class Media3PlayerController @Inject constructor(
                         }
                     }
                 })
-                _isPlaying.value = mediaController.isPlaying
-                mediaController.currentMediaItem?.let { item ->
+                _isPlaying.value = controller.isPlaying
+                controller.currentMediaItem?.let { item ->
                     val channel = channelList.find { it.stationuuid == item.mediaId }
                         ?: MyChannel(
                             stationuuid = item.mediaId,
@@ -167,18 +177,27 @@ class Media3PlayerController @Inject constructor(
                     _currentChannel.value = channel
                 }
                 MyCustomLogger.logMessageInfo(tag = TAG, message = "MediaController initialized and state synced")
+                onConnected?.invoke()
 
             } catch (e: Exception) {
+                isConnecting = false
                 MyCustomLogger.logMessageInfo(tag = TAG, message = "Error initializing MediaController: ${e.message}")
             }
         }, MoreExecutors.directExecutor())
     }
 
     override fun previous() {
-        if (::mediaController.isInitialized) {
-            MyCustomLogger.logMessageInfo(tag = TAG, message = "previous() called")
-            mediaController.seekToPreviousMediaItem()
+        mediaController?.seekToPreviousMediaItem()
+    }
+
+    override fun release() {
+        mediaController?.run {
+            clearMediaItems()
+            release()
         }
+        mediaController = null
+        _isPlaying.value = false
+        _currentChannel.value = null
     }
 
 }
