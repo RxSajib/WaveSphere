@@ -92,10 +92,7 @@ class Media3PlayerController @Inject constructor(
     }
 
     override fun pause() {
-        if (::mediaController.isInitialized) {
-            MyCustomLogger.logMessageInfo(tag = TAG, message = "pause() called")
-            mediaController.pause()
-        }
+        mediaController?.pause()
     }
 
     override fun stop() {

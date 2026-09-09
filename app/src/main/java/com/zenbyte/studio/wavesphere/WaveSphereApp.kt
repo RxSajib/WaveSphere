@@ -2,6 +2,7 @@ package com.zenbyte.studio.wavesphere
 
 import android.app.Application
 import android.content.res.Resources
+import android.widget.Toast
 import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
@@ -10,6 +11,7 @@ import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+import com.zenbyte.studio.presentation.ui.player.MyPLayer.initExoPlayer
 import dagger.hilt.android.HiltAndroidApp
 import dev.b3nedikt.app_locale.AppLocale
 import dev.b3nedikt.app_locale.SharedPrefsAppLocaleRepository
@@ -20,41 +22,6 @@ import java.util.Locale
 @HiltAndroidApp
 class WaveSphereApp : Application() {
 
-    companion object {
-        private var _exoPlayer: ExoPlayer? = null
-        val exoPlayer: ExoPlayer
-            get() {
-                if (_exoPlayer == null) {
-                    throw IllegalStateException("ExoPlayer not initialized. Call initExoPlayer() first.")
-                }
-                return _exoPlayer!!
-            }
-
-        @OptIn(UnstableApi::class)
-        fun initExoPlayer(application: Application) {
-            if (_exoPlayer == null) {
-                val httpDataSourceFactory = DefaultHttpDataSource.Factory()
-                    .setUserAgent("WaveSphere/1.0 (Android)")
-                    .setAllowCrossProtocolRedirects(true)
-
-                val dataSourceFactory =
-                    DefaultDataSource.Factory(application, httpDataSourceFactory)
-
-                _exoPlayer = ExoPlayer.Builder(application)
-                    .setMediaSourceFactory(
-                        DefaultMediaSourceFactory(application).setDataSourceFactory(
-                            dataSourceFactory
-                        )
-                    )
-                    .build()
-            }
-        }
-
-        fun releaseExoPlayer() {
-            _exoPlayer?.release()
-            _exoPlayer = null
-        }
-    }
 
     override fun onCreate() {
         super.onCreate()

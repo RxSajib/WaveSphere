@@ -17,6 +17,8 @@ interface PlayerController {
 
     fun previous()
 
+    fun release()
+
     val currentChannel: StateFlow<MyChannel?>
 
     val isPlaying: StateFlow<Boolean>
