@@ -90,12 +90,12 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="HelpPopularTopicGroupPreview">
+      <SelectionState runConfigName="Prev">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-08-28T10:57:59.343377500Z">
+        <DropdownSelection timestamp="2026-09-06T18:07:28.320681Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=1407125531100233" />
+              <DeviceId pluginId="Wireless" identifier="serviceName=adb-1407125531100233-iJpKmP" />
             </handle>
           </Target>
         </DropdownSelection>

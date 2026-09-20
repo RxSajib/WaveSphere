@@ -11,6 +11,9 @@ import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+import com.revenuecat.purchases.LogLevel
+import com.revenuecat.purchases.Purchases
+import com.revenuecat.purchases.PurchasesConfiguration
 import com.zenbyte.studio.presentation.ui.player.MyPLayer.initExoPlayer
 import dagger.hilt.android.HiltAndroidApp
 import dev.b3nedikt.app_locale.AppLocale
@@ -37,6 +40,11 @@ class WaveSphereApp : Application() {
             Locale.forLanguageTag("zh"),
         )
         AppLocale.appLocaleRepository = SharedPrefsAppLocaleRepository(this)
+
+        Purchases.logLevel = LogLevel.DEBUG
+        Purchases.configure(
+            PurchasesConfiguration.Builder(this, "test_UWtfdapGeVDKRMPLPTfSVDKJaDY")
+            .build())
     }
 
     override fun getResources(): Resources {
