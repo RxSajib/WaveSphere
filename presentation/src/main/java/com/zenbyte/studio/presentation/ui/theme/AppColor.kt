@@ -58,3 +58,6 @@ val Metal = Color(0xFF5A5A5B)
 val Blues = Color(0xFF5B6FD8)
 val Folk = Color(0xFFC2712D)
 val World = Color(0xFF845FE6)
+
+val lottieCircleColor = Color(0x05262626)
+val lottieCircleColorWorld = Color(0x1E6D6D6D)
