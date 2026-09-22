@@ -11,6 +11,9 @@ import kotlinx.serialization.Serializable
 sealed class AppDestination : NavKey {
 
     @Serializable
+    data object SplashScreen : AppDestination()
+
+    @Serializable
     data object BottomAppBar : AppDestination() {
 
         @Serializable

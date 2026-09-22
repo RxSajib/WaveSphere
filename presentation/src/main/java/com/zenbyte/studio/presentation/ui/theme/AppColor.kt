@@ -59,5 +59,5 @@ val Blues = Color(0xFF5B6FD8)
 val Folk = Color(0xFFC2712D)
 val World = Color(0xFF845FE6)
 
-val lottieCircleColor = Color(0x05262626)
-val lottieCircleColorWorld = Color(0x1E6D6D6D)
+val lottieCircleColor = Color(0x031D1D1D)
+val lottieCircleColorWorld = Color(0xB48E8E8E)

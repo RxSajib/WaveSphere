@@ -14,6 +14,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.zenbyte.studio.presentation.ui.screen.SplashScreen
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 
@@ -28,11 +29,12 @@ fun RootNavigation() {
                     AppDestination.BottomAppBar::class, AppDestination.BottomAppBar.serializer()
                 )
                 subclass(AppDestination.Dest::class, AppDestination.Dest.serializer())
+                subclass(AppDestination.SplashScreen::class, AppDestination.SplashScreen.serializer())
             }
         }
     }
 
-    val rootBackStack = rememberNavBackStack(configuration = appConfig, AppDestination.BottomAppBar)
+    val rootBackStack = rememberNavBackStack(configuration = appConfig, AppDestination.SplashScreen)
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -48,6 +50,9 @@ fun RootNavigation() {
                 }
                 entry<AppDestination.Dest> { dest ->
                     DestNavigation(startDest = dest, rootBackStack = rootBackStack)
+                }
+                entry<AppDestination.SplashScreen> {
+                    SplashScreen(rootBackStack = rootBackStack)
                 }
 
             },

@@ -56,8 +56,8 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(color = MaterialTheme.colorScheme.surface)
                 ) {
-                    SplashScreen()
-                   // RootNavigation()
+                  //  SplashScreen()
+                    RootNavigation()
                 }
 
             }
