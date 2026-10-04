@@ -27,7 +27,7 @@ import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 
 @Composable
-fun DownloadChannel(modifier: Modifier) {
+fun DownloadChannel(modifier: Modifier, channelSize : String = "0") {
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         Box(modifier = Modifier.size(30.dp), contentAlignment = Alignment.Center) {
             CircularProgressIndicator(modifier = Modifier.fillMaxSize(), strokeWidth = 2.dp)
@@ -42,7 +42,7 @@ fun DownloadChannel(modifier: Modifier) {
         WidthGap(width = 15.dp)
         Column(modifier = Modifier) {
             Text(
-                text = "Fetch Total Channel: 521",
+                text = "Fetch Total Channel: $channelSize",
                 style = MaterialTheme.typography.titleSmall.copy(
                     fontWeight = FontWeight.Bold,
                     fontSize = adjustedFontSize(12f),

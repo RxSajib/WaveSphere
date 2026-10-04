@@ -1,6 +1,7 @@
 package com.zenbyte.studio.presentation.ui.screen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,16 +42,17 @@ import com.zenbyte.studio.presentation.ui.component.MyLottie
 import com.zenbyte.studio.presentation.ui.navigation.AppDestination
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
 import com.zenbyte.studio.presentation.ui.theme.buttonColor
-import com.zenbyte.studio.presentation.ui.theme.lottieCircleColor
+import com.zenbyte.studio.presentation.ui.theme.lottieCircleColorWorldDay
 import com.zenbyte.studio.presentation.viewmodel.splashScreen.SplashScreenViewModel
 
 @Composable
 fun SplashScreen(rootBackStack: NavBackStack<NavKey>) {
 
     val viewModel : SplashScreenViewModel = hiltViewModel()
-    val isNavigateHome by viewModel.navigateToHome.collectAsStateWithLifecycle(false)
+    val listOfChannel by viewModel.channelList.collectAsStateWithLifecycle()
+    val isLoadChannel by viewModel.isLoadChannel.collectAsStateWithLifecycle()
 
-    if(isNavigateHome){
+    if(viewModel.splashScreenState){
         rootBackStack.add(
             AppDestination.BottomAppBar
         )
@@ -61,6 +63,7 @@ fun SplashScreen(rootBackStack: NavBackStack<NavKey>) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = MaterialTheme.colorScheme.surface)
                 .padding(bottom = innerPadding.calculateBottomPadding()),
             contentAlignment = Alignment.Center
         ) {
@@ -75,7 +78,7 @@ fun SplashScreen(rootBackStack: NavBackStack<NavKey>) {
             val waveColor = rememberLottieDynamicProperties(
                 LottieDynamicProperty(
                     property = LottieProperty.STROKE_COLOR,
-                    value = lottieCircleColor.toArgb(),
+                    value = MaterialTheme.colorScheme.surfaceBright.toArgb(),
                     keyPath = KeyPath("**", "Stroke 1")
                 )
             )
@@ -93,7 +96,7 @@ fun SplashScreen(rootBackStack: NavBackStack<NavKey>) {
             val colorForWorld = rememberLottieDynamicProperties(
                 LottieDynamicProperty(
                     property = LottieProperty.COLOR,
-                    value = Color.White.toArgb(),
+                    value = MaterialTheme.colorScheme.secondaryContainer.toArgb(),
                     keyPath = KeyPath("**")
                 )
             )
@@ -149,7 +152,9 @@ fun SplashScreen(rootBackStack: NavBackStack<NavKey>) {
                         animationResId = R.raw.recording,
                         modifier = Modifier.size(50.dp)
                     )
-                    DownloadChannel(modifier = Modifier.padding(16.dp))
+                    if(isLoadChannel){
+                        DownloadChannel(modifier = Modifier.padding(16.dp), channelSize = listOfChannel.size.toString())
+                    }
                 }
 
             }

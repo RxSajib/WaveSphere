@@ -1,5 +1,5 @@
 [versions]
-agp = "9.5.0-alpha06"
+agp = "9.5.0-alpha08"
 coilCompose = "3.6.3"
 composeShimmer = "1.5.0"
 converterGson = "3.0.0"

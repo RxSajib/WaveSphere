@@ -10,7 +10,9 @@ val darkColorScheme = darkColorScheme(
     inverseSurface = colorSurfaceTintDark,
     onSurface = White,
     onPrimary = onPrimaryDark,
-    inversePrimary = Color.DarkGray
+    inversePrimary = Color.DarkGray,
+    surfaceBright = lottieCircleColorDark,
+    secondaryContainer = lottieCircleColorWorldDark
 )
 
 val lightColorScheme = lightColorScheme(
@@ -20,4 +22,6 @@ val lightColorScheme = lightColorScheme(
     onSurface = Black,
     onPrimary = onPrimaryLight,
     inversePrimary = White,
+    surfaceBright = lottieCircleColorDay,
+    secondaryContainer = lottieCircleColorWorldDay
 )
