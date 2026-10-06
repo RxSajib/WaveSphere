@@ -222,41 +222,48 @@ class HomeViewModel @Inject constructor(
 
     private fun getAllLocalChannel() {
         viewModelScope.launch {
-            when (countryListUseCase.getCountryList()) {
-                is Resource.Success -> {
+            val response = countryListUseCase.getCountryList()
+            response.collect { response ->
+                when (response) {
+                    is Resource.Success -> {
 
-                }
+                    }
 
-                is Resource.Error -> {
+                    is Resource.Error -> {
 
-                }
+                    }
 
-                is Resource.Loading -> {
+                    is Resource.Loading -> {
 
+                    }
                 }
             }
+
         }
     }
 
     private fun getAllChannel() {
         viewModelScope.launch {
             val allchannelResponse = countryListUseCase.getCountryList()
-            when (allchannelResponse) {
-                is Resource.Success -> {
-                    for (channel in allchannelResponse.data ?: emptyList()) {
-                        Log.d(TAG, "getAllChannel: ${channel.name}")
-                        getChannelByCountryUseCase.getChannelByCountry(countryName = channel.name)
+            allchannelResponse.collect { allchannelResponse ->
+                when (allchannelResponse) {
+                    is Resource.Success -> {
+                        for (channel in allchannelResponse.data ?: emptyList()) {
+                            Log.d(TAG, "getAllChannel: ${channel.name}")
+                            getChannelByCountryUseCase.getChannelByCountry(countryName = channel.name)
+                        }
+                    }
+
+                    is Resource.Error -> {
+
+                    }
+
+                    is Resource.Loading -> {
+
                     }
                 }
-
-                is Resource.Error -> {
-
-                }
-
-                is Resource.Loading -> {
-
-                }
             }
+
         }
     }
 
@@ -265,19 +272,22 @@ class HomeViewModel @Inject constructor(
 
             val response = getChannelByCountryUseCase.getChannelByCountry(
                 myContext.getSimCountry().ifEmpty { "IR" })
-            when (response) {
-                is Resource.Success -> {
-                    channelMutableStateFlow.emit(response.data ?: emptyList())
-                }
+            response.collect { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        channelMutableStateFlow.emit(response.data ?: emptyList())
+                    }
 
-                is Resource.Error -> {
-                    channelMutableStateFlow.emit(emptyList())
-                }
+                    is Resource.Error -> {
+                        channelMutableStateFlow.emit(emptyList())
+                    }
 
-                is Resource.Loading -> {
+                    is Resource.Loading -> {
 
+                    }
                 }
             }
+
         }
     }
 

@@ -32,27 +32,33 @@ import com.zenbyte.studio.presentation.viewmodel.search.SearchViewModel
 fun CountriesScreen(rootBackStack: NavBackStack<NavKey>, viewModel: SearchViewModel) {
 
     val context = LocalPlatformContext.current
-    val countryList by viewModel.countryState.collectAsStateWithLifecycle()
+    val countryList by viewModel.uiState.collectAsStateWithLifecycle()
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        if (countryList.isSuccess) {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(items = countryList.data ?: emptyList()) { country ->
-                    CountryItem(context = context, country = country) {
-                        rootBackStack.add(
-                            AppDestination.Dest(
-                                firstDestName = AppDestination.Dest.ChannelByCountry::class.simpleName.orEmpty(),
-                                countryName = it.name
+
+        when{
+            countryList.isInitialLoading -> {
+                CountryShimmer()
+            }
+            countryList.countries.isNotEmpty() -> {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(items = countryList.countries) { country ->
+                        CountryItem(context = context, country = country) {
+                            rootBackStack.add(
+                                AppDestination.Dest(
+                                    firstDestName = AppDestination.Dest.ChannelByCountry::class.simpleName.orEmpty(),
+                                    countryName = it.name
+                                )
                             )
-                        )
+                        }
                     }
                 }
             }
-        } else if (countryList.isLoading) {
-            CountryShimmer()
-        } else {
-            ServerError {
-                viewModel.getAllCountry()
+            countryList.error != null -> {
+
+                ServerError {
+                    viewModel.getAllCountry()
+                }
             }
         }
     }

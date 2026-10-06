@@ -16,10 +16,10 @@ interface WaveSphereApi {
 
     @GET("stations/search")
     suspend fun getChannelBySearch(
-        @Query("tag") tag: String,
+        @Query("tag") tag: String?= null,
         @Query("codec") codec: String = "mp3",
-        @Query("order") order: String,
-        @Query("countrycode") countryCode: String,
+        @Query("order") order: String?= null,
+        @Query("countrycode") countryCode: String?= null,
         @Query("hidebroken") hideBroken: Boolean = true
     ): ChannelDto
 

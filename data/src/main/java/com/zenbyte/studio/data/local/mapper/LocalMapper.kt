@@ -4,8 +4,13 @@ import com.zenbyte.studio.data.local.dao.MyChannelDao
 import com.zenbyte.studio.data.local.entity.MyChannelEntity
 import com.zenbyte.studio.data.local.model.Genres
 import com.zenbyte.studio.data.remote.model.ChannelDtoItem
+import com.zenbyte.studio.data.remote.model.CountryDtoItem
 import com.zenbyte.studio.domain.model.MyChannel
+import com.zenbyte.studio.domain.model.MyCountry
 import com.zenbyte.studio.domain.model.MyGenres
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 object LocalMapper {
 
@@ -44,5 +49,17 @@ object LocalMapper {
             lastcheckok = lastcheckok,
             sslError = sslError
         )
+    }
+
+    fun Flow<List<CountryDtoItem>>.toMyCountry(): Flow<List<MyCountry>> {
+        return map { countryList ->
+            countryList.map { country ->
+                MyCountry(
+                    name = country.name,
+                    countryCode = country.iso,
+                    stationCount = country.stationcount
+                )
+            }
+        }
     }
 }
