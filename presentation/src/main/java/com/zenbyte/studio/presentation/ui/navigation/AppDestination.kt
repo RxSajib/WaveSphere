@@ -11,6 +11,9 @@ import kotlinx.serialization.Serializable
 sealed class AppDestination : NavKey {
 
     @Serializable
+    data object SplashScreen : AppDestination()
+
+    @Serializable
     data object BottomAppBar : AppDestination() {
 
         @Serializable
@@ -36,6 +39,12 @@ sealed class AppDestination : NavKey {
         val languages: com.zenbyte.studio.data.local.model.Languages?= null) : AppDestination()
 
     {
+
+        @Serializable
+        data object PlaybackSetting : AppDestination()
+
+        @Serializable
+        data object HelpAndSupport : AppDestination()
 
         @Serializable
         data object Languages : AppDestination()

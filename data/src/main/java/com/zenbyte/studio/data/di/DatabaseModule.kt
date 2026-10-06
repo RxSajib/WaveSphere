@@ -33,4 +33,8 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideMyChannelDao(database: MyFavoriteChannelDatabase) = database.channelDao()
+
+    @Provides
+    @Singleton
+    fun provideCountryDao(database: MyFavoriteChannelDatabase) = database.myCountryDao()
 }

@@ -34,6 +34,7 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import com.zenbyte.studio.presentation.R
+import com.zenbyte.studio.presentation.ui.bottomsheet.SleepTimerSheet
 import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.presentation.viewmodel.playerView.PlayerViewModel
@@ -66,7 +67,7 @@ fun PlayerViewScreen(
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val isPlayingChannel by viewModel.isPlayingChannel.collectAsStateWithLifecycle(false)
     val isChannelSaved by viewModel.isChannelSaved.collectAsStateWithLifecycle(false)
-
+    val isShowLiveIndicator by viewModel.isShowLiveIndicator.collectAsStateWithLifecycle(false)
 
     // Sync UI with the selected channel, then follow service updates (Next/Prev)
     val currentChannel = currentChannelByPlayer ?: channelData.channel
@@ -127,7 +128,7 @@ fun PlayerViewScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(top = innerPadding.calculateTopPadding())
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -174,7 +175,9 @@ fun PlayerViewScreen(
                 overflow = TextOverflow.Ellipsis
             )
             HeightGap(height = 15.dp)
-            LiveTag()
+            if(isShowLiveIndicator){
+                LiveTag()
+            }
             if (isLoading) {
                 androidx.compose.material3.CircularProgressIndicator(
                     modifier = Modifier.padding(16.dp),
@@ -197,7 +200,7 @@ fun PlayerViewScreen(
                     modifier = Modifier.weight(1f),
                     title = stringResource(R.string.sleep_timer)
                 ){
-
+                    viewModel.showSleepTimerDialog = true
                 }
 
                 QuickAction(
@@ -270,6 +273,10 @@ fun PlayerViewScreen(
                 MusicController(icon = painterResource(R.drawable.next_svgrepo_com)) {
                     viewModel.nextPlayBack()
                 }
+            }
+
+            if(viewModel.showSleepTimerDialog){
+                SleepTimerSheet()
             }
         }
     }

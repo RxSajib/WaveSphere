@@ -1,6 +1,9 @@
 package com.zenbyte.studio.presentation.viewmodel.playerView
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
@@ -10,6 +13,7 @@ import com.zenbyte.studio.domain.usecase.MediaPlayControllerUseCase
 import com.zenbyte.studio.domain.usecase.RemoveSaveChannelUseCase
 import com.zenbyte.studio.domain.usecase.SaveChannelUseCase
 import com.zenbyte.studio.domain.usecase.local.DataStoreUseCase
+import com.zenbyte.studio.presentation.ui.data.AppConstant.ENABLE_SHOW_LIVE_INDICATOR
 import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,8 +36,11 @@ class PlayerViewModel @Inject constructor(
     val isChannelSavedUseCase: IsChannelSavedUseCase,
     val removeSaveChannelUseCase: RemoveSaveChannelUseCase,
     val mediaPlayControllerUseCase: MediaPlayControllerUseCase,
+    val dataStoreUseCase: DataStoreUseCase
 ) : ViewModel() {
 
+    val isShowLiveIndicator = dataStoreUseCase.getBoolData(key =  ENABLE_SHOW_LIVE_INDICATOR)
+    var showSleepTimerDialog by mutableStateOf(false)
 
     val currentChannel = mediaPlayControllerUseCase.playerController.currentChannel
     val isPlaying = mediaPlayControllerUseCase.playerController.isPlaying

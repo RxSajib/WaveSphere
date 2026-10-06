@@ -62,7 +62,8 @@ fun MyPlayerSnackBar(
     Row(
         modifier = modifier
             .fillMaxWidth()   .clip(shape = RoundedCornerShape(10.dp))
-            .background(color = buttonColor.copy(alpha = 0.15f))
+            .background(color = buttonColor.copy(alpha = 0.05f))
+            .border(width = 1.dp, color = buttonColor.copy(alpha = 0.08f), shape = RoundedCornerShape(10.dp))
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

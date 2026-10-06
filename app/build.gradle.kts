@@ -126,4 +126,6 @@ dependencies {
 // Allows to update the text of views at runtime without recreating the activity
     implementation("dev.b3nedikt.reword:reword:4.0.4")
 
+    implementation("com.revenuecat.purchases:purchases:10.21.1")
+
 }

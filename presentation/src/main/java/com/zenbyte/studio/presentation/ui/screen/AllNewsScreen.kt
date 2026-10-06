@@ -50,7 +50,7 @@ fun AllNewsScreen(rootBackStack: NavBackStack<NavKey>) {
         ) { innerPadding ->
             Box(modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)) {
+                .padding(top = innerPadding.calculateTopPadding())) {
                 if (newsList.isSuccess) {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         newsList.data?.let { myChannels ->

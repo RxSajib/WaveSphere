@@ -19,4 +19,8 @@ class DataStoreUseCase @Inject constructor(
     suspend fun saveIntData(key : String, value : Int) = dataStoreRepo.saveIntData(key = key, value = value)
 
     fun getIntData(key : String) = dataStoreRepo.getIntData(key = key)
+
+    suspend fun saveFlotData(key : String, value : Float) = dataStoreRepo.saveFlotData(key = key, value = value)
+
+    fun getFlotData(key : String) = dataStoreRepo.getFloatData(key = key)
 }

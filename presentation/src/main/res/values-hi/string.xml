@@ -1,5 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="live_stream_options">लाइव स्ट्रीम विकल्प</string>
+    <string name="auto_reconnect">ऑटो रिकनेक्ट</string>
+    <string name="automatically_reconnect_if_stream_lost">स्ट्रीम खो जाने पर स्वचालित रूप से पुनरारंभ करें</string>
+    <string name="continue_in_background">बैकग्राउंड में जारी रखें</string>
+    <string name="keep_playing_when_app_is_in_background">ऐप बैकग्राउंड में होने पर भी बजाना जारी रखें</string>
+    <string name="show_live_indicator">लाइव संकेतक दिखाएं</string>
+    <string name="display_live_badge_on_live_stations">लाइव स्टेशनों पर लाइव बैज प्रदर्शित करें</string>
+    <string name="buffering_timeout">बफरिंग टाइमआउट</string>
+    <string name="stop_playback_if_buffering_take_too_long">यदि बफरिंग में बहुत अधिक समय लगता है तो प्लेबैक बंद करें</string>
+    <string name="audio_recommended">ऑटो (अनुशंसित)</string>
+    <string name="audio_recommended_details">गुणवत्ता को स्वचालित रूप से समायोजित करें</string>
+    <string name="high">उच्च</string>
+    <string name="high_details">सर्वोत्तम गुणवत्ता, अधिक डेटा का उपयोग करता है</string>
+    <string name="medium">मध्यम</string>
+    <string name="medium_details">गुणवत्ता और डेटा उपयोग को संतुलित करें</string>
+    <string name="low">निम्न</string>
+    <string name="low_details">कम डेटा की खपत करता है</string>
+    <string name="kbps">kbps</string>
+    <string name="audio_quality">ऑडियो गुणवत्ता</string>
+    <string name="choose_streaming_quality">स्ट्रीमिंग गुणवत्ता चुनें</string>
+
+    <string name="crossfade">क्रॉसफ़ेड</string>
+    <string name="smooth_transition_between_songs">गानों के बीच सहज संक्रमण</string>
+    <string name="hi_there">नमस्ते!</string>
+    <string name="help_support_details">सहायता चाहिए? हम आपके लिए यहाँ हैं। उत्तर खोजें या हमसे संपर्क करें।</string>
+    <string name="popular_topics">लोकप्रिय विषय</string>
+
+    <string name="still_need_help">क्या अभी भी सहायता चाहिए?</string>
+    <string name="still_need_help_details">हम आपकी सहायता के लिए 24/7 यहाँ हैं</string>
+
+    <string name="playback_issues">प्लेबैक समस्याएं</string>
+    <string name="playback_issues_details">बफरिंग, प्लेबैक या स्ट्रीमिंग समस्याओं को ठीक करें</string>
+    <string name="premium_and_subscriptions">प्रीमियम और सदस्यताएँ</string>
+    <string name="premium_and_subscriptions_details">अपने प्रीमियम प्लान और भुगतान का प्रबंधन करें</string>
+    <string name="record_music">संगीत रिकॉर्ड करें</string>
+    <string name="record_music_details">अपने पसंदीदा संगीत को रिकॉर्ड और साझा करें</string>
+    <string name="privacy_and_security">गोपनीयता और सुरक्षा</string>
+    <string name="privacy_and_security_details">अपनी गोपनीयता और डेटा के बारे में जानें</string>
+    <string name="playback_issue_details">• अपने इंटरनेट कनेक्शन की जाँच करें। • वाई-फाई और मोबाइल डेटा के बीच स्विच करें। • सुनिश्चित करें कि आपका कनेक्शन स्थिर है। • स्टेशन को रोकें और फिर से चलाएं। • स्ट्रीम लोड होने के लिए कुछ सेकंड प्रतीक्षा करें। • दूसरा रेडियो स्टेशन चलाने का प्रयास करें। • जाँचें कि स्टेशन वर्तमान में ऑनलाइन है या नहीं। • ऐप को बंद करें और फिर से खोलें। • ऐप को अपडेट रखें। • यदि समस्या बनी रहती है, तो सहायता से संपर्क करें।</string>
+    <string name="premium_and_subscription_issue_details">• अपने इंटरनेट कनेक्शन की जाँच करें। • सुनिश्चित करें कि आपने सही खाते में साइन इन किया है। • ऐप में अपनी सदस्यता स्थिति की जाँच करें। • प्रीमियम खरीदने के बाद ऐप को पुनरारंभ करें। • अपनी खरीदारी सक्रिय होने के लिए कुछ क्षण प्रतीक्षा करें। • यदि प्रीमियम नहीं दिख रहा है तो **खरीदारी बहाल करें** का उपयोग करें। • सुनिश्चित करें कि आप खरीदारी के लिए उपयोग किए गए उसी Google खाते का उपयोग कर रहे हैं। • ऐप को नवीनतम संस्करण में अपडेट करें। • यदि भुगतान पहले ही पूरा हो चुका है तो फिर से खरीदने से बचें। • यदि समस्या बनी रहती है, तो सहायता से संपर्क करें।</string>
+    <string name="record_music_issue_details">• स्टेशन नहीं चल रहा या अनुपलब्ध है। • संगीत बफर हो रहा है या रुक रहा है। • ऑडियो में देरी हो रही है या बाधित है। • ध्वनि की गुणवत्ता खराब या विकृत है। • स्टेशन चलने पर भी कोई आवाज नहीं आ रही है। • संगीत अप्रत्याशित रूप से बंद हो जाता है। • गलत गाना या स्टेशन की जानकारी प्रदर्शित हो रही है। • यह जाँचने के लिए कि क्या समस्या स्टेशन-विशिष्ट है, दूसरा स्टेशन आज़माएँ। • ऐप को पुनरारंभ और फिर से प्रयास करें। • यदि समस्या बनी रहती है, तो सहायता से संपर्क करें।</string>
+    <string name="privacy_and_security_issue_details">• जानें कि आपके व्यक्तिगत डेटा को कैसे संभाला जाता है। • समझें कि ऐप कौन सी जानकारी एकत्र करता है। • समीक्षा करें कि आपका डेटा कैसे संग्रहीत और संरक्षित है। • ऐप अनुमतियों के बारे में जानें और उनकी आवश्यकता क्यों है। • समझें कि आपकी जानकारी का उपयोग कैसे किया जाता है। • जानें कि अपनी गोपनीयता सेटिंग्स को कैसे प्रबंधित करें। • अधिक जानकारी के लिए हमारी गोपनीयता नीति की समीक्षा करें। • आपकी जानकारी कभी भी तीसरे पक्ष को नहीं बेची जाती है। • नवीनतम सुरक्षा सुधारों के लिए ऐप को अपडेट रखें। • यदि आपकी गोपनीयता संबंधी चिंताएं हैं, तो सहायता से संपर्क करें।</string>
+
+    <string name="need_more_help">और सहायता चाहिए?</string>
+    <string name="contact_support">सहायता टीम से संपर्क करें</string>
+    <string name="contact_support_details">सहायता प्राप्त करने के लिए हमारी सहायता टीम के साथ चैट करें।</string>
+    <string name="email_us">हमें ईमेल करें</string>
+    <string name="email_us_details">हम आमतौर पर 24 घंटों के भीतर जवाब देते हैं</string>
+    <string name="chat_now">अभी चैट करें</string>
+    <string name="send_email">ईमेल भेजें</string>
 
     <string name="hint_choose_languages">अपनी पसंदीदा भाषाएँ चुनें। परिवर्तन लागू करने के लिए ऐप पुनः प्रारंभ होगा।</string>
     <string name="see_all">सभी देखें</string>

@@ -1,14 +1,17 @@
 package com.zenbyte.studio.presentation.viewmodel.search
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zenbyte.studio.data.local.dao.MyCountryDao
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.model.MyCountry
 import com.zenbyte.studio.domain.model.MyGenres
+import com.zenbyte.studio.domain.repository.local.CountryListLocal
 import com.zenbyte.studio.domain.usecase.CountryListUseCase
 import com.zenbyte.studio.domain.usecase.GetAllFavoriteChannelUseCase
 import com.zenbyte.studio.domain.usecase.GetSingleSaveChannel
@@ -33,14 +36,26 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.log
 import kotlin.time.Duration.Companion.milliseconds
 
+
+data class CountryUiState(
+    val countries: List<MyCountry> = emptyList(),
+    val isInitialLoading: Boolean = false,
+    val isRefreshing: Boolean = false,
+    val error: String? = null
+)
+
 private const val TAG = "SearchViewModel"
+
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     val countryListUseCase: CountryListUseCase,
@@ -52,32 +67,53 @@ class SearchViewModel @Inject constructor(
     val saveChannelUseCase: SaveChannelUseCase,
     val removeSaveChannelUseCase: RemoveSaveChannelUseCase,
     val isChannelSavedUseCase: IsChannelSavedUseCase,
-    val mediaPlayControllerUseCase: MediaPlayControllerUseCase
+    val mediaPlayControllerUseCase: MediaPlayControllerUseCase,
+    val countryListLocal: CountryListLocal
 ) : ViewModel() {
 
     private val searchInputMutableStateFlow = MutableStateFlow("")
     val searchInput = searchInputMutableStateFlow.asStateFlow()
 
 
-    private val newsListMutableStateFlow = MutableStateFlow< ApiState<List<MyChannel>>>(ApiState(isLoading = true))
+    private val newsListMutableStateFlow =
+        MutableStateFlow<ApiState<List<MyChannel>>>(ApiState(isLoading = true))
     val newsList = newsListMutableStateFlow.asStateFlow()
-
-    fun getNewsList(countryCode : String){
+    fun getNewsList(countryCode: String) {
         viewModelScope.launch {
             newsListMutableStateFlow.emit(ApiState(isLoading = true))
-            val response = searchChannelUseCase.getChannelBySearch(tag = "news", order = "news", countryCode = countryCode)
-            when(response){
-                is Resource.Success -> {
-                    MyCustomLogger.logMessageDebug(tag = TAG, message = response.data.toString())
-                    newsListMutableStateFlow.emit(ApiState(data = response.data?: emptyList(), isLoading = false, isSuccess = true))
-                }
-                is Resource.Loading -> {
+            val response = searchChannelUseCase.getChannelBySearch(
+                tag = "news",
+                order = "news",
+                countryCode = countryCode
+            )
+            response.collect { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        newsListMutableStateFlow.emit(
+                            ApiState(
+                                data = response.data ?: emptyList(),
+                                isLoading = false,
+                                isSuccess = true
+                            )
+                        )
+                    }
 
-                }
-                is Resource.Error -> {
-                    newsListMutableStateFlow.emit(ApiState(errorMessage = response.message, isLoading = false, isSuccess = false))
+                    is Resource.Loading -> {
+
+                    }
+
+                    is Resource.Error -> {
+                        newsListMutableStateFlow.emit(
+                            ApiState(
+                                errorMessage = response.message,
+                                isLoading = false,
+                                isSuccess = false
+                            )
+                        )
+                    }
                 }
             }
+
         }
     }
 
@@ -86,11 +122,11 @@ class SearchViewModel @Inject constructor(
     fun getSaveChannel(channelID: String) =
         isChannelSavedUseCase.isChannelSaved(stationuuid = channelID)
 
-    fun saveChannel(myChannel: MyChannel){
+    fun saveChannel(myChannel: MyChannel) {
         viewModelScope.launch {
-            if(!isChannelSavedUseCase.isChannelSaved(myChannel.stationuuid).first()){
+            if (!isChannelSavedUseCase.isChannelSaved(myChannel.stationuuid).first()) {
                 saveChannelUseCase.saveChannel(myChannel = myChannel)
-            }else {
+            } else {
                 removeSaveChannelUseCase.removeSaveChannel(channelID = myChannel.stationuuid)
             }
 
@@ -98,8 +134,7 @@ class SearchViewModel @Inject constructor(
     }
 
 
-
-    fun inputSearchData(searchKey : String){
+    fun inputSearchData(searchKey: String) {
         viewModelScope.launch {
             searchInputMutableStateFlow.emit(searchKey)
         }
@@ -108,38 +143,83 @@ class SearchViewModel @Inject constructor(
     private var selectedMenuPositionMutableStateFlow = MutableStateFlow(1)
     val selectedMenuPosition = selectedMenuPositionMutableStateFlow.asStateFlow()
 
-    private val countryListMutableStateFlow = MutableStateFlow<ApiState< List<MyCountry>>>(ApiState(isLoading = true))
+    private val countryListMutableStateFlow =
+        MutableStateFlow<ApiState<List<MyCountry>>>(ApiState(isLoading = true))
     val countryState = countryListMutableStateFlow.asStateFlow()
 
     private val currentPayingChannelMutableStateFlow = MutableStateFlow<MyChannel?>(null)
     val currentPlayingChannel = currentPayingChannelMutableStateFlow.asStateFlow()
     var isMusicPlaying by mutableStateOf(false)
 
-    fun setSelectedMenuPosition(position: Int){
+    fun setSelectedMenuPosition(position: Int) {
         viewModelScope.launch {
             selectedMenuPositionMutableStateFlow.emit(position)
         }
     }
 
+    private val _uiState = MutableStateFlow(CountryUiState())
+    val uiState = _uiState.asStateFlow()
+
     init {
         getAllCountry()
-       /* getNewsList(
-            countryCode = "in"
-        )*/
+        /* getNewsList(
+             countryCode = "in"
+         )*/
         getNewsListByCountry()
         getCurrentPlayingChannelInfo()
         getGenresData()
+        getCountryByLocal()
+        getNewsChannel()
     }
 
-    fun getGenresData() : List<MyGenres>{
+    private fun getNewsChannel(){
+        viewModelScope.launch {
+            val response = searchChannelUseCase.getChannelBySearch(tag = "news", null, null)
+            response.collect { apiResponse ->
+                when(apiResponse){
+                    is Resource.Loading -> {
+                        MyCustomLogger.logMessageInfo(tag = TAG, message = "loading news data")
+                    }
+                    is Resource.Error -> {
+                        MyCustomLogger.logMessageInfo(tag = TAG, message = "error fetch news data")
+                    }
+                    is Resource.Success -> {
+                        MyCustomLogger.logMessageInfo(tag = TAG, message = "success fetch news data")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getCountryByLocal() {
+        viewModelScope.launch {
+            countryListLocal.getAllCountry().collectLatest { countries ->
+                _uiState.update {
+                    it.copy(
+                        countries = countries,
+                        isInitialLoading =
+                            countries.isEmpty() && it.isInitialLoading
+                    )
+                }
+            }
+        }
+    }
+
+    fun getGenresData(): List<MyGenres> {
         return GenresData.getGenres(context = context)
     }
 
-    private fun getNewsListByCountry(){
+    private fun getNewsListByCountry() {
         viewModelScope.launch {
             localChannelUseCase.getChannelByTags(tags = NEWS_TAG, country = context.getSimCountry())
                 .collect { channels ->
-                    newsListMutableStateFlow.emit(ApiState(data = channels, isLoading = false, isSuccess = true))
+                    newsListMutableStateFlow.emit(
+                        ApiState(
+                            data = channels,
+                            isLoading = false,
+                            isSuccess = true
+                        )
+                    )
                 }
         }
     }
@@ -153,13 +233,13 @@ class SearchViewModel @Inject constructor(
 
     }
 
-    fun isPlaying(myChannel: MyChannel) : StateFlow<Boolean>{
+    fun isPlaying(myChannel: MyChannel): StateFlow<Boolean> {
         return flow {
             mediaPlayControllerUseCase.playerController.isPlaying.collect { isPlaying ->
-                if(myChannel.stationuuid == currentPlayingChannel.value?.stationuuid){
+                if (myChannel.stationuuid == currentPlayingChannel.value?.stationuuid) {
                     emit(isPlaying)
                     return@collect
-                }else{
+                } else {
                     emit(false)
                     return@collect
                 }
@@ -175,53 +255,71 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             mediaPlayControllerUseCase.playerController.isPlaying.first().let { isPlaying ->
                 if (isPlaying) {
-                    if(currentPlayingChannel.value == null){
-                        mediaPlayControllerUseCase.playAudio( myChannel = channels, index = index)
-                    }else {
-                        if(myChannel.stationuuid == currentPlayingChannel.value?.stationuuid){
+                    if (currentPlayingChannel.value == null) {
+                        mediaPlayControllerUseCase.playAudio(myChannel = channels, index = index)
+                    } else {
+                        if (myChannel.stationuuid == currentPlayingChannel.value?.stationuuid) {
                             mediaPlayControllerUseCase.playerController.pause()
-                        }else {
-                            mediaPlayControllerUseCase.playAudio( myChannel = channels, index = index)
+                        } else {
+                            mediaPlayControllerUseCase.playAudio(
+                                myChannel = channels,
+                                index = index
+                            )
                         }
                     }
 
-                }else {
-                    if(currentPlayingChannel.value == null){
-                        mediaPlayControllerUseCase.playAudio( myChannel = channels, index = index)
-                    }else {
-                        if(myChannel.stationuuid == currentPlayingChannel.value?.stationuuid){
+                } else {
+                    if (currentPlayingChannel.value == null) {
+                        mediaPlayControllerUseCase.playAudio(myChannel = channels, index = index)
+                    } else {
+                        if (myChannel.stationuuid == currentPlayingChannel.value?.stationuuid) {
                             mediaPlayControllerUseCase.playerController.singlePlay()
-                        }else {
-                            mediaPlayControllerUseCase.playAudio( myChannel = channels, index = index)
+                        } else {
+                            mediaPlayControllerUseCase.playAudio(
+                                myChannel = channels,
+                                index = index
+                            )
                         }
                     }
-
                 }
-                /* if (myChannel.stationuuid == currentPlayingChannel.value?.stationuuid) {
-                     mediaPlayControllerUseCase.playerController.pause()
-                 } else {
-                     mediaPlayControllerUseCase.playAudio(myChannel = channels, index = index)
-
-                 }*/
             }
         }
 
     }
 
-    fun getAllCountry(){
+    fun getAllCountry() {
         viewModelScope.launch {
-            countryListMutableStateFlow.emit(ApiState(isLoading = true))
-            when(val response = countryListUseCase.getCountryList()){
-                is Resource.Success -> {
-                    countryListMutableStateFlow.emit(ApiState(data = response.data?: emptyList(), isSuccess = true))
-                }
-                is Resource.Error -> {
-                    countryListMutableStateFlow.emit(ApiState(errorMessage = response.message, isSuccess = false))
-                }
-                is Resource.Loading -> {
+            val response = countryListUseCase.getCountryList()
+            response.collect { response ->
+                when (response) {
 
+                    is Resource.Success -> {
+
+                    }
+
+                    is Resource.Error -> {
+                        if (countryListLocal.getAllCountry().first().isEmpty()) {
+                            MyCustomLogger.logMessageInfo(tag = TAG, message = "error message ${response.message}")
+                            _uiState.emit(
+                                CountryUiState(
+                                    error = response.message
+                                )
+                            )
+                        }
+                    }
+
+                    is Resource.Loading -> {
+                        if (countryListLocal.getAllCountry().first().isEmpty()) {
+                            _uiState.update {
+                                CountryUiState(
+                                    isInitialLoading = true
+                                )
+                            }
+                        }
+                    }
                 }
             }
+
         }
     }
 

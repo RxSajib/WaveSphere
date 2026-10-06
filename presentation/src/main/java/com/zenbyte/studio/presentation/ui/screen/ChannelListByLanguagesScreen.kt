@@ -53,7 +53,7 @@ fun ChannelListByLanguagesScreen(languages: Languages) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding)
+                    .padding(top = innerPadding.calculateTopPadding())
             ) {
 
                 if (channelListState.isSuccess) {

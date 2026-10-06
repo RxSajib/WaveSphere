@@ -52,7 +52,7 @@ fun AllCountryScreen(rootBackStack: NavBackStack<NavKey>) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding),
+                    .padding(top = innerPadding.calculateTopPadding()),
                 contentAlignment = Alignment.Center
             ) {
                 if (countryList.isSuccess) {

@@ -51,7 +51,7 @@ fun LanguagesListScreen(rootBackStack: NavBackStack<NavKey>, backStack: NavBackS
                 contentPadding = PaddingValues(10.dp),
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding)
+                    .padding(top = innerPadding.calculateTopPadding())
             ) {
                 items(languagesList) { languages ->
                     LanguagesByChannelItem(languages) { selectedLan ->

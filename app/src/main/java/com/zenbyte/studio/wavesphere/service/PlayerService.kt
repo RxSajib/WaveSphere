@@ -6,8 +6,8 @@ import androidx.annotation.OptIn
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.MediaSession
+import com.zenbyte.studio.presentation.ui.player.MyPLayer.exoPlayer
 import com.zenbyte.studio.wavesphere.utils.MyCustomLogger
-import com.zenbyte.studio.wavesphere.WaveSphereApp
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "PlayerService"
@@ -28,7 +28,6 @@ class PlayerService (
 
     override fun onDestroy() {
         mediaSession.release()
-        WaveSphereApp.releaseExoPlayer()
         super.onDestroy()
     }
 
@@ -47,14 +46,14 @@ class PlayerService (
 
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaLibrarySession {
-        val session = MediaLibrarySession.Builder(this, WaveSphereApp.exoPlayer, callback).build()
+        val session = MediaLibrarySession.Builder(this, exoPlayer, callback).build()
         return session
     }
 
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         super.onTaskRemoved(rootIntent)
-        if (!WaveSphereApp.exoPlayer.isPlaying) {
+        if (!exoPlayer.isPlaying) {
             stopSelf()
         }
     }

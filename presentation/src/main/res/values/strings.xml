@@ -1,5 +1,59 @@
 <resources>
     <string name="app_name" translatable="false">WaveSphere</string>
+    <string name="live_stream_options">Live Stream Options</string>
+    <string name="auto_reconnect">Auto Reconnect</string>
+    <string name="automatically_reconnect_if_stream_lost">Automatically reconnect if stream lost</string>
+    <string name="continue_in_background">Continue in Background</string>
+    <string name="keep_playing_when_app_is_in_background">Keep playing when app is in background</string>
+    <string name="show_live_indicator">Show Live indicator</string>
+    <string name="display_live_badge_on_live_stations">Display LIVE badge on live stations</string>
+    <string name="buffering_timeout">Buffering Timeout</string>
+    <string name="stop_playback_if_buffering_take_too_long">Stop playback if buffering takes too long</string>
+    
+    <string name="audio_quality">Audio Quality</string>
+    <string name="choose_streaming_quality">Choose streaming quality</string>
+
+    <string name="crossfade">Crossfade</string>
+    <string name="smooth_transition_between_songs">Smooth transition between songs</string>
+
+    <string name="audio_recommended">Auto (Recommended)</string>
+    <string name="audio_recommended_details">Adjust quality automatically</string>"
+    <string name="high">High</string>
+    <string name="high_details">Best quality, uses more data</string>
+    <string name="medium">Medium</string>
+    <string name="medium_details">Balance quality and data usage</string>
+    <string name="low">Low</string>
+    <string name="low_details">Consumes less data</string>
+    <string name="kbps">kbps</string>
+
+    <string name="hi_there">Hi there!</string>
+    <string name="help_support_details">Need help? We\'re here for you. Find answers or reach out to us.</string>
+    <string name="popular_topics">Popular Topics</string>
+
+    <string name="playback_issue_details">• Check your internet connection. • Switch between Wi-Fi and mobile data. • Make sure your connection is stable. • Stop the station and play it again. • Wait a few seconds for the stream to load. • Try playing another radio station. • Check if the station is currently online. • Close and reopen the app. • Keep the app updated. • If the issue continues, contact support.</string>
+    <string name="premium_and_subscription_issue_details">• Check your internet connection. • Make sure you\'re signed in to the correct account. • Check your subscription status in the app. • Restart the app after purchasing Premium. • Wait a few moments for your purchase to activate. • Use **Restore Purchase** if Premium is not showing. • Make sure you\'re using the same Google account used for purchase. • Update the app to the latest version. • Avoid purchasing again if payment was already completed. • If the issue continues, contact support.</string>
+    <string name="record_music_issue_details">• Station not playing or unavailable. • Music keeps buffering or stopping. • Audio is delayed or interrupted. • Sound quality is poor or distorted. • No sound even when the station is playing. • Music stops unexpectedly. • Wrong song or station information is displayed. • Try another station to check if the issue is station-specific. • Restart the app and try again. • If the issue continues, contact support.</string>
+    <string name="privacy_and_security_issue_details">• Learn how your personal data is handled. • Understand what information the app collects. • Review how your data is stored and protected. • Learn about app permissions and why they are needed. • Understand how your information is used. • Learn how to manage your privacy settings. • Review our Privacy Policy for more details. • Your information is never sold to third parties. • Keep the app updated for the latest security improvements. • If you have privacy concerns, contact support.</string>
+
+    <string name="still_need_help">Still need help?</string>
+    <string name="still_need_help_details">We\'re here 24/7 to support you</string>
+
+    <string name="need_more_help">Need more help?</string>
+    <string name="contact_support">Contact Support</string>
+    <string name="contact_support_details">Chat with our support team to get help.</string>
+    <string name="email_us">Email Us</string>
+    <string name="email_us_details">We usually reply within 24 hours</string>
+    <string name="chat_now">Chat Now</string>
+    <string name="send_email">Send Email</string>
+
+    <string name="playback_issues">Playback Issues</string>
+    <string name="playback_issues_details">Fix buffering, playback or streaming issues</string>
+    <string name="premium_and_subscriptions">Premium &amp; Subscriptions</string>
+    <string name="premium_and_subscriptions_details">Manage your premium plan and payment</string>
+    <string name="record_music">Record Music</string>
+    <string name="record_music_details">Record and share your favorite music</string>
+    <string name="privacy_and_security">Privacy &amp; Security</string>
+    <string name="privacy_and_security_details">Learn about your privacy and data</string>
 
     <string name="hint_choose_languages">Choose your preferred languages The App will restart to apply changes</string>
     <string name="see_all">See All</string>

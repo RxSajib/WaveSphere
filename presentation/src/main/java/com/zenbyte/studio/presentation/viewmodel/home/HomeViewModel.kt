@@ -20,8 +20,10 @@ import com.zenbyte.studio.domain.usecase.IsChannelSavedUseCase
 import com.zenbyte.studio.domain.usecase.MediaPlayControllerUseCase
 import com.zenbyte.studio.domain.usecase.RemoveSaveChannelUseCase
 import com.zenbyte.studio.domain.usecase.SaveChannelUseCase
+import com.zenbyte.studio.domain.usecase.local.DataStoreUseCase
 import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
 import com.zenbyte.studio.domain.utils.Resource
+import com.zenbyte.studio.presentation.ui.data.AppConstant.ENABLE_SHOW_LIVE_INDICATOR
 import com.zenbyte.studio.presentation.viewmodel.utils.Extras
 import com.zenbyte.studio.presentation.viewmodel.utils.Extras.getSimCountry
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -59,7 +61,8 @@ class HomeViewModel @Inject constructor(
     val getSingleSaveChannel: GetSingleSaveChannel,
     val saveChannelUseCase: SaveChannelUseCase,
     val removeSaveChannelUseCase: RemoveSaveChannelUseCase,
-    val isChannelSavedUseCase: IsChannelSavedUseCase
+    val isChannelSavedUseCase: IsChannelSavedUseCase,
+    val dataStoreUseCase: DataStoreUseCase
 ) : ViewModel() {
 
 
@@ -72,6 +75,8 @@ class HomeViewModel @Inject constructor(
     val popularStation = channelMutableStateFlow.asStateFlow().map { it ->
         it.sortedBy { it.name }.take(5)
     }
+
+    val isShowLiveIndicator = dataStoreUseCase.getBoolData(key = ENABLE_SHOW_LIVE_INDICATOR)
 
     private val currentPayingChannelMutableStateFlow = MutableStateFlow<MyChannel?>(null)
     val currentPlayingChannel = currentPayingChannelMutableStateFlow.asStateFlow()
@@ -217,41 +222,48 @@ class HomeViewModel @Inject constructor(
 
     private fun getAllLocalChannel() {
         viewModelScope.launch {
-            when (countryListUseCase.getCountryList()) {
-                is Resource.Success -> {
+            val response = countryListUseCase.getCountryList()
+            response.collect { response ->
+                when (response) {
+                    is Resource.Success -> {
 
-                }
+                    }
 
-                is Resource.Error -> {
+                    is Resource.Error -> {
 
-                }
+                    }
 
-                is Resource.Loading -> {
+                    is Resource.Loading -> {
 
+                    }
                 }
             }
+
         }
     }
 
     private fun getAllChannel() {
         viewModelScope.launch {
             val allchannelResponse = countryListUseCase.getCountryList()
-            when (allchannelResponse) {
-                is Resource.Success -> {
-                    for (channel in allchannelResponse.data ?: emptyList()) {
-                        Log.d(TAG, "getAllChannel: ${channel.name}")
-                        getChannelByCountryUseCase.getChannelByCountry(countryName = channel.name)
+            allchannelResponse.collect { allchannelResponse ->
+                when (allchannelResponse) {
+                    is Resource.Success -> {
+                        for (channel in allchannelResponse.data ?: emptyList()) {
+                            Log.d(TAG, "getAllChannel: ${channel.name}")
+                            getChannelByCountryUseCase.getChannelByCountry(countryName = channel.name)
+                        }
+                    }
+
+                    is Resource.Error -> {
+
+                    }
+
+                    is Resource.Loading -> {
+
                     }
                 }
-
-                is Resource.Error -> {
-
-                }
-
-                is Resource.Loading -> {
-
-                }
             }
+
         }
     }
 
@@ -260,19 +272,22 @@ class HomeViewModel @Inject constructor(
 
             val response = getChannelByCountryUseCase.getChannelByCountry(
                 myContext.getSimCountry().ifEmpty { "IR" })
-            when (response) {
-                is Resource.Success -> {
-                    channelMutableStateFlow.emit(response.data ?: emptyList())
-                }
+            response.collect { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        channelMutableStateFlow.emit(response.data ?: emptyList())
+                    }
 
-                is Resource.Error -> {
-                    channelMutableStateFlow.emit(emptyList())
-                }
+                    is Resource.Error -> {
+                        channelMutableStateFlow.emit(emptyList())
+                    }
 
-                is Resource.Loading -> {
+                    is Resource.Loading -> {
 
+                    }
                 }
             }
+
         }
     }
 

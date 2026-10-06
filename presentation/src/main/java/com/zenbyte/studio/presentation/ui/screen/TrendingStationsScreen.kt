@@ -52,7 +52,7 @@ fun TrendingStationsScreen(modifier: Modifier = Modifier, rootBackStack: NavBack
 
             Box(modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding), contentAlignment = Alignment.Center){
+                .padding(top = innerPadding.calculateTopPadding()), contentAlignment = Alignment.Center){
 
                 if(trendingChannelList.isSuccess){
                     LazyVerticalGrid(

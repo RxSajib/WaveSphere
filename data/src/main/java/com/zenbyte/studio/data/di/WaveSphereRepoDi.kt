@@ -3,9 +3,11 @@ package com.zenbyte.studio.data.di
 import com.zenbyte.studio.data.remote.repoimpl.AppSettingImpl
 import com.zenbyte.studio.data.remote.repoimpl.local.LocalChannelRepoImpl
 import com.zenbyte.studio.data.remote.repoimpl.WaveSphereImpl
+import com.zenbyte.studio.data.remote.repoimpl.local.CountryListLocalRepoImpl
 import com.zenbyte.studio.domain.repository.AppSetting
 import com.zenbyte.studio.domain.repository.local.LocalChannelRepo
 import com.zenbyte.studio.domain.repository.WaveSphereRepo
+import com.zenbyte.studio.domain.repository.local.CountryListLocal
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -31,4 +33,8 @@ abstract class WaveSphereRepoDi {
     @Binds
     @Singleton
     abstract fun bindLocalChannelRepo(localChannelRepoImpl: LocalChannelRepoImpl) : LocalChannelRepo
+
+    @Binds
+    @Singleton
+    abstract fun bindLocalCountryRepo(countryListLocalRepoImpl: CountryListLocalRepoImpl) : CountryListLocal
 }

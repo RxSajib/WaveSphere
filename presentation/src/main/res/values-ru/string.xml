@@ -1,5 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="live_stream_options">Опции прямого эфира</string>
+    <string name="auto_reconnect">Автопереподключение</string>
+    <string name="automatically_reconnect_if_stream_lost">Автоматически переподключаться при потере потока</string>
+    <string name="continue_in_background">Продолжать в фоновом режиме</string>
+    <string name="keep_playing_when_app_is_in_background">Продолжать воспроизведение, когда приложение в фоновом режиме</string>
+    <string name="show_live_indicator">Показывать индикатор прямого эфира</string>
+    <string name="display_live_badge_on_live_stations">Отображать значок LIVE на станциях прямого эфира</string>
+    <string name="buffering_timeout">Тайм-аут буферизации</string>
+    <string name="stop_playback_if_buffering_take_too_long">Остановить воспроизведение, если буферизация занимает слишком много времени</string>
+    <string name="audio_recommended">Авто (рекомендуется)</string>
+    <string name="audio_recommended_details">Автоматическая настройка качества</string>
+    <string name="high">Высокое</string>
+    <string name="high_details">Лучшее качество, потребляет больше данных</string>
+    <string name="medium">Среднее</string>
+    <string name="medium_details">Баланс качества и использования данных</string>
+    <string name="low">Низкое</string>
+    <string name="low_details">Потребляет меньше данных</string>
+    <string name="kbps">кбит/с</string>
+
+    <string name="audio_quality">Качество аудио</string>
+    <string name="choose_streaming_quality">Выберите качество потоковой передачи</string>
+
+    <string name="crossfade">Кроссфейд</string>
+    <string name="smooth_transition_between_songs">Плавный переход между песнями</string>
+
+    <string name="hi_there">Привет!</string>
+    <string name="help_support_details">Нужна помощь? Мы здесь для вас. Найдите ответы или свяжитесь с нами.</string>
+    <string name="popular_topics">Популярные темы</string>
+
+    <string name="still_need_help">Все еще нужна помощь?</string>
+    <string name="still_need_help_details">Мы здесь 24/7, чтобы поддержать вас</string>
+
+    <string name="playback_issues">Проблемы с воспроизведением</string>
+    <string name="playback_issues_details">Устранение проблем с буферизацией, воспроизведением или потоковой передачей</string>
+    <string name="premium_and_subscriptions">Премиум и подписки</string>
+    <string name="premium_and_subscriptions_details">Управление премиум-планом и оплатой</string>
+    <string name="record_music">Запись музыки</string>
+    <string name="record_music_details">Записывайте и делитесь своей любимой музыкой</string>
+    <string name="privacy_and_security">Конфиденциальность и безопасность</string>
+    <string name="privacy_and_security_details">Узнайте о своей конфиденциальности и данных</string>
+    <string name="playback_issue_details">• Проверьте интернет-соединение. • Переключитесь между Wi-Fi и мобильными данными. • Убедитесь, что ваше соединение стабильно. • Остановите станцию и запустите ее снова. • Подождите несколько секунд для загрузки потока. • Попробуйте включить другую радиостанцию. • Проверьте, находится ли станция в сети в данный момент. • Закройте и снова откройте приложение. • Регулярно обновляйте приложение. • Если проблема не решена, обратитесь в службу поддержки.</string>
+    <string name="premium_and_subscription_issue_details">• Проверьте интернет-соединение. • Убедитесь, что вы вошли в правильную учетную запись. • Проверьте статус подписки в приложении. • Перезапустите приложение после покупки Premium. • Подождите несколько минут для активации покупки. • Используйте **Восстановить покупку**, если статус Premium не отображается. • Убедитесь, что используете ту же учетную запись Google, которая использовалась для покупки. • Обновите приложение до последней версии. • Избегайте повторной покупки, если платеж уже был совершен. • Если проблема не решена, обратитесь в службу поддержки.</string>
+    <string name="record_music_issue_details">• Станция не воспроизводится или недоступна. • Музыка постоянно буферизуется или прерывается. • Аудио задерживается или прерывается. • Качество звука плохое или искаженное. • Нет звука, даже когда станция запущена. • Музыка неожиданно останавливается. • Отображается неверная информация о песне или станции. • Попробуйте другую станцию, чтобы проверить, не связана ли проблема только с ней. • Перезапустите приложение и попробуйте снова. • Если проблема не решена, обратитесь в службу поддержки.</string>
+    <string name="privacy_and_security_issue_details">• Узнайте, как обрабатываются ваши персональные данные. • Поймите, какую информацию собирает приложение. • Узнайте, как ваши данные хранятся и защищаются. • Ознакомьтесь с разрешениями приложения и причинами их необходимости. • Поймите, как используется ваша информация. • Узнайте, как управлять настройками конфиденциальности. • Ознакомьтесь с нашей Политикой конфиденциальности для получения подробной информации. • Ваша информация никогда не продается третьим лицам. • Обновляйте приложение для получения последних улучшений безопасности. • Если у вас есть вопросы по конфиденциальности, обратитесь в службу поддержки.</string>
+
+    <string name="need_more_help">Нужна дополнительная помощь?</string>
+    <string name="contact_support">Связаться с поддержкой</string>
+    <string name="contact_support_details">Чат с нашей службой поддержки для получения помощи.</string>
+    <string name="email_us">Напишите нам</string>
+    <string name="email_us_details">Мы обычно отвечаем в течение 24 часов</string>
+    <string name="chat_now">Чат сейчас</string>
+    <string name="send_email">Отправить письмо</string>
     <string name="hint_choose_languages">Выберите предпочитаемые языки. Для применения изменений приложение будет перезапущено.</string>
     <string name="see_all">Показать все</string>
     <string name="home_header_subtitle">Давайте наслаждаться миром радио</string>

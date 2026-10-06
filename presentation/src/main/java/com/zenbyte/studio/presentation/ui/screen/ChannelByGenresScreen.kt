@@ -66,7 +66,7 @@ fun ChannelByGenresScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding), contentAlignment = Alignment.Center
+                    .padding(top = innerPadding.calculateTopPadding()), contentAlignment = Alignment.Center
             ) {
 
                 if (channelListState.isSuccess) {
