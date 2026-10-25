@@ -1,13 +1,13 @@
 package com.zenbyte.studio.presentation.ui.screen
 
 import android.annotation.SuppressLint
-import android.util.Log
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -36,11 +35,8 @@ import com.zenbyte.studio.presentation.ui.component.MySectionHeader
 import com.zenbyte.studio.presentation.ui.component.NowPlayingComponent
 import com.zenbyte.studio.presentation.ui.navigation.AppDestination
 import com.zenbyte.studio.presentation.ui.component.CategoryList
+import com.zenbyte.studio.presentation.viewmodel.utils.Extras.getCurrentTime
 import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 private const val TAG = "HomeScreen"
 
@@ -60,6 +56,7 @@ fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey
     val countryUiState by viewModel.uiState.collectAsStateWithLifecycle()
 
 
+
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         when{
             countryUiState.isInitialLoading -> {
@@ -76,7 +73,7 @@ fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey
                 ) {
 
                     item {
-                        HomeHeader()
+                        HomeHeader(viewModel = viewModel)
                         HeightGap(height = 20.dp)
                         currentPlayingChannel?.let { channel ->
                             NowPlayingComponent(

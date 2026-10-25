@@ -156,10 +156,10 @@ class SearchViewModel @Inject constructor(
 
     init {
         getAllCountry()
-        /* getNewsList(
-             countryCode = "in"
-         )*/
-        getNewsListByCountry()
+        getNewsList(
+             countryCode = context.getSimCountry().ifEmpty { "USA" }
+         )
+      //  getNewsListByCountry()
         getCurrentPlayingChannelInfo()
         getGenresData()
         getCountryByLocal()

@@ -23,6 +23,6 @@ interface WaveSphereApi {
         @Query("hidebroken") hideBroken: Boolean = true
     ): ChannelDto
 
-    @GET("stations")
+    @GET("stationsssss")
     suspend fun getAllStations() : ChannelDto
 }

@@ -25,9 +25,12 @@ import com.zenbyte.studio.domain.usecase.SearchChannelUseCase
 import com.zenbyte.studio.domain.usecase.local.DataStoreUseCase
 import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
 import com.zenbyte.studio.domain.utils.Resource
+import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.data.AppConstant.ENABLE_SHOW_LIVE_INDICATOR
 import com.zenbyte.studio.presentation.viewmodel.utils.Extras.getSimCountry
+import com.zenbyte.studio.presentation.viewmodel.utils.Extras.getTimeOfDay
 import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
+import com.zenbyte.studio.presentation.viewmodel.utils.enum.TimeOfDay
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -89,14 +92,26 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
+    var timeOfDay by mutableStateOf("")
+
     init {
-         getChannelByCountry()
+        getMyTimeOfDay()
+        getChannelByCountry()
         //     getAllChannel()
         //   getAllLocalChannel()
         getChannelByCountryCode()
         getCurrentPlayingChannelInfo()
         isMusicPlaying()
         getPopularTrendingStations()
+    }
+
+    private fun getMyTimeOfDay() {
+        timeOfDay = when (getTimeOfDay()) {
+            TimeOfDay.MORNING -> myContext.getString(R.string.good_morning)
+            TimeOfDay.AFTERNOON -> myContext.getString(R.string.good_afternoon)
+            TimeOfDay.EVENING -> myContext.getString(R.string.good_evening)
+            TimeOfDay.NIGHT -> myContext.getString(R.string.good_night)
+        }
     }
 
     private fun getPopularTrendingStations(){

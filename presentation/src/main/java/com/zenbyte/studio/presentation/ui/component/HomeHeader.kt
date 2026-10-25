@@ -18,14 +18,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.viewmodel.home.HomeViewModel
 
 @Composable
-fun HomeHeader(modifier: Modifier = Modifier) {
+fun HomeHeader(viewModel: HomeViewModel) {
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Column(modifier = Modifier.weight(1f)) {
 
             Text(
-                text = "Good Morning \uD83E\uDEF6",
+                text = "${viewModel.timeOfDay} \uD83E\uDEF6",
                 style = MaterialTheme.typography.titleMedium.copy(
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold
@@ -58,5 +59,5 @@ fun HomeHeader(modifier: Modifier = Modifier) {
 @Composable
 @Preview
 fun HomeHeaderPreview(modifier: Modifier = Modifier) {
-    HomeHeader()
+ //   HomeHeader(viewModel)
 }

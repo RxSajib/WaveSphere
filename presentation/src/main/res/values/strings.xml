@@ -1,4 +1,10 @@
 <resources>
+
+    <string name="good_morning">Good Morning</string>
+    <string name="good_afternoon">Good AfterNoon</string>
+    <string name="good_evening">Good Evening</string>
+    <string name="good_night">Good Night</string>
+
     <string name="app_name" translatable="false">WaveSphere</string>
     <string name="live_stream_options">Live Stream Options</string>
     <string name="auto_reconnect">Auto Reconnect</string>

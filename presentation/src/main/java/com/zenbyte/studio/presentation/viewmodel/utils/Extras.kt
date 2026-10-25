@@ -4,10 +4,13 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.icu.util.Calendar
+import android.icu.util.TimeZone
 import android.net.Uri
 import android.os.Build
 import android.telephony.TelephonyManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.Color
 import com.zenbyte.studio.presentation.BuildConfig
 import com.zenbyte.studio.presentation.R
@@ -30,11 +33,35 @@ import com.zenbyte.studio.presentation.viewmodel.utils.enum.ChannelLanguages
 import com.zenbyte.studio.presentation.viewmodel.utils.enum.GenresEnum
 import androidx.core.net.toUri
 import com.zenbyte.studio.presentation.viewmodel.utils.enum.AudioBitRate
+import com.zenbyte.studio.presentation.viewmodel.utils.enum.TimeOfDay
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 object Extras {
 
     const val SUPPORT_EMAIL= "sajibroy206@gmail.com"
     const val SUPPORT_NUMBER = "+8801771330378"
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getCurrentTime(): String {
+        val timeZone = ZoneId.systemDefault()
+        return ZonedDateTime.now(timeZone)
+            .format(DateTimeFormatter.ofPattern("hh:mm a"))
+    }
+
+    fun getTimeOfDay(timeZone: TimeZone = TimeZone.getDefault()): TimeOfDay {
+        val calendar = Calendar.getInstance(timeZone)
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+
+        return when (hour) {
+            in 5..11 -> TimeOfDay.MORNING
+            in 12..16 -> TimeOfDay.AFTERNOON
+            in 17..19 -> TimeOfDay.EVENING
+            else -> TimeOfDay.NIGHT
+        }
+    }
+
     fun Context.getAppVersion() : String {
         return try {
             val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
