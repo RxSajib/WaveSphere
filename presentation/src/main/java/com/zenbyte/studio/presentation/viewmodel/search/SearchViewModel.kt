@@ -11,6 +11,7 @@ import com.zenbyte.studio.data.local.dao.MyCountryDao
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.model.MyCountry
 import com.zenbyte.studio.domain.model.MyGenres
+import com.zenbyte.studio.domain.model.UiState
 import com.zenbyte.studio.domain.repository.local.CountryListLocal
 import com.zenbyte.studio.domain.usecase.CountryListUseCase
 import com.zenbyte.studio.domain.usecase.GetAllFavoriteChannelUseCase
@@ -46,13 +47,6 @@ import javax.inject.Inject
 import kotlin.math.log
 import kotlin.time.Duration.Companion.milliseconds
 
-
-data class CountryUiState(
-    val countries: List<MyCountry> = emptyList(),
-    val isInitialLoading: Boolean = false,
-    val isRefreshing: Boolean = false,
-    val error: String? = null
-)
 
 private const val TAG = "SearchViewModel"
 
@@ -157,7 +151,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private val _uiState = MutableStateFlow(CountryUiState())
+    private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -196,7 +190,7 @@ class SearchViewModel @Inject constructor(
             countryListLocal.getAllCountry().collectLatest { countries ->
                 _uiState.update {
                     it.copy(
-                        countries = countries,
+                        data = countries,
                         isInitialLoading =
                             countries.isEmpty() && it.isInitialLoading
                     )
@@ -301,7 +295,7 @@ class SearchViewModel @Inject constructor(
                         if (countryListLocal.getAllCountry().first().isEmpty()) {
                             MyCustomLogger.logMessageInfo(tag = TAG, message = "error message ${response.message}")
                             _uiState.emit(
-                                CountryUiState(
+                                UiState(
                                     error = response.message
                                 )
                             )
@@ -311,7 +305,7 @@ class SearchViewModel @Inject constructor(
                     is Resource.Loading -> {
                         if (countryListLocal.getAllCountry().first().isEmpty()) {
                             _uiState.update {
-                                CountryUiState(
+                                UiState(
                                     isInitialLoading = true
                                 )
                             }

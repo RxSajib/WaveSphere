@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
+import com.zenbyte.studio.domain.model.UiState
 import com.zenbyte.studio.domain.usecase.CountryListUseCase
 import com.zenbyte.studio.domain.usecase.GetAllFavoriteChannelUseCase
 import com.zenbyte.studio.domain.usecase.GetAllRadioStationsUseCase
@@ -20,12 +21,13 @@ import com.zenbyte.studio.domain.usecase.IsChannelSavedUseCase
 import com.zenbyte.studio.domain.usecase.MediaPlayControllerUseCase
 import com.zenbyte.studio.domain.usecase.RemoveSaveChannelUseCase
 import com.zenbyte.studio.domain.usecase.SaveChannelUseCase
+import com.zenbyte.studio.domain.usecase.SearchChannelUseCase
 import com.zenbyte.studio.domain.usecase.local.DataStoreUseCase
 import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
 import com.zenbyte.studio.domain.utils.Resource
 import com.zenbyte.studio.presentation.ui.data.AppConstant.ENABLE_SHOW_LIVE_INDICATOR
-import com.zenbyte.studio.presentation.viewmodel.utils.Extras
 import com.zenbyte.studio.presentation.viewmodel.utils.Extras.getSimCountry
+import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -42,6 +44,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.microseconds
@@ -54,6 +57,7 @@ class HomeViewModel @Inject constructor(
     @ApplicationContext val myContext: Context,
     val getChannelByCountryUseCase: GetChannelByCountryUseCase,
     val getAllRadioStationsUseCase: GetAllRadioStationsUseCase,
+    val searchChannelUseCase: SearchChannelUseCase,
     val localChannelUseCase: LocalChannelUseCase,
     val countryListUseCase: CountryListUseCase,
     val mediaPlayControllerUseCase: MediaPlayControllerUseCase,
@@ -82,14 +86,31 @@ class HomeViewModel @Inject constructor(
     val currentPlayingChannel = currentPayingChannelMutableStateFlow.asStateFlow()
     var isMusicPlaying by mutableStateOf(false)
 
+    private val _uiState = MutableStateFlow(UiState())
+    val uiState = _uiState.asStateFlow()
 
     init {
-        // getChannelByCountry()
+         getChannelByCountry()
         //     getAllChannel()
         //   getAllLocalChannel()
         getChannelByCountryCode()
         getCurrentPlayingChannelInfo()
         isMusicPlaying()
+        getPopularTrendingStations()
+    }
+
+    private fun getPopularTrendingStations(){
+        viewModelScope.launch {
+            localChannelUseCase.getChannelByCountryCode(countryCode = myContext.getSimCountry().ifEmpty { "USA" }).collect { channels ->
+                _uiState.update {
+                    it.copy(
+                        data = channels,
+                        isInitialLoading =
+                            channels.isEmpty() && it.isInitialLoading
+                    )
+                }
+            }
+        }
     }
 
     fun mediaPlayController(myChannel: MyChannel, channels: List<MyChannel>, index: Int) {
@@ -242,48 +263,35 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getAllChannel() {
-        viewModelScope.launch {
-            val allchannelResponse = countryListUseCase.getCountryList()
-            allchannelResponse.collect { allchannelResponse ->
-                when (allchannelResponse) {
-                    is Resource.Success -> {
-                        for (channel in allchannelResponse.data ?: emptyList()) {
-                            Log.d(TAG, "getAllChannel: ${channel.name}")
-                            getChannelByCountryUseCase.getChannelByCountry(countryName = channel.name)
-                        }
-                    }
-
-                    is Resource.Error -> {
-
-                    }
-
-                    is Resource.Loading -> {
-
-                    }
-                }
-            }
-
-        }
-    }
-
     private fun getChannelByCountry() {
         viewModelScope.launch {
 
-            val response = getChannelByCountryUseCase.getChannelByCountry(
-                myContext.getSimCountry().ifEmpty { "IR" })
+            val response = searchChannelUseCase.getChannelBySearch(countryCode =
+                myContext.getSimCountry().ifEmpty { "USA" }, order = null, tag = null)
             response.collect { response ->
                 when (response) {
                     is Resource.Success -> {
-                        channelMutableStateFlow.emit(response.data ?: emptyList())
                     }
 
                     is Resource.Error -> {
-                        channelMutableStateFlow.emit(emptyList())
+                        if (localChannelUseCase.getChannelByCountryCode(countryCode = myContext.getSimCountry().ifEmpty { "USA" }).first().isEmpty()) {
+                            MyCustomLogger.logMessageInfo(tag = TAG, message = "error message ${response.message}")
+                            _uiState.emit(
+                                UiState(
+                                    error = response.message
+                                )
+                            )
+                        }
                     }
 
                     is Resource.Loading -> {
-
+                        if (localChannelUseCase.getChannelByCountryCode(countryCode = myContext.getSimCountry().ifEmpty { "USA" }).first().isEmpty()) {
+                            _uiState.update {
+                                UiState(
+                                    isInitialLoading = true
+                                )
+                            }
+                        }
                     }
                 }
             }

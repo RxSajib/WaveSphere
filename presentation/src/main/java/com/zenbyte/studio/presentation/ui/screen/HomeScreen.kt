@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -34,6 +36,7 @@ import com.zenbyte.studio.presentation.ui.component.MySectionHeader
 import com.zenbyte.studio.presentation.ui.component.NowPlayingComponent
 import com.zenbyte.studio.presentation.ui.navigation.AppDestination
 import com.zenbyte.studio.presentation.ui.component.CategoryList
+import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
@@ -54,129 +57,148 @@ fun HomeScreen(modifier: Modifier = Modifier, rootBackStack: NavBackStack<NavKey
     val trendingChannel = viewModel.tranChannel.collectAsStateWithLifecycle(emptyList())
     val popularShort = viewModel.popularStation.collectAsStateWithLifecycle(emptyList())
     val currentPlayingChannel by viewModel.currentPlayingChannel.collectAsStateWithLifecycle()
+    val countryUiState by viewModel.uiState.collectAsStateWithLifecycle()
 
 
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize(),
-        contentPadding = PaddingValues(16.dp)
-
-    ) {
-
-        item {
-            HomeHeader()
-            HeightGap(height = 20.dp)
-            currentPlayingChannel?.let { channel ->
-                NowPlayingComponent(
-                    context = context,
-                    channel = channel,
-                    viewModel = viewModel,
-                    isBuffering = viewModel.mediaPlayControllerUseCase.playerController.isLoading.collectAsStateWithLifecycle(
-                        false
-                    ).value
-                )
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        when{
+            countryUiState.isInitialLoading -> {
+                CircularProgressIndicator()
             }
+            countryUiState.data.isNotEmpty() -> {
+                MyCustomLogger.logMessageInfo(tag = TAG, message = "data ---")
 
-            HeightGap(height = 15.dp)
-            MySectionHeader(
-                title = stringResource(R.string.trending_stations),
-                showSeeAll = true,
-                onClickSeeAll = {
-                    rootBackStack.add(
-                        AppDestination.Dest(
-                            firstDestName = AppDestination.Dest.TrendingStations::class.simpleName
-                                ?: ""
+                LazyColumn(
+                    modifier = modifier
+                        .fillMaxSize(),
+                    contentPadding = PaddingValues(16.dp)
+
+                ) {
+
+                    item {
+                        HomeHeader()
+                        HeightGap(height = 20.dp)
+                        currentPlayingChannel?.let { channel ->
+                            NowPlayingComponent(
+                                context = context,
+                                channel = channel,
+                                viewModel = viewModel,
+                                isBuffering = viewModel.mediaPlayControllerUseCase.playerController.isLoading.collectAsStateWithLifecycle(
+                                    false
+                                ).value
+                            )
+                        }
+
+                        HeightGap(height = 15.dp)
+                        MySectionHeader(
+                            title = stringResource(R.string.trending_stations),
+                            showSeeAll = true,
+                            onClickSeeAll = {
+                                rootBackStack.add(
+                                    AppDestination.Dest(
+                                        firstDestName = AppDestination.Dest.TrendingStations::class.simpleName
+                                            ?: ""
+                                    )
+                                )
+                            }
                         )
-                    )
-                }
-            )
-            HeightGap(height = 20.dp)
-        }
+                        HeightGap(height = 20.dp)
+                    }
 
 
-        item {
-            LazyRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                items(trendingChannel.value) { channel ->
-                    Box(modifier = Modifier.width(itemWidth)) {
-                        MyCustomStation(
-                            isPlaying = viewModel.isPlaying(myChannel = channel).collectAsStateWithLifecycle(false).value,
-                            context = context, myChannel = channel,
-                            onClick = { myChannel ->
-                                // mediaPlayerViewModel.playMusic(myChannel = myChannel)
+                    item {
+                        LazyRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            items(trendingChannel.value) { channel ->
+                                Box(modifier = Modifier.width(itemWidth)) {
+                                    MyCustomStation(
+                                        isPlaying = viewModel.isPlaying(myChannel = channel)
+                                            .collectAsStateWithLifecycle(false).value,
+                                        context = context, myChannel = channel,
+                                        onClick = { myChannel ->
+                                            // mediaPlayerViewModel.playMusic(myChannel = myChannel)
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+                        HeightGap(height = 20.dp)
+                        MySectionHeader(
+                            title = stringResource(R.string.categories),
+                            showSeeAll = false
+                        )
+                        HeightGap(height = 15.dp)
+                        CategoryList(
+                            onClickCountry = {
+                                rootBackStack.add(
+                                    AppDestination.Dest(firstDestName = AppDestination.Dest.MyCountryList::class.simpleName.orEmpty())
+                                )
+                            },
+                            onClickLanguages = {
+                                rootBackStack.add(
+                                    AppDestination.Dest(firstDestName = AppDestination.Dest.Languages::class.simpleName.orEmpty())
+                                )
+                            },
+                            onClickGenres = {
+                                rootBackStack.add(
+                                    AppDestination.Dest(firstDestName = AppDestination.Dest.Genres::class.simpleName.orEmpty())
+                                )
+                            },
+                            onClickNews = {
+                                rootBackStack.add(
+                                    AppDestination.Dest(firstDestName = AppDestination.Dest.News::class.simpleName.orEmpty())
+                                )
+                            }
+                        )
+                        HeightGap(height = 20.dp)
+                        MySectionHeader(
+                            title = stringResource(R.string.popular_stations),
+                            showSeeAll = true,
+                            onClickSeeAll = {
+                                rootBackStack.add(
+                                    AppDestination.Dest(
+                                        firstDestName = AppDestination.Dest.PopularStations::class.simpleName
+                                            ?: ""
+                                    )
+                                )
                             }
                         )
                     }
+
+                    items(popularShort.value) { channel ->
+                        ChannelItem(
+                            context = context,
+                            myChannel = channel,
+                            isPlaying = viewModel.isPlaying(myChannel = channel)
+                                .collectAsStateWithLifecycle(false).value,
+                            modifier = Modifier,
+                            isBuffering = viewModel.isBufferingChannel(myChannel = channel)
+                                .collectAsStateWithLifecycle(false).value,
+                            isChannelFavorite =
+                                viewModel.getSaveChannel(channelID = channel.stationuuid)
+                                    .collectAsStateWithLifecycle(false).value,
+                            onClickFavorite = { myChannel ->
+                                viewModel.saveChannel(myChannel = myChannel)
+                            },
+                            onMediaController = { myChannel ->
+                                viewModel.mediaPlayController(
+                                    myChannel = myChannel,
+                                    channels = popularShort.value,
+                                    index = popularShort.value.indexOf(channel)
+                                )
+                            })
+                    }
+
                 }
             }
-        }
-
-        item {
-            HeightGap(height = 20.dp)
-            MySectionHeader(
-                title = stringResource(R.string.categories),
-                showSeeAll = false
-            )
-            HeightGap(height = 15.dp)
-            CategoryList(
-                onClickCountry = {
-                    rootBackStack.add(
-                        AppDestination.Dest(firstDestName = AppDestination.Dest.MyCountryList::class.simpleName.orEmpty())
-                    )
-                },
-                onClickLanguages = {
-                    rootBackStack.add(
-                        AppDestination.Dest(firstDestName = AppDestination.Dest.Languages::class.simpleName.orEmpty())
-                    )
-                },
-                onClickGenres = {
-                    rootBackStack.add(
-                        AppDestination.Dest(firstDestName = AppDestination.Dest.Genres::class.simpleName.orEmpty())
-                    )
-                },
-                onClickNews = {
-                    rootBackStack.add(
-                        AppDestination.Dest(firstDestName = AppDestination.Dest.News::class.simpleName.orEmpty())
-                    )
-                }
-            )
-            HeightGap(height = 20.dp)
-            MySectionHeader(
-                title = stringResource(R.string.popular_stations),
-                showSeeAll = true,
-                onClickSeeAll = {
-                    rootBackStack.add(
-                        AppDestination.Dest(
-                            firstDestName = AppDestination.Dest.PopularStations::class.simpleName
-                                ?: ""
-                        )
-                    )
-                }
-            )
-        }
-
-        items(popularShort.value) { channel ->
-            ChannelItem(
-                context = context,
-                myChannel = channel,
-                isPlaying = viewModel.isPlaying(myChannel = channel).collectAsStateWithLifecycle(false).value,
-                modifier = Modifier,
-                isBuffering = viewModel.isBufferingChannel(myChannel = channel).collectAsStateWithLifecycle(false).value,
-                isChannelFavorite =
-                    viewModel.getSaveChannel(channelID = channel.stationuuid)
-                        .collectAsStateWithLifecycle(false).value,
-                onClickFavorite = { myChannel ->
-                    viewModel.saveChannel(myChannel = myChannel)
-                },
-                onMediaController = { myChannel ->
-                    viewModel.mediaPlayController(
-                        myChannel = myChannel,
-                        channels = popularShort.value,
-                        index = popularShort.value.indexOf(channel)
-                    )
-                })
+            countryUiState.error != null -> {
+                MyCustomLogger.logMessageInfo(tag = TAG, message = "error ---")
+            }
         }
 
     }

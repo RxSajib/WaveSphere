@@ -22,6 +22,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import coil3.compose.LocalPlatformContext
+import com.zenbyte.studio.domain.model.MyCountry
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.component.CountryItem
 import com.zenbyte.studio.presentation.ui.component.CountryShimmer
@@ -34,8 +35,8 @@ import com.zenbyte.studio.presentation.viewmodel.search.SearchViewModel
 fun AllCountryScreen(rootBackStack: NavBackStack<NavKey>) {
 
     val viewModel: SearchViewModel = hiltViewModel()
-    val countryList by viewModel.countryState.collectAsStateWithLifecycle()
     val context = LocalPlatformContext.current
+    val countryList by viewModel.uiState.collectAsStateWithLifecycle()
 
     Surface(
         modifier = Modifier
@@ -49,33 +50,38 @@ fun AllCountryScreen(rootBackStack: NavBackStack<NavKey>) {
                 }
             }
         ) { innerPadding ->
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = innerPadding.calculateTopPadding()),
-                contentAlignment = Alignment.Center
+                    .padding(innerPadding),
             ) {
-                if (countryList.isSuccess) {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        items(items = countryList.data ?: emptyList()) { country ->
-                            CountryItem(context = context, country = country) {
-                                rootBackStack.add(
-                                    AppDestination.Dest(
-                                        firstDestName = AppDestination.Dest.ChannelByCountry::class.simpleName.orEmpty(),
-                                        countryName = it.name
+
+                when {
+                    countryList.isInitialLoading -> {
+                        CountryShimmer()
+                    }
+
+                    countryList.data.isNotEmpty() -> {
+                        LazyColumn(modifier = Modifier.fillMaxSize()) {
+                            items(items = countryList.data as List<MyCountry>) { country ->
+                                CountryItem(context = context, country = country) {
+                                    rootBackStack.add(
+                                        AppDestination.Dest(
+                                            firstDestName = AppDestination.Dest.ChannelByCountry::class.simpleName.orEmpty(),
+                                            countryName = it.name
+                                        )
                                     )
-                                )
+                                }
                             }
                         }
                     }
-                } else if (countryList.isLoading) {
-                    CountryShimmer()
-                } else {
-                    ServerError {
-                        viewModel.getAllCountry()
+
+                    countryList.error != null -> {
+
+                        ServerError {
+                            viewModel.getAllCountry()
+                        }
                     }
                 }
             }

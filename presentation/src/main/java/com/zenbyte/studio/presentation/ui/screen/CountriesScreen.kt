@@ -20,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import coil3.compose.LocalPlatformContext
+import com.zenbyte.studio.domain.model.MyCountry
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.component.CountryItem
 import com.zenbyte.studio.presentation.ui.component.CountryShimmer
@@ -40,9 +41,9 @@ fun CountriesScreen(rootBackStack: NavBackStack<NavKey>, viewModel: SearchViewMo
             countryList.isInitialLoading -> {
                 CountryShimmer()
             }
-            countryList.countries.isNotEmpty() -> {
+            countryList.data.isNotEmpty() -> {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(items = countryList.countries) { country ->
+                    items(items = countryList.data as List<MyCountry>) { country ->
                         CountryItem(context = context, country = country) {
                             rootBackStack.add(
                                 AppDestination.Dest(
