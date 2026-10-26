@@ -14,7 +14,9 @@ import com.zenbyte.studio.domain.usecase.IsChannelSavedUseCase
 import com.zenbyte.studio.domain.usecase.MediaPlayControllerUseCase
 import com.zenbyte.studio.domain.usecase.RemoveSaveChannelUseCase
 import com.zenbyte.studio.domain.usecase.SaveChannelUseCase
+import com.zenbyte.studio.domain.usecase.SearchChannelUseCase
 import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
+import com.zenbyte.studio.domain.utils.Resource
 import com.zenbyte.studio.presentation.viewmodel.state.ApiState
 import com.zenbyte.studio.presentation.viewmodel.utils.AppConst.NEWS_TAG
 import com.zenbyte.studio.presentation.viewmodel.utils.Extras
@@ -46,6 +48,7 @@ class NewsChannelViewModel @Inject constructor(
     val isChannelSavedUseCase: IsChannelSavedUseCase,
     val countryListUseCase: CountryListUseCase,
     val mediaPlayControllerUseCase: MediaPlayControllerUseCase,
+    val searchChannelUseCase: SearchChannelUseCase,
 ) : ViewModel() {
 
     private val newsListMutableStateFlow = MutableStateFlow< ApiState<List<MyChannel>>>(ApiState(isLoading = true))
@@ -56,9 +59,12 @@ class NewsChannelViewModel @Inject constructor(
     var isMusicPlaying by mutableStateOf(false)
 
     init {
-        getNewsListByCountry()
+     //   getNewsListByCountry()
         getCurrentPlayingChannelInfo()
         isMusicPlaying()
+        getNewsList(
+            countryCode = context.getSimCountry().ifEmpty { "USA" }
+        )
     }
 
     private fun isMusicPlaying() {
@@ -170,10 +176,49 @@ class NewsChannelViewModel @Inject constructor(
 
     private fun getNewsListByCountry(){
         viewModelScope.launch {
-            localChannelUseCase.getChannelByTags(tags = NEWS_TAG, country = context.getSimCountry())
+            localChannelUseCase.getChannelByTags(tags = NEWS_TAG, country = context.getSimCountry().ifEmpty { "USA" })
                 .collect { channels ->
                     newsListMutableStateFlow.emit(ApiState(data = channels, isLoading = false, isSuccess = true))
                 }
+        }
+    }
+
+    fun getNewsList(countryCode: String) {
+        viewModelScope.launch {
+            newsListMutableStateFlow.emit(ApiState(isLoading = true))
+            val response = searchChannelUseCase.getChannelBySearch(
+                tag = "news",
+                order = "news",
+                countryCode = countryCode
+            )
+            response.collect { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        newsListMutableStateFlow.emit(
+                            ApiState(
+                                data = response.data ?: emptyList(),
+                                isLoading = false,
+                                isSuccess = true
+                            )
+                        )
+                    }
+
+                    is Resource.Loading -> {
+
+                    }
+
+                    is Resource.Error -> {
+                        newsListMutableStateFlow.emit(
+                            ApiState(
+                                errorMessage = response.message,
+                                isLoading = false,
+                                isSuccess = false
+                            )
+                        )
+                    }
+                }
+            }
+
         }
     }
 }

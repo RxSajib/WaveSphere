@@ -1,8 +1,10 @@
 package com.zenbyte.studio.presentation.ui.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -25,15 +27,24 @@ fun HomeHeader(viewModel: HomeViewModel) {
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Column(modifier = Modifier.weight(1f)) {
 
-            Text(
-                text = "${viewModel.timeOfDay} \uD83E\uDEF6",
-                style = MaterialTheme.typography.titleMedium.copy(
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Bold
-                ),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = viewModel.timeOfDay,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                WidthGap(width = 5.dp)
+                Image(
+                    painter = painterResource(R.drawable.icon_emoji_happy),
+                    contentDescription = null,
+                    modifier = Modifier.size(25.dp)
+                )
+            }
+
             HeightGap(height = 4.dp)
             Text(
                 text = stringResource(R.string.home_header_subtitle),
