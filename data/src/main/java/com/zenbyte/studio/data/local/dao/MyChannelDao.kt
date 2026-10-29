@@ -32,16 +32,15 @@ interface MyChannelDao {
     @Query("""
         SELECT * FROM channel_db 
         WHERE (tags LIKE '%' || :tags || '%') 
-        AND (
-            countrycode = :country 
-            OR 
-            NOT EXISTS (SELECT 1 FROM channel_db WHERE (tags LIKE '%' || :tags || '%') AND countrycode = :country order by votes desc)
-        )
+        AND countrycode = :country
     """)
     fun getChannelByTags(tags : String, country : String) : Flow<List<MyChannelEntity>>
 
     @Query("SELECT COUNT(*) FROM channel_db WHERE language like :languages")
     fun getLengthChannelByLanguages(languages : String) : Flow<Int>
+
+    @Query("SELECT COUNT(*) FROM Channel_db WHERE (tags LIKE '%' || :tags || '%')  AND (countrycode = :country)")
+    fun getLengthChannelByTag(tags : String, country : String) : Flow<Int>
 
     @Query("SELECT * FROM channel_db WHERE language like :languages")
     fun getChannelsByLanguages(languages : String) : Flow<List<MyChannelEntity>>

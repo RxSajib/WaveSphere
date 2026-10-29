@@ -16,4 +16,6 @@ class LocalChannelUseCase @Inject constructor(val localChannelRepo: LocalChannel
     fun getChannelLengthByLanguages(languages : String) = localChannelRepo.getChannelLengthByLanguages(languages = languages)
 
     fun getChannelsByLanguages(languages : String) = localChannelRepo.getChannelByLanguages(languages = languages)
+
+    fun getChannelLengthByTags(tags : String, country : String) = localChannelRepo.getLengthChannelByTag(tags = tags, country = country)
 }

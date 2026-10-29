@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.toUpperCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.data.local.dao.MyCountryDao
@@ -32,6 +33,7 @@ import com.zenbyte.studio.presentation.viewmodel.utils.localDataSources.GenresDa
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -43,6 +45,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.Locale
+import java.util.Locale.getDefault
 import javax.inject.Inject
 import kotlin.math.log
 import kotlin.time.Duration.Companion.milliseconds
@@ -68,6 +72,7 @@ class SearchViewModel @Inject constructor(
     private val searchInputMutableStateFlow = MutableStateFlow("")
     val searchInput = searchInputMutableStateFlow.asStateFlow()
 
+    var genresData by mutableStateOf<List<MyGenres>>(emptyList())
 
     private val newsListMutableStateFlow =
         MutableStateFlow<ApiState<List<MyChannel>>>(ApiState(isLoading = true))
@@ -157,7 +162,7 @@ class SearchViewModel @Inject constructor(
     init {
         getAllCountry()
         getNewsList(
-             countryCode = context.getSimCountry().ifEmpty { "USA" }
+             countryCode = context.getSimCountry().ifEmpty { "USA" }.uppercase(getDefault())
          )
       //  getNewsListByCountry()
         getCurrentPlayingChannelInfo()
@@ -199,8 +204,11 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun getGenresData(): List<MyGenres> {
-        return GenresData.getGenres(context = context)
+     fun getGenresData() {
+       viewModelScope.launch {
+           MyCustomLogger.logMessageInfo(TAG, "getGenresData: ${context.getSimCountry().ifEmpty { "USA" }}")
+           genresData = GenresData.getGenres(context = context, localChannelUseCase = localChannelUseCase, scope = viewModelScope, country = context.getSimCountry().ifEmpty { "USA" }.uppercase())
+       }
     }
 
     private fun getNewsListByCountry() {

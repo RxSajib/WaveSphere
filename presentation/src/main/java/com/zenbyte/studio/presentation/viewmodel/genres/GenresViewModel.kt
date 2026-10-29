@@ -18,7 +18,8 @@ class GenresViewModel @Inject constructor(
     }
 
     fun getGenresData() : List<MyGenres>{
-        return GenresData.getGenres(context = context)
+      //  return GenresData.getGenres(context = context)
+        return emptyList()
     }
 
 }

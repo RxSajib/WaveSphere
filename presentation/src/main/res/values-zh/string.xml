@@ -4,6 +4,7 @@
     <string name="good_afternoon">下午好</string>
     <string name="good_evening">晚上好</string>
     <string name="good_night">晚安</string>
+    <string name="no_radio_stations_are_available_right_now">目前没有可用的广播电台。</string>
     <string name="live_stream_options">直播流选项</string>
     <string name="auto_reconnect">自动重连</string>
     <string name="automatically_reconnect_if_stream_lost">流失后自动重新连接</string>
