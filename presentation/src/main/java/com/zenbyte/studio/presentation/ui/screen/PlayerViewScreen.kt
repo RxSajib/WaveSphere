@@ -63,6 +63,7 @@ import androidx.navigation3.runtime.NavKey
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
+import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.bottomsheet.SleepTimerSheet
 import com.zenbyte.studio.presentation.ui.component.HeightGap
@@ -74,6 +75,7 @@ import com.zenbyte.studio.presentation.ui.component.MyCustomAppBar
 import com.zenbyte.studio.presentation.ui.component.PremiumTag
 import com.zenbyte.studio.presentation.ui.component.QuickAction
 import com.zenbyte.studio.presentation.ui.component.TightWrapText
+import com.zenbyte.studio.presentation.ui.component.UpNextStationCard
 import com.zenbyte.studio.presentation.ui.navigation.AppDestination
 import com.zenbyte.studio.presentation.ui.theme.genresColor
 import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
@@ -93,8 +95,7 @@ fun PlayerViewScreen(
     val coilsContext = LocalPlatformContext.current
     val viewModel: PlayerViewModel = hiltViewModel()
     val volume = viewModel.volume.collectAsStateWithLifecycle()
-    val channelList = channelData.channelList
-    
+
     val currentChannelByPlayer by viewModel.currentChannel.collectAsStateWithLifecycle()
     val isPlaying by viewModel.isPlaying.collectAsStateWithLifecycle()
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
@@ -151,18 +152,13 @@ fun PlayerViewScreen(
                 }
             )
 
-
-                MyCustomAppBar(title = "Now Playing", isBackButtonEnable = true, isPremiumEnable = false) {
-                    rootBackStack.removeLastOrNull()
-                }
-
         }
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = innerPadding.calculateTopPadding())
-                .padding(16.dp),
+                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             PremiumTag {
@@ -388,6 +384,25 @@ fun PlayerViewScreen(
                     )
                 }
             }
+
+            HeightGap(height = 10.dp)
+            Spacer(modifier = Modifier.weight(1f))
+            UpNextStationCard(
+                myChannel =  MyChannel(
+                    stationuuid = "station-002",
+                    name = "Foorti 88.0 FM",
+                    codec = "MP3",
+                    country = "Bangladesh",
+                    url = "https://example.com/foorti",
+                    urlResolved = "https://example.com/foorti/stream",
+                    favicon = "https://example.com/foorti.png",
+                    language = "bengali",
+                    votes = 950,
+                    tags = "pop,music,entertainment",
+                    lastcheckok = 1,
+                    sslError = 0
+                )
+            )
 
 
             if(viewModel.showSleepTimerDialog){

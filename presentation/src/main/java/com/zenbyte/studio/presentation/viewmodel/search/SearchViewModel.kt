@@ -193,6 +193,7 @@ class SearchViewModel @Inject constructor(
     private fun getCountryByLocal() {
         viewModelScope.launch {
             countryListLocal.getAllCountry().collectLatest { countries ->
+                MyCustomLogger.logMessageInfo(tag = TAG, message = countries.toString())
                 _uiState.update {
                     it.copy(
                         data = countries,
