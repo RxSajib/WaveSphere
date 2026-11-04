@@ -56,7 +56,7 @@ fun ChannelByCountryScreen(
     val channelListState by viewModel.channelList.collectAsStateWithLifecycle()
     val currentPlayingChannel by viewModel.currentPlayingChannel.collectAsStateWithLifecycle()
     val channelState by viewModel.uiState.collectAsStateWithLifecycle()
-
+    MyCustomLogger.logMessageInfo(tag = TAG, message = "init ChannelByCountryScreen ${channelState.data as List<MyChannel>}")
     LaunchedEffect(Unit) {
         viewModel.getChannelByCountryRemote(countryName = countryName)
         viewModel.getChannelByCountry(countryName = countryName)
@@ -102,8 +102,9 @@ fun ChannelByCountryScreen(
                                 isPlaying = viewModel.isPlaying(myChannel = channelData).collectAsStateWithLifecycle(false).value,
                                 context = contextCoil, myChannel = channelData,
                                 onClick = {myChannel ->
+                                    MyCustomLogger.logMessageInfo(tag = TAG, message = "${channelListState.data?.size}")
                                     backStack.add(
-                                        AppDestination.Dest.PlayerView(channel = myChannel, channelList = channelListState.data?: emptyList())
+                                        AppDestination.Dest.PlayerView(channel = myChannel, channelList = channelState.data as List<MyChannel>)
                                     )
                                 }
                             )

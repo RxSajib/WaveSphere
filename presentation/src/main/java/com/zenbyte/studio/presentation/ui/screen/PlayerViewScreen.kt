@@ -66,6 +66,7 @@ import coil3.request.ImageRequest
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.bottomsheet.SleepTimerSheet
+import com.zenbyte.studio.presentation.ui.bottomsheet.UpNextStationBottomSheet
 import com.zenbyte.studio.presentation.ui.component.HeightGap
 import com.zenbyte.studio.presentation.ui.component.WidthGap
 import com.zenbyte.studio.presentation.viewmodel.playerView.PlayerViewModel
@@ -78,6 +79,7 @@ import com.zenbyte.studio.presentation.ui.component.TightWrapText
 import com.zenbyte.studio.presentation.ui.component.UpNextStationCard
 import com.zenbyte.studio.presentation.ui.navigation.AppDestination
 import com.zenbyte.studio.presentation.ui.theme.genresColor
+import com.zenbyte.studio.presentation.viewmodel.home.HomeViewModel
 import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 import dev.vivvvek.seeker.Seeker
 import dev.vivvvek.seeker.SeekerDefaults
@@ -94,6 +96,7 @@ fun PlayerViewScreen(
 
     val coilsContext = LocalPlatformContext.current
     val viewModel: PlayerViewModel = hiltViewModel()
+    val homeViewModel : HomeViewModel = hiltViewModel()
     val volume = viewModel.volume.collectAsStateWithLifecycle()
 
     val currentChannelByPlayer by viewModel.currentChannel.collectAsStateWithLifecycle()
@@ -105,6 +108,7 @@ fun PlayerViewScreen(
 
     // Sync UI with the selected channel, then follow service updates (Next/Prev)
     val currentChannel = currentChannelByPlayer ?: channelData.channel
+    MyCustomLogger.logMessageInfo(tag = TAG, message = channelData.channelList.size.toString())
 
     LaunchedEffect(currentChannel) {
         viewModel.updateChannelUID(value = currentChannel.stationuuid)
@@ -401,12 +405,20 @@ fun PlayerViewScreen(
                     tags = "pop,music,entertainment",
                     lastcheckok = 1,
                     sslError = 0
-                )
+                ),
+                onClick = { channelData ->
+                    viewModel.isOpenNextTrackBottomSheet = true
+                }
             )
 
 
             if(viewModel.showSleepTimerDialog){
                 SleepTimerSheet()
+            }
+            if(viewModel.isOpenNextTrackBottomSheet){
+                UpNextStationBottomSheet(channelList = channelData.channelList, viewModel = homeViewModel){
+                    viewModel.isOpenNextTrackBottomSheet = false
+                }
             }
         }
     }

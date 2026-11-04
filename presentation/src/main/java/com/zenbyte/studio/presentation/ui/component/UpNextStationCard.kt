@@ -31,9 +31,10 @@ import coil3.request.crossfade
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
 @Composable
-fun UpNextStationCard(myChannel: MyChannel) {
+fun UpNextStationCard(myChannel: MyChannel, onClick: (MyChannel) -> Unit) {
 
     val context = LocalContext.current
 
@@ -52,6 +53,9 @@ fun UpNextStationCard(myChannel: MyChannel) {
             .background(color = MaterialTheme.colorScheme.primary.copy(
                 alpha = 0.01f
             ))
+            .debounceClickable{
+                onClick.invoke(myChannel)
+            }
             .padding(10.dp), verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -144,6 +148,7 @@ fun UpNextStationCardPreview() {
             tags = "pop,music,entertainment",
             lastcheckok = 1,
             sslError = 0
-        )
+        ),
+        onClick = {}
     )
 }
