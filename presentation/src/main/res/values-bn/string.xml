@@ -4,6 +4,8 @@
     <string name="good_afternoon">শুভ অপরাহ্ন</string>
     <string name="good_evening">শুভ সন্ধ্যা</string>
     <string name="good_night">শুভ রাত্রি</string>
+    <string name="up_next">এরপর বাজবে</string>
+    <string name="current_playing">বর্তমানে চলছে</string>
     <string name="no_radio_stations_are_available_right_now">এই মুহূর্তে কোনো রেডিও স্টেশন উপলব্ধ নেই।</string>
     <string name="live_stream_options">লাইভ স্ট্রিম অপশন</string>
     <string name="auto_reconnect">অটো রিকানেক্ট</string>

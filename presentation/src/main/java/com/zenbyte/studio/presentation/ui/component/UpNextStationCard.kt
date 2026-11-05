@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,12 +32,16 @@ import coil3.request.crossfade
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.presentation.R
 import com.zenbyte.studio.presentation.ui.theme.adjustedFontSize
+import com.zenbyte.studio.presentation.viewmodel.utils.MyCustomLogger
 import com.zenbyte.studio.presentation.viewmodel.utils.debounceClickable
 
+private const val TAG = "UpNextStationCard"
 @Composable
-fun UpNextStationCard(myChannel: MyChannel, onClick: (MyChannel) -> Unit) {
+fun UpNextStationCard(index : Int, myChannel: List<MyChannel>, onClick: () -> Unit) {
 
     val context = LocalContext.current
+    MyCustomLogger.logMessageInfo(tag = TAG, message = "index $index")
+    MyCustomLogger.logMessageInfo(tag = TAG, message = "list size ${myChannel.size}")
 
     Row(
         modifier = Modifier
@@ -50,11 +55,13 @@ fun UpNextStationCard(myChannel: MyChannel, onClick: (MyChannel) -> Unit) {
                 shape = RoundedCornerShape(10.dp)
             )
             .clip(shape = RoundedCornerShape(10.dp))
-            .background(color = MaterialTheme.colorScheme.primary.copy(
-                alpha = 0.01f
-            ))
-            .debounceClickable{
-                onClick.invoke(myChannel)
+            .background(
+                color = MaterialTheme.colorScheme.primary.copy(
+                    alpha = 0.01f
+                )
+            )
+            .debounceClickable {
+                onClick.invoke()
             }
             .padding(10.dp), verticalAlignment = Alignment.CenterVertically
     ) {
@@ -85,7 +92,7 @@ fun UpNextStationCard(myChannel: MyChannel, onClick: (MyChannel) -> Unit) {
                         .clip(RoundedCornerShape(10.dp))
                         .aspectRatio(1f),
                     model = ImageRequest.Builder(context = context)
-                        .data(myChannel.favicon.takeIf { it.isNotEmpty() && it != "null" })
+                        .data(if(myChannel.size > index+1) myChannel[index+1].favicon.takeIf { it.isNotEmpty() && it != "null" } else myChannel[index].favicon.takeIf { it.isNotEmpty() && it != "null" })
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.applogo),
@@ -98,7 +105,7 @@ fun UpNextStationCard(myChannel: MyChannel, onClick: (MyChannel) -> Unit) {
         WidthGap(width = 10.dp)
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = "UP NEXT",
+                text = if(myChannel.size > index+1) stringResource(R.string.up_next) else stringResource(R.string.current_playing),
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontSize = adjustedFontSize(8f),
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
@@ -106,19 +113,19 @@ fun UpNextStationCard(myChannel: MyChannel, onClick: (MyChannel) -> Unit) {
             )
             HeightGap(height = 10.dp)
             Text(
-                text = "Foorti 88.0 FM",
-                style = MaterialTheme.typography.bodyMedium.copy(
+                text = if(myChannel.size > index+1) myChannel[index+1].name else myChannel[index].name,
+                style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
                 )
             )
             Text(
-                text = "Dhaka Bangladesh",
+                text = if(myChannel.size > index+1) myChannel[index+1].tags else myChannel[index].tags,
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontSize = adjustedFontSize(8f),
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
                 )
-            )
+            ) 
         }
         WidthGap(width = 5.dp)
         IconButton(onClick = {}) {
@@ -131,24 +138,3 @@ fun UpNextStationCard(myChannel: MyChannel, onClick: (MyChannel) -> Unit) {
     }
 }
 
-@Composable
-@Preview
-fun UpNextStationCardPreview() {
-    UpNextStationCard(
-        myChannel = MyChannel(
-            stationuuid = "station-002",
-            name = "Foorti 88.0 FM",
-            codec = "MP3",
-            country = "Bangladesh",
-            url = "https://example.com/foorti",
-            urlResolved = "https://example.com/foorti/stream",
-            favicon = "https://example.com/foorti.png",
-            language = "bengali",
-            votes = 950,
-            tags = "pop,music,entertainment",
-            lastcheckok = 1,
-            sslError = 0
-        ),
-        onClick = {}
-    )
-}

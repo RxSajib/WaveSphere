@@ -56,7 +56,7 @@ fun ChannelByCountryScreen(
     val channelListState by viewModel.channelList.collectAsStateWithLifecycle()
     val currentPlayingChannel by viewModel.currentPlayingChannel.collectAsStateWithLifecycle()
     val channelState by viewModel.uiState.collectAsStateWithLifecycle()
-    MyCustomLogger.logMessageInfo(tag = TAG, message = "init ChannelByCountryScreen ${channelState.data as List<MyChannel>}")
+    MyCustomLogger.logMessageInfo(tag = TAG, message = "init ChannelByCountryScreen ${(channelState.data as List<MyChannel>).indexOf(currentPlayingChannel)}")
     LaunchedEffect(Unit) {
         viewModel.getChannelByCountryRemote(countryName = countryName)
         viewModel.getChannelByCountry(countryName = countryName)

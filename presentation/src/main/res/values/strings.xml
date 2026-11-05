@@ -5,6 +5,9 @@
     <string name="good_evening">Good Evening</string>
     <string name="good_night">Good Night</string>
 
+    <string name="up_next">Up Next</string>
+    <string name="current_playing">Current Playing</string>
+
     <string name="no_radio_stations_are_available_right_now">No radio stations are available right now.</string>
     <string name="app_name" translatable="false">WaveSphere</string>
     <string name="live_stream_options">Live Stream Options</string>

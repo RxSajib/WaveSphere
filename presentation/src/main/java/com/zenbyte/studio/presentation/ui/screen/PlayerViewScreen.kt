@@ -108,7 +108,6 @@ fun PlayerViewScreen(
 
     // Sync UI with the selected channel, then follow service updates (Next/Prev)
     val currentChannel = currentChannelByPlayer ?: channelData.channel
-    MyCustomLogger.logMessageInfo(tag = TAG, message = channelData.channelList.size.toString())
 
     LaunchedEffect(currentChannel) {
         viewModel.updateChannelUID(value = currentChannel.stationuuid)
@@ -392,21 +391,9 @@ fun PlayerViewScreen(
             HeightGap(height = 10.dp)
             Spacer(modifier = Modifier.weight(1f))
             UpNextStationCard(
-                myChannel =  MyChannel(
-                    stationuuid = "station-002",
-                    name = "Foorti 88.0 FM",
-                    codec = "MP3",
-                    country = "Bangladesh",
-                    url = "https://example.com/foorti",
-                    urlResolved = "https://example.com/foorti/stream",
-                    favicon = "https://example.com/foorti.png",
-                    language = "bengali",
-                    votes = 950,
-                    tags = "pop,music,entertainment",
-                    lastcheckok = 1,
-                    sslError = 0
-                ),
-                onClick = { channelData ->
+                index =  channelData.channelList.indexOf(currentChannel),
+                channelData.channelList,
+                onClick = {
                     viewModel.isOpenNextTrackBottomSheet = true
                 }
             )
