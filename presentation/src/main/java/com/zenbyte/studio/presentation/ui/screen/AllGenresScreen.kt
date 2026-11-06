@@ -40,13 +40,13 @@ fun AllGenresScreen(rootBackStack: NavBackStack<NavKey>) {
             }
         ) { innerPadding ->
             LazyVerticalGrid(
-                modifier = Modifier.fillMaxSize().padding(top = innerPadding.calculateTopPadding()),
+                modifier = Modifier.fillMaxSize().padding(innerPadding),
                 columns = GridCells.Fixed(3),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 contentPadding = PaddingValues(10.dp)
             ) {
-                items(viewModel.getGenresData()) { genre ->
+                items(viewModel.genresData) { genre ->
                     GenresItem(
                         genres = genre
                     ){genres ->

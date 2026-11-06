@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="good_morning">בוקר טוב</string>
+    <string name="good_afternoon">צהריים טובים</string>
+    <string name="good_evening">ערב טוב</string>
+    <string name="good_night">לילה טוב</string>
+    <string name="up_next">הבא בתור</string>
+    <string name="current_playing">מושמע כעת</string>
+    <string name="no_radio_stations_are_available_right_now">אין כרגע תחנות רדיו זמינות.</string>
     <string name="live_stream_options">אפשרויות סטרימינג בשידור חי</string>
     <string name="auto_reconnect">חיבור מחדש אוטומטי</string>
     <string name="automatically_reconnect_if_stream_lost">חיבור מחדש אוטומטי אם השידור אבד</string>

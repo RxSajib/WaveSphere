@@ -5,12 +5,14 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.toUpperCase
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.data.local.dao.MyCountryDao
 import com.zenbyte.studio.domain.model.MyChannel
 import com.zenbyte.studio.domain.model.MyCountry
 import com.zenbyte.studio.domain.model.MyGenres
+import com.zenbyte.studio.domain.model.UiState
 import com.zenbyte.studio.domain.repository.local.CountryListLocal
 import com.zenbyte.studio.domain.usecase.CountryListUseCase
 import com.zenbyte.studio.domain.usecase.GetAllFavoriteChannelUseCase
@@ -31,6 +33,7 @@ import com.zenbyte.studio.presentation.viewmodel.utils.localDataSources.GenresDa
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -42,17 +45,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.Locale
+import java.util.Locale.getDefault
 import javax.inject.Inject
 import kotlin.math.log
 import kotlin.time.Duration.Companion.milliseconds
 
-
-data class CountryUiState(
-    val countries: List<MyCountry> = emptyList(),
-    val isInitialLoading: Boolean = false,
-    val isRefreshing: Boolean = false,
-    val error: String? = null
-)
 
 private const val TAG = "SearchViewModel"
 
@@ -74,6 +72,7 @@ class SearchViewModel @Inject constructor(
     private val searchInputMutableStateFlow = MutableStateFlow("")
     val searchInput = searchInputMutableStateFlow.asStateFlow()
 
+    var genresData by mutableStateOf<List<MyGenres>>(emptyList())
 
     private val newsListMutableStateFlow =
         MutableStateFlow<ApiState<List<MyChannel>>>(ApiState(isLoading = true))
@@ -157,15 +156,15 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private val _uiState = MutableStateFlow(CountryUiState())
+    private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
     init {
         getAllCountry()
-        /* getNewsList(
-             countryCode = "in"
-         )*/
-        getNewsListByCountry()
+        getNewsList(
+             countryCode = context.getSimCountry().ifEmpty { "USA" }.uppercase(getDefault())
+         )
+      //  getNewsListByCountry()
         getCurrentPlayingChannelInfo()
         getGenresData()
         getCountryByLocal()
@@ -194,9 +193,10 @@ class SearchViewModel @Inject constructor(
     private fun getCountryByLocal() {
         viewModelScope.launch {
             countryListLocal.getAllCountry().collectLatest { countries ->
+                MyCustomLogger.logMessageInfo(tag = TAG, message = countries.toString())
                 _uiState.update {
                     it.copy(
-                        countries = countries,
+                        data = countries,
                         isInitialLoading =
                             countries.isEmpty() && it.isInitialLoading
                     )
@@ -205,8 +205,11 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun getGenresData(): List<MyGenres> {
-        return GenresData.getGenres(context = context)
+     fun getGenresData() {
+       viewModelScope.launch {
+           MyCustomLogger.logMessageInfo(TAG, "getGenresData: ${context.getSimCountry().ifEmpty { "USA" }}")
+           genresData = GenresData.getGenres(context = context, localChannelUseCase = localChannelUseCase, scope = viewModelScope, country = context.getSimCountry().ifEmpty { "USA" }.uppercase())
+       }
     }
 
     private fun getNewsListByCountry() {
@@ -301,7 +304,7 @@ class SearchViewModel @Inject constructor(
                         if (countryListLocal.getAllCountry().first().isEmpty()) {
                             MyCustomLogger.logMessageInfo(tag = TAG, message = "error message ${response.message}")
                             _uiState.emit(
-                                CountryUiState(
+                                UiState(
                                     error = response.message
                                 )
                             )
@@ -311,7 +314,7 @@ class SearchViewModel @Inject constructor(
                     is Resource.Loading -> {
                         if (countryListLocal.getAllCountry().first().isEmpty()) {
                             _uiState.update {
-                                CountryUiState(
+                                UiState(
                                     isInitialLoading = true
                                 )
                             }

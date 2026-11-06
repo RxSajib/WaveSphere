@@ -25,6 +25,7 @@ import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import coil3.compose.LocalPlatformContext
 import com.zenbyte.studio.domain.model.MyGenres
+import com.zenbyte.studio.presentation.ui.component.EmptyStations
 import com.zenbyte.studio.presentation.ui.component.MyCustomAppBar
 import com.zenbyte.studio.presentation.ui.component.MyCustomStation
 import com.zenbyte.studio.presentation.ui.component.MyCustomStationShimmerItem
@@ -70,28 +71,33 @@ fun ChannelByGenresScreen(
             ) {
 
                 if (channelListState.isSuccess) {
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(3),
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        contentPadding = PaddingValues(16.dp)
-                    ) {
-                        items(channelListState.data ?: emptyList()) { channelData ->
-                            MyCustomStation(
-                                isPlaying = viewModel.isPlaying(myChannel = channelData).collectAsStateWithLifecycle(false).value,
-                                context = contextCoil, myChannel = channelData,
-                                onClick = { myChannel ->
-                                    backStack.add(
-                                        AppDestination.Dest.PlayerView(
-                                            channel = myChannel,
-                                            channelList = channelListState.data ?: emptyList()
+                    if(!channelListState.data.isNullOrEmpty()){
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(3),
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(10.dp),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            contentPadding = PaddingValues(16.dp)
+                        ) {
+                            items(channelListState.data ?: emptyList()) { channelData ->
+                                MyCustomStation(
+                                    isPlaying = viewModel.isPlaying(myChannel = channelData).collectAsStateWithLifecycle(false).value,
+                                    context = contextCoil, myChannel = channelData,
+                                    onClick = { myChannel ->
+                                        backStack.add(
+                                            AppDestination.Dest.PlayerView(
+                                                channel = myChannel,
+                                                channelList = channelListState.data ?: emptyList()
+                                            )
                                         )
-                                    )
-                                }
-                            )
+                                    }
+                                )
+                            }
                         }
+                    }else {
+                        EmptyStations()
                     }
+
                 } else if (channelListState.isLoading) {
                     LazyVerticalGrid(
                         modifier = Modifier.fillMaxSize(), columns = GridCells.Fixed(3),

@@ -89,7 +89,7 @@ class ChannelByGenresViewModel @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     val channelList = tagsNameMutableStateFlow.filter { it.isNotEmpty() }.distinctUntilChanged().flatMapLatest { tagName ->
-        localChannelRepo.getChannelByTags(tags = tagName, country = context.getSimCountry())
+        localChannelRepo.getChannelByTags(tags = tagName, country = context.getSimCountry().ifEmpty { "USA" }.uppercase())
     }.map { channelList ->
         ApiState(data = channelList, isSuccess = true, isLoading = false)
     }.stateIn(

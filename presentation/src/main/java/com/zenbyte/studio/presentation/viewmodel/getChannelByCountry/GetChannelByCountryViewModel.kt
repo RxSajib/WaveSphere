@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zenbyte.studio.domain.model.MyChannel
+import com.zenbyte.studio.domain.model.UiState
 import com.zenbyte.studio.domain.usecase.GetChannelByCountryUseCase
 import com.zenbyte.studio.domain.usecase.local.LocalChannelUseCase
 import com.zenbyte.studio.domain.usecase.MediaPlayControllerUseCase
@@ -17,8 +18,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
@@ -39,6 +42,9 @@ class GetChannelByCountryViewModel @Inject constructor(
     val currentPlayingChannel = currentPayingChannelMutableStateFlow.asStateFlow()
     var isMusicPlaying by mutableStateOf(false)
 
+    private val _uiState = MutableStateFlow(UiState())
+    val uiState = _uiState.asStateFlow()
+
     init {
         getCurrentPlayingChannelInfo()
     }
@@ -48,7 +54,6 @@ class GetChannelByCountryViewModel @Inject constructor(
                 currentPayingChannelMutableStateFlow.emit(myChannel)
             }
         }
-
     }
 
     fun isPlaying(myChannel: MyChannel): StateFlow<Boolean> {
@@ -69,12 +74,50 @@ class GetChannelByCountryViewModel @Inject constructor(
         )
     }
 
+    fun getChannelByCountryRemote(countryName : String) {
+        viewModelScope.launch {
+            val response = getChannelByCountryUseCase.getChannelByCountry(countryName = countryName)
+            response.collect { response ->
+                when (response) {
+                    is com.zenbyte.studio.domain.utils.Resource.Success -> {}
+                    is com.zenbyte.studio.domain.utils.Resource.Loading -> {
+                        if (localChannelUseCase.getChannelByCountry(countryName = countryName)
+                                .first().isEmpty()
+                        ) {
+                            _uiState.update {
+                                UiState(
+                                    isInitialLoading = true
+                                )
+                            }
+                        }
+                    }
 
+                    is com.zenbyte.studio.domain.utils.Resource.Error -> {
+                        if (localChannelUseCase.getChannelByCountry(countryName = countryName)
+                                .first().isEmpty()
+                        ) {
+                            _uiState.emit(
+                                UiState(
+                                    error = response.message
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     fun getChannelByCountry(countryName: String) {
         viewModelScope.launch {
-            localChannelUseCase.getChannelByCountry(countryName = countryName).collect {
-                channelListMutableStateFlow.emit(ApiState(data = it, isSuccess = true, isLoading = false))
+            localChannelUseCase.getChannelByCountry(countryName = countryName).collect { channels ->
+                _uiState.update {
+                    it.copy(
+                        data = channels,
+                        isInitialLoading =
+                            channels.isEmpty() && it.isInitialLoading
+                    )
+                }
             }
         }
     }

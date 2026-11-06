@@ -32,9 +32,8 @@ import kotlinx.coroutines.flow.update
 fun AllNewsScreen(rootBackStack: NavBackStack<NavKey>) {
 
     val viewModel: NewsChannelViewModel = hiltViewModel()
-    val newsList by viewModel.newsList.collectAsStateWithLifecycle()
     val context = LocalPlatformContext.current
-
+    val newsList by viewModel.newsList.collectAsStateWithLifecycle()
 
     Surface(
         modifier = Modifier
@@ -51,6 +50,7 @@ fun AllNewsScreen(rootBackStack: NavBackStack<NavKey>) {
             Box(modifier = Modifier
                 .fillMaxSize()
                 .padding(top = innerPadding.calculateTopPadding())) {
+
                 if (newsList.isSuccess) {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         newsList.data?.let { myChannels ->
@@ -60,20 +60,19 @@ fun AllNewsScreen(rootBackStack: NavBackStack<NavKey>) {
                                     context = context,
                                     isBuffering = viewModel.isBufferingChannel(myChannel = channel).collectAsStateWithLifecycle(false).value,
                                     isPlaying = viewModel.isPlaying(myChannel = channel).collectAsStateWithLifecycle(false).value,
+
                                     myChannel = channel,
-                                    isChannelFavorite =
-                                        viewModel.getSaveChannel(channelID = channel.stationuuid).collectAsStateWithLifecycle(false).value,
+                                    isChannelFavorite =  viewModel.getSaveChannel(channelID = channel.stationuuid).collectAsStateWithLifecycle(false).value,
                                     onClickFavorite = {myChannel ->
                                         viewModel.saveChannel(myChannel = myChannel)
                                     },
                                     onMediaController = {myChannel ->
                                         viewModel.mediaPlayController(
                                             myChannel = myChannel,
-                                            channels =  newsList.data?: emptyList(),
-                                            index =  newsList.data?.indexOf(channel)?: -1
+                                            channels = newsList.data?.toList()?: emptyList(),
+                                            index = newsList.data?.toList()?.indexOf(channel)?: -1
                                         )
-                                    }
-                                )
+                                    })
                             }
                         }
 
@@ -83,7 +82,7 @@ fun AllNewsScreen(rootBackStack: NavBackStack<NavKey>) {
                 } else {
                     // error message
                     ServerError {
-                        //  viewModel.getNewsList(countryCode = "in")
+                        //   viewModel.getNewsList(countryCode = "in")
                     }
                 }
             }

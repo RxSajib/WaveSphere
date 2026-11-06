@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="good_morning">सुप्रभात</string>
+    <string name="good_afternoon">शुभ दोपहर</string>
+    <string name="good_evening">शुभ संध्या</string>
+    <string name="good_night">शुभ रात्रि</string>
+    <string name="up_next">आगे बजने वाला</string>
+    <string name="current_playing">अभी चल रहा है</string>
+    <string name="no_radio_stations_are_available_right_now">अभी कोई रेडियो स्टेशन उपलब्ध नहीं है।</string>
     <string name="live_stream_options">लाइव स्ट्रीम विकल्प</string>
     <string name="auto_reconnect">ऑटो रिकनेक्ट</string>
     <string name="automatically_reconnect_if_stream_lost">स्ट्रीम खो जाने पर स्वचालित रूप से पुनरारंभ करें</string>

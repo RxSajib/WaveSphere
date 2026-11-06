@@ -127,5 +127,5 @@ dependencies {
     implementation("dev.b3nedikt.reword:reword:4.0.4")
 
     implementation("com.revenuecat.purchases:purchases:10.21.1")
-
+    implementation("com.github.racra:smooth-corner-rect-android-compose:v1.0.0")
 }

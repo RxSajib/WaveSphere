@@ -42,6 +42,7 @@ class PlayerViewModel @Inject constructor(
     val isShowLiveIndicator = dataStoreUseCase.getBoolData(key =  ENABLE_SHOW_LIVE_INDICATOR)
     var showSleepTimerDialog by mutableStateOf(false)
 
+    var isOpenNextTrackBottomSheet by mutableStateOf(false)
     val currentChannel = mediaPlayControllerUseCase.playerController.currentChannel
     val isPlaying = mediaPlayControllerUseCase.playerController.isPlaying
     val isLoading = mediaPlayControllerUseCase.playerController.isLoading

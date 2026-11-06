@@ -16,4 +16,6 @@ interface LocalChannelRepo {
     fun getChannelLengthByLanguages(languages : String) : Flow<Int>
 
     fun getChannelByLanguages(languages : String) : Flow<List<MyChannel>>
+
+    fun getLengthChannelByTag(tags : String, country : String) : Flow<Int>
 }

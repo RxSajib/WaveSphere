@@ -22,13 +22,14 @@ import com.zenbyte.studio.presentation.viewmodel.search.SearchViewModel
 
 @Composable
 fun GenresScreen(viewModel: SearchViewModel, rootBackStack: NavBackStack<NavKey>) {
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         contentPadding = PaddingValues(10.dp)
     ) {
-        items(viewModel.getGenresData()) { genre ->
+        items(viewModel.genresData) { genre ->
             GenresItem(
                 genres = genre
             ){genres ->

@@ -45,4 +45,8 @@ class LocalChannelRepoImpl @Inject constructor(val dao: MyChannelDao) : LocalCha
             it.map { info -> info.toMyChannel() }
         }
     }
+
+    override fun getLengthChannelByTag(tags: String, country: String): Flow<Int> {
+        return dao.getLengthChannelByTag(tags = tags, country = country)
+    }
 }

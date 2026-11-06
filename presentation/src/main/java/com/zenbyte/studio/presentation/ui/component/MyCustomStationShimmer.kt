@@ -35,9 +35,6 @@ fun MyCustomStationShimmerItem(){
                 .fillMaxWidth()
                 .aspectRatio(1f), contentAlignment = Alignment.Center
         ) {
-
-
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -73,32 +70,6 @@ fun MyCustomStationShimmerItem(){
 
             }
         }
-
-       /* Text(
-            text = myChannel.name,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleSmall.copy(
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold,
-                fontSize = adjustedFontSize(10f)
-            ),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-
-        Text(
-            text = myChannel.tags,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleSmall.copy(
-                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
-                fontWeight = FontWeight.W400,
-                fontSize = adjustedFontSize(8f)
-            ),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )*/
     }
 }
 

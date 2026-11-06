@@ -9,6 +9,9 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        maven {
+            url = uri("https://jitpack.io")
+        }
     }
 }
 plugins {
@@ -19,7 +22,14 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven("https://jitpack.io") {
+            content {
+                includeGroup("com.github.philburk")
+                includeGroup("com.github.racra")
+            }
+        }
     }
+
 }
 
 rootProject.name = "WaveSphere"
